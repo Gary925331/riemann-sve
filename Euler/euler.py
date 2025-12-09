@@ -9,7 +9,7 @@ Y = 1
 
 X_ARRAY = arr.array('f', [1])
 Y_ARRAY = arr.array('f', [1])
-
+REAL_Y_ARRAY = arr.array('f', [1])
 
 for i in range(50):
     print(f"Computing step {i}")
@@ -22,10 +22,13 @@ for i in range(50):
     Y_ARRAY.append(Y)
     print(f"(X,Y) = {X}, {Y}")
     REAL_Y = (1/2)*X*X/(1-0.5*X)
+    REAL_Y_ARRAY.append(REAL_Y)
     print(f"REAL_Y = {REAL_Y}")
 
-plt.plot(X_ARRAY, Y_ARRAY)
+plt.plot(X_ARRAY, Y_ARRAY, label = 'Euler_Y')
+plt.plot(X_ARRAY,REAL_Y_ARRAY, label = 'REAL_Y')
 plt.xlabel('X-axis Label')
 plt.ylabel('Y-axis Label')
 plt.title('My Simple Line Graph')
+plt.legend()
 plt.show()
