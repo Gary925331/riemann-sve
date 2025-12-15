@@ -10,8 +10,9 @@ U = 0.5
 ALPHA = 0.1
 DX = L / NO_CELLS
 T_END = 0.5
-DT = DX / abs(ALPHA)
-NO_TIME_STEPS = 100
+CFL = 0.0001
+DT = CFL*DX/ALPHA
+NO_TIME_STEPS = 100000
 NO_INTERFACES = NO_CELLS + 1
 
 x = np.linspace(0.0, 1.0 ,NO_CELLS)
@@ -49,7 +50,7 @@ for step in range(NO_TIME_STEPS):
         
         F[i] += -ALPHA*(H[i] - H[i - 1]) / DX
 
-        print(f"F = {F}")
+     
 
     
     for i in range(NO_CELLS):
