@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define N 800          /* number of cells */
+#define N 1600          /* number of cells */
 #define NIF (N+1)      /* number of interfaces */
 #define ALPHA 1.0    /* advection speed */
 #define L 1.0          /* domain length */
@@ -56,6 +56,8 @@ int main(void)
 {
     double *u = malloc(sizeof(double) * N);
     double *F = malloc(sizeof(double) * NIF);
+    double *A = malloc(sizeof(double) * N);
+
     if (!u || !F) {
         fprintf(stderr, "allocation failed\n");
         return 1;
@@ -69,6 +71,18 @@ int main(void)
             u[i] = 0.5;
         }
     }
+
+    /* Compute the analytical solution first */
+
+    for (int i = 0; i < N; ++i) {
+        double x = (i + 0.5) * DX;
+        A[i] = 0.1;
+        if ((x > (0.2+ALPHA*T_FINAL)) && (x < 0.4+ALPHA*T_FINAL)) {
+            A[i] = 0.5;
+        }
+    }
+
+
 
     double time = 0.0;
     for (int timestep = 0; timestep < MAX_TIMESTEPS; timestep++) {
@@ -90,6 +104,17 @@ int main(void)
         }
 
     }
+
+    double Total_error = 0.0;
+    for (int i = 0; i < N; i++)
+    {
+        Total_error = Total_error + (u[i] - A[i])*(u[i] - A[i]);
+    }
+    // Find the average
+    Total_error = (float)(Total_error / N);
+    printf("Total error %g\n", Total_error); 
+
+    
 
 
 
@@ -113,6 +138,7 @@ int main(void)
     /* cleanup */
     free(u);
     free(F);
+    free(A);
 
     return 0;
 }
