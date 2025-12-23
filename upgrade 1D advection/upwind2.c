@@ -2,15 +2,15 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define N 1600          /* number of cells */
+#define N 100          /* number of cells */
 #define NIF (N+1)      /* number of interfaces */
 #define ALPHA 1.0    /* advection speed */
 #define L 1.0          /* domain length */
 #define DX (L / N)    /* cell size */
-#define CFL 0.5
+#define CFL 0.05
 #define DT (CFL*DX / fabs(ALPHA)) /* time step size */   
-#define T_FINAL 0.5
-#define MAX_TIMESTEPS 10000
+#define T_FINAL 0.2
+#define MAX_TIMESTEPS 50000
 
 
 void Compute_Fluxes(int nif, const double *u, double *F, double alpha)
@@ -20,15 +20,31 @@ void Compute_Fluxes(int nif, const double *u, double *F, double alpha)
 
     // Only compute the inside interfaces; leave the outside 2 interfaces for later.   
     for (int j = 1; j < (nif-1); j++) {
-        int left  = j-1;
+        int left  = j - 1;
         int right = j;
-        double u_interface;
-        if (alpha > 0.0) {
-            u_interface = u[left];
+        
+        double left_F = ALPHA*u[left];
+        double right_F = ALPHA*u[right];
+        double left_u = u[left];
+        double right_u = u[right];
+        
+        // Upwind scheme
+        
+        if (ALPHA > 0) {
+            F[j] = left_F;
         } else {
-            u_interface = u[right];
+            F[j] = right_F;
         }
-        F[j] = alpha * u_interface;
+        
+
+       //central flux
+       // F[j] = 0.5 * (left_F + right_F);
+
+
+       // Rusanov flux
+       // F[j] = 0.5 * (left_F + right_F) - 0.25*(right_u - left_u);
+
+
     }
     // Set dF/dx = 0 on left and right ends of our domain
     F[0] = F[1];
