@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 L = 1
 NO_CELLS = 200
 U = 0.5
-ALPHA = 0.1
+ALPHA = 1e-4
 DX = L / NO_CELLS
-T_END = 0.5
-CFL = 0.0001
-DT = CFL*DX/ALPHA
-NO_TIME_STEPS = 100000
+T_END = 0.4
+DIFFUSION_CFL = 0.001  # ALPHA*DT/(DX^2)
+DT = (DIFFUSION_CFL*DX*DX)/ALPHA
+NO_TIME_STEPS = int(T_END/DT)
 NO_INTERFACES = NO_CELLS + 1
 
 x = np.linspace(0.0, 1.0 ,NO_CELLS)
@@ -65,7 +65,6 @@ plt.plot(x, H)
 plt.xlabel('X')
 plt.ylabel('Y')
 plt.legend()
-plt.show()
 plt.savefig("diffusion_graph.png", dpi=1000, bbox_inches='tight')
 
 
