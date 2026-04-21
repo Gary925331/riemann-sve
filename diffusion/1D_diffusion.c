@@ -9,8 +9,8 @@
 #define DX (L / N)    /* cell size */
 #define CFL 0.0000001
 #define DT (CFL*DX / fabs(ALPHA)) /* time step size */   
-#define T_FINAL 0.5     /* final time */
-#define MAX_TIMESTEPS 500000
+#define T_FINAL 0.0005     /* final time */
+#define MAX_TIMESTEPS 5000000
 
 
 void Compute_Fluxes(int nif, const double *u, double *F, double alpha)
@@ -118,7 +118,7 @@ int main(void)
             printf("Arrived at target time; stopping.\n");
             break;
         } else {
-            printf("Ran out of timesteps before reaching target time.\n");
+           printf("Ran out of timesteps before reaching target time.\n");
         }
 
     }
