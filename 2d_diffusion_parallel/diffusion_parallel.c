@@ -9,19 +9,19 @@
 #define NIF_X (NX+1)      /* number of interfaces */
 #define NIF_Y (NY+1)
 #define U 1    /* advection speed */
-#define L 1          /* domain length */
-#define H 1
-#define DX L/NX    /* cell size */
-#define DY H/NY
+#define L 1.0          /* domain length */
+#define H 1.0
+#define DX (L/NX)    /* cell size */
+#define DY (H/NY)
 #define CFL DT*U/(DX*DX)
-#define DT 0.0000001 /* time step size */   
-#define T_FINAL 0.5     /* final time */
-#define MAX_TIMESTEPS 5000000
-#define NP 2
+#define DT 0.0001 /* time step size */   
+#define T_FINAL 0.25     /* final time */
+#define MAX_TIMESTEPS 500000
+#define NP 1
 #define alpha 0.0005 //diffusion speed
 #define DEBUG 1
 
-void Compute_Fluxes(const float *T, float *F,float *W)
+void Compute_Fluxes(const float *T, float *F,float *W,float time)
 {
     /* compute flux at all interfaces j = 0..n (n+1 interfaces)
        interface j is between left = (j-1) and right = j (mod n) */
@@ -30,48 +30,59 @@ void Compute_Fluxes(const float *T, float *F,float *W)
 //	#pragma omp parallel
 //	{
 	#pragma omp for   
-    	for (int j = 0; j < NIF_X; j++) {
-		for (int k = 0; k < NIF_Y; k++){
-			int index1 = j*NIF_Y+k;
-			int index2 = k*NIF_X+j; 
-			float Left_F = U*T[index2];
-			float Right_F = U*T[index2+1];
-			float Left,Right,Top,Bottom;
+    	for (int j = 1; j < NIF_X; j++) {
+		for (int k = 0; k < NY; k++){
+			int index1 = j*NY+k;
+			float Left_F = U*T[index1-NY];
+			float Right_F = U*T[index1];
         		// Upwind scheme
-        		if (U > 0) {
-            			F[index2] = Left_F;
+			if (U > 0) {
+            			F[index1] = Left_F;
         		} else {
-            			F[index2] = Right_F;
+            			F[index1] = Right_F;
         		}
-			if(j ==0){
-                                Left = T[index2];
-                        }else{
-                                Left = T[index2];
-                        }
-			//Right
-                        if (j == (NIF_X-1)) {
-                                Right = T[index2];
-                        }else{ 
-                                Right = T[index2+1];
-                        }
-                                    
-			//Bottom
-                        if(k == 0){
-                                Bottom = T[index1];
-                        }else{
-                                Bottom = T[index1];
-                        }
-                                   
-			//Top
-                        if(k == (NIF_Y-1)){
-                                Top = T[index1];
-			}else{
-				Top = T[index1+1];
-                        }
-
-        		F[index2] += -alpha*((Right - Left) / DX);
-			W[index1] = -alpha*((Top - Bottom) / DY);
+			F[index1] += -alpha*((T[index1] - T[index1-NY]) / DX);
+			/*if(j==0 || j==NIF_X-1){
+				F[index1] = F[index1+NY];
+			}*/
+//			printf("Interface %g\n",F[4050]);
         	}
+	}
+//	printf("step %g Interface %g\n",time/DT,F[4050]);
+
+        for (int i=0; i<NY; i++){
+                F[i]=F[i+NY];
+                F[NX*NY+i]=F[(NX-1)*NY+i];
+	}
+	for (int j = 0; j < NX; j++) {
+                for (int k = 0; k < NY; k++){
+                        int index = j*NY+k;
+                        float Bottom,Top;
+                        if(j == 0){
+                                Bottom = T[index];
+                        }else{
+                                Bottom = T[index-1];
+                        }
+                        if(j == (NY-1)){
+                                Top = T[index];
+                        }else{
+                                Top = T[index+1];
+                        }
+                        W[index] = alpha/DY/DY*(Top+Bottom-2*T[index]);
+		}
+	}
+/*	for (int j = 1; j < NIF_Y; j++) {
+                for (int k = 0; k < NX; k++){
+                        int index1 = j*NX+k;
+                        W[index1] = (-alpha)*((T[index1] - T[index1-NX]) / DY);
+                }
+        }
+	printf("step %g Interface %g\n",time/DT,W[3060]);
+	for (int i=0; i<NX; i++){
+                W[i]=W[i+NX];
+                W[NX*NY+i]=W[NX*(NY-1)+i];
+        }*/
+
 
        		//central flux
        		// F[j] = 0.5 * (left_F + right_F);
@@ -81,10 +92,8 @@ void Compute_Fluxes(const float *T, float *F,float *W)
        		// F[j] = 0.5 * (left_F + right_F) - 0.25*(right_u - left_u);
 
 
-    	}
 //	}//end of parallel
     	// Set dF/dx = 0 on left and right ends of our domain
-    	
 }
 
 
@@ -101,16 +110,14 @@ void Update_State(const float *F, float *T,float *W,float *Tnew) {
 	#pragma omp for
     	for (int j = 0; j < NX; j++) {
                 for (int k = 0; k < NY; k++){
-                        int index1 = j*NY+k;
-                        int index2 = k*NX+j;
-        		Tnew[index2] = T[index2] - (DT/DX)*(F[index2+1] - F[index2])-(DT/DY)*(W[index1+1]-W[index1]);
+                        int index = j*NY+k;
+        		Tnew[index] = T[index] - ((DT/DX)*(F[index+NY] - F[index])) + DT*W[index];
     		}
 	}
 	for (int j = 0; j < NX; j++) {
                 for (int k = 0; k < NY; k++){
-                        int index1 = j*NY+k;
-                        int index2 = k*NX+j; 
-                        T[index2] = Tnew[index2];
+                        int index1 = j*NY+k; 
+                        T[index1] = Tnew[index1];
                 }
         }
 
@@ -127,7 +134,7 @@ int main(void)
 	float *W;
 	T = (float*)malloc(NIF_X*NIF_Y*sizeof(float));
 	Tnew = (float*)malloc(NIF_X*NIF_Y*sizeof(float));
-	F = (float*)malloc(NIF_X*NIF_Y*sizeof(float));
+	F = (float*)malloc(NIF_X*NY*sizeof(float));
 	A = (float*)malloc(NIF_X*NIF_Y*sizeof(float));
 	W = (float*)malloc(NIF_X*NIF_Y*sizeof(float));
     	if (!T || !F) {
@@ -164,7 +171,7 @@ int main(void)
                         float y = (k + 0.5) * DY;
                         int index2= j*NY+k;
                         A[index2] = 0.0;
-                        if ((0.2+U*T_FINAL) && (x < 0.4+U*T_FINAL) && (y < 0.6) && (y > 0.4)) {
+                        if ((x>(0.2+U*T_FINAL)) && (x < 0.4+U*T_FINAL) && (y < 0.6) && (y > 0.4)) {
                                 A[index2] = 1.0;
                         }
         	}
@@ -176,7 +183,7 @@ int main(void)
     for (int timestep = 0; timestep < MAX_TIMESTEPS; timestep++) {
     
         // Compute fluxes
-        Compute_Fluxes( T, F, W);
+        Compute_Fluxes( T, F, W,time);
 
         // Update T using Fluxes F
 //        printf("Computing state at time %g (using) timestep %g (after %d time steps)\n", time, DT, timestep);
@@ -184,12 +191,12 @@ int main(void)
         Update_State(F,T,W,Tnew);
 
         time = time + DT;
-/*        if (time > T_FINAL) {
-            printf("Thread %d arrived at target time; stopping.\n", tid);
+        if (time > T_FINAL) {
+//            printf("Thread %d arrived at target time; stopping.\n", tid);
             break;
-        } else {
-            printf("Thread %d ran out of timesteps before reaching target time.\n", tid);
-        }*/
+        }// else {
+           // printf("Thread %d ran out of timesteps before reaching target time.\n", tid);
+      //  }*/
 
     }
 
