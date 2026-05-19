@@ -4,12 +4,12 @@
 
 #define N 200          /* number of cells */
 #define NIF (N+1)      /* number of interfaces */
-#define ALPHA 0.1    /* advection speed */
+#define ALPHA 0.5    /* advection speed */
 #define L 0.1          /* domain length */
 #define DX (L / N)    /* cell size */
-#define CFL 0.0000001
+#define CFL 0.001
 #define DT (CFL*DX / fabs(ALPHA)) /* time step size */   
-#define T_FINAL 0.0005     /* final time */
+#define T_FINAL 0.1     /* final time */
 #define MAX_TIMESTEPS 5000000
 
 
@@ -36,7 +36,7 @@ void Compute_Fluxes(int nif, const double *u, double *F, double alpha)
             F[j] = right_F;
         }
 
-        F[j] += -ALPHA*(u[j] - u[j-1]) / DX;
+        F[j] += -0.000024*(u[j] - u[j-1]) / DX;
         
 
        //central flux
@@ -49,6 +49,7 @@ void Compute_Fluxes(int nif, const double *u, double *F, double alpha)
 
     }
     // Set dF/dx = 0 on left and right ends of our domain
+    printf(" %g\n",F[50]);
     F[0] = F[1];
     F[nif-1] = F[nif-2];
 }
@@ -109,16 +110,16 @@ int main(void)
         Compute_Fluxes(NIF, u, F, ALPHA);
 
         // Update U using Fluxes F
-        printf("Computing state at time %g (using) timestep %g (after %d time steps)\n", time, DT, timestep);
+ //       printf("Computing state at time %g (using) timestep %g (after %d time steps)\n", time, DT, timestep);
 
         Update_State(N, F, u);
 
         time = time + DT;
         if (time > T_FINAL) {
-            printf("Arrived at target time; stopping.\n");
+//            printf("Arrived at target time; stopping.\n");
             break;
-        } else {
-           printf("Ran out of timesteps before reaching target time.\n");
+//        } else {
+//           printf("Ran out of timesteps before reaching target time.\n");
         }
 
     }
