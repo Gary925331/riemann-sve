@@ -1,0 +1,9 @@
+services:
+  cfd-solver:
+    # 告訴 Compose 直接在當前目錄讀取 Dockerfile 來建置
+    build: .
+    
+    # 掛載 Volumes
+    volumes:
+      # 將主機當前目錄下的 result_data 對應到容器內的 /usr/src/app/output
+      - ./result_data:/usr/src/app/output
