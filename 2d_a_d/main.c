@@ -10,8 +10,8 @@
 #define NIF_Y (NY+1)
 #define U 0.5    /* advection speed X */
 #define V 0.25   /* advection speed Y */
-#define L 2.0          /* domain length */
-#define H 1.0
+#define L 1.0          /* domain length */
+#define H 0.5
 #define DX (L/NX)    /* cell size */
 #define DY (H/NY)
 #define CFL DT*U/(DX*DX)
@@ -34,11 +34,11 @@ void Compute_Fluxes(const float *T, float *F,float *W,float *D,float time)
     	for (int j = 1; j < NIF_X-1; j++) {
 		for (int k = 0; k < NY; k++){
 			int index1 = j*NY+k;
-			float Left_F = U*T[index1];
-			float Right_F = U*T[index1+NY];
-			float right_T = T[index1+NY];
-			float left_T = T[index1]; 
-        		
+			float Left_F = U*T[index1-NY];
+			float Right_F = U*T[index1];
+			float right_T = T[index1];
+			float left_T = T[index1-NY]; 
+
 			F[index1] = 0.5 * (Left_F + Right_F) - 0.25*(right_T - left_T);
         	}
 	}
@@ -49,10 +49,10 @@ void Compute_Fluxes(const float *T, float *F,float *W,float *D,float time)
 	for (int j = 0; j < NX; j++) {
                 for (int k = 1; k < NIF_Y-1; k++){
                         int index1 = j*(NIF_Y - 1)+k;
-                        float Top_W = V*T[index1+1];
-                        float Bottom_W = V*T[index1];
-                        float Top_T = T[index1+1]; 
-                        float Bottom_T = T[index1]; 
+                        float Top_W = V*T[index1];
+                        float Bottom_W = V*T[index1-1];
+                        float Top_T = T[index1]; 
+                        float Bottom_T = T[index1-1]; 
 
                         W[index1] = 0.5 * (Top_W + Bottom_W) - 0.125*(Top_T - Bottom_T);
                 }
@@ -132,7 +132,7 @@ void Update_State(const float *F, float *T,float *W,float *D,float *Tnew) {
     	for (int j = 0; j < NX; j++) {
                 for (int k = 0; k < NY; k++){
                         int index = j*NY+k;
-        		Tnew[index] = T[index] - ((DT/DX)*(F[index+NY] - F[index])) - ((DT/DY)*(W[index+1]-W[index])) + D[index];
+        		Tnew[index] = T[index] - ((DT/DX)*(F[index+NY] - F[index])) - ((DT/DY)*(W[index+1]-W[index])) + DT*D[index];
     		}
 	}
 	for (int j = 0; j < NX; j++) {
@@ -181,7 +181,7 @@ int main(void)
 			float y = (k + 0.5) * DY;
 			int index2= j*NY+k;
         		T[index2] = 0.0;
-        		if ((x > 0.2) && (x < 0.4) && (y < 0.6) && (y > 0.4)) {
+        		if ((x > 0.1) && (x < 0.2) && (y < 0.2) && (y > 0.1)) {
             			T[index2] = 1.0;
         		}
 		}
@@ -195,7 +195,7 @@ int main(void)
                         float y = (k + 0.5) * DY;
                         int index2= j*NY+k;
                         A[index2] = 0.0;
-                        if ((x>(0.2+U*T_FINAL)) && (x < 0.4+U*T_FINAL) && (y < 0.6) && (y > 0.4)) {
+                        if ((x>(0.1+U*T_FINAL)) && (x < 0.2+U*T_FINAL) && (y < 0.2+V*T_FINAL) && (y > 0.1+V*T_FINAL)) {
                                 A[index2] = 1.0;
                         }
         	}
