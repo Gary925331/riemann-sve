@@ -3,8 +3,8 @@
 #include <math.h>
 #include <omp.h>
 
-#define NX 200          /* number of X cells */
-#define NY 100
+#define NX 1600          /* number of X cells */
+#define NY 800
 #define N (NX*NY)
 #define NIF_X (NX+1)      /* number of interfaces */
 #define NIF_Y (NY+1)
