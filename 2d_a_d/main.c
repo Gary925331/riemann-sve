@@ -36,8 +36,8 @@ void Compute_Fluxes(const float *T, float *F,float *W,float *D,float time)
 			int index1 = j*NY+k;
 			float Left_F = U*T[index1];
 			float Right_F = U*T[index1+NY];
-			float right_T = T[index1];
-			float left_T = T[index1+NY]; 
+			float right_T = T[index1+NY];
+			float left_T = T[index1]; 
         		
 			F[index1] = 0.5 * (Left_F + Right_F) - 0.25*(right_T - left_T);
         	}
@@ -54,14 +54,14 @@ void Compute_Fluxes(const float *T, float *F,float *W,float *D,float time)
                         float Top_T = T[index1+1]; 
                         float Bottom_T = T[index1]; 
 
-                        W[index1] = 0.5 * (Top_W + Bottom_W) - 0.25*(Top_T - Bottom_T);
+                        W[index1] = 0.5 * (Top_W + Bottom_W) - 0.125*(Top_T - Bottom_T);
                 }
         }
 //	printf("step %g Interface %g\n",time/DT,F[4050]);
 
         for (int i=0; i<NX; i++){
                 W[i*NY]=W[i*NY+1];
-                W[i*NY-1]=W[i*NY-2];
+                W[(i+1)*NY-1]=W[(i+1)*NY-2];
 	}
 	
 	for (int j = 0; j < NX; j++) {
