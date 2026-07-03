@@ -3,8 +3,8 @@
 #include <math.h>
 #include <omp.h>
 
-#define NX 1600          /* number of X cells */
-#define NY 800
+#define NX 200          /* number of X cells */
+#define NY 100
 #define N (NX*NY)
 #define NIF_X (NX+1)      /* number of interfaces */
 #define NIF_Y (NY+1)
@@ -42,28 +42,30 @@ void Compute_Fluxes(const float *T, float *F,float *W,float *D,float time)
 			F[index1] = 0.5 * (Left_F + Right_F) - 0.25*(right_T - left_T);
         	}
 	}
+	#pragma omp for
 	for (int i=0; i<NY; i++){
                 F[i]=F[i+NY];
                 F[NX*NY+i]=F[(NX-1)*NY+i];
 	}
-	for (int j = 0; j < NX; j++) {
-                for (int k = 1; k < NIF_Y-1; k++){
-                        int index1 = j*(NIF_Y - 1)+k;
+	#pragma omp for
+	for (int j = 1; j < NX-1; j++) {
+                for (int k = 0; k < NIF_Y; k++){
+                        int index1 = j*(NIF_Y)+k;
                         float Top_W = V*T[index1];
                         float Bottom_W = V*T[index1-1];
                         float Top_T = T[index1]; 
                         float Bottom_T = T[index1-1]; 
 
-                        W[index1] = 0.5 * (Top_W + Bottom_W) - 0.125*(Top_T - Bottom_T);
+                        W[index1] = 0.5 * (Top_W + Bottom_W) - 0.25*(Top_T - Bottom_T);
                 }
         }
 //	printf("step %g Interface %g\n",time/DT,F[4050]);
-
+	#pragma omp for
         for (int i=0; i<NX; i++){
                 W[i*NY]=W[i*NY+1];
                 W[(i+1)*NY-1]=W[(i+1)*NY-2];
 	}
-	
+	#pragma omp for
 	for (int j = 0; j < NX; j++) {
                 for (int k = 0; k < NY; k++){
                         int index = j*NY+k;
@@ -89,7 +91,7 @@ void Compute_Fluxes(const float *T, float *F,float *W,float *D,float time)
                                 Right = T[index+NY];
                         }
 
-                        D[index] = alpha/DY/DY*(Left+Right+Top+Bottom-4*T[index]);
+                        D[index] = (alpha/DY/DY)*(Left+Right+Top+Bottom-4*T[index]);
 		}
 	}
 /*	for (int j = 1; j < NIF_Y; j++) {
@@ -135,6 +137,7 @@ void Update_State(const float *F, float *T,float *W,float *D,float *Tnew) {
         		Tnew[index] = T[index] - ((DT/DX)*(F[index+NY] - F[index])) - ((DT/DY)*(W[index+1]-W[index])) + DT*D[index];
     		}
 	}
+	#pragma omp for
 	for (int j = 0; j < NX; j++) {
                 for (int k = 0; k < NY; k++){
                         int index1 = j*NY+k; 
