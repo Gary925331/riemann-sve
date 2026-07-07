@@ -172,6 +172,8 @@ int main(void)
 
     /* initial condition */
 	omp_set_num_threads(NP);
+	float Total_error = 0.0;
+
 	FILE *pFile;
         if (DEBUG) printf("Saving results\n");
         pFile = fopen("results.txt", "w");
@@ -228,7 +230,7 @@ int main(void)
 
     }
 
-    float Total_error = 0.0;
+//    float Total_error = 0.0;
     #pragma omp single
     {
     for (int j = 0; j < NX; j++) {
