@@ -3,22 +3,21 @@
 #include <math.h>
 #include <omp.h>
 
-#define NX 200          /* number of X cells */
-#define NY 100
+#define NX 800          /* number of X cells */
+#define NY 800
 #define N (NX*NY)
 #define NIF_X (NX+1)      /* number of interfaces */
 #define NIF_Y (NY+1)
 #define U 0.5    /* advection speed X */
 #define V 0.25   /* advection speed Y */
 #define L 1.0          /* domain length */
-#define H 0.5
+#define H 1.0
 #define DX (L/NX)    /* cell size */
 #define DY (H/NY)
-#define CFL DT*U/(DX*DX)
 #define DT 0.0001 /* time step size */   
 #define T_FINAL 1     /* final time */
 #define MAX_TIMESTEPS 10000
-#define NP 1
+#define NP 8
 #define alpha 0.000024 //diffusion speed
 #define DEBUG 1
 
@@ -48,13 +47,14 @@ void Compute_Fluxes(const float *T, float *F,float *W,float *D,float time)
                 F[NX*NY+i]=F[(NX-1)*NY+i];
 	}
 	#pragma omp for
-	for (int j = 1; j < NX-1; j++) {
-                for (int k = 0; k < NIF_Y; k++){
-                        int index1 = j*(NIF_Y)+k;
-                        float Top_W = V*T[index1];
-                        float Bottom_W = V*T[index1-1];
-                        float Top_T = T[index1]; 
-                        float Bottom_T = T[index1-1]; 
+	for (int j = 0; j < NX; j++) {
+                for (int k = 1; k < NIF_Y; k++){
+                        int index1 = j*NIF_Y+k;
+			int index = j*NY+k;
+                        float Top_W = V*T[index];
+                        float Bottom_W = V*T[index-1];
+                        float Top_T = T[index]; 
+                        float Bottom_T = T[index-1]; 
 
                         W[index1] = 0.5 * (Top_W + Bottom_W) - 0.25*(Top_T - Bottom_T);
                 }
@@ -62,8 +62,8 @@ void Compute_Fluxes(const float *T, float *F,float *W,float *D,float time)
 //	printf("step %g Interface %g\n",time/DT,F[4050]);
 	#pragma omp for
         for (int i=0; i<NX; i++){
-                W[i*NY]=W[i*NY+1];
-                W[(i+1)*NY-1]=W[(i+1)*NY-2];
+                W[i*NIF_Y]=W[i*NIF_Y+1];
+                W[(i+1)*NIF_Y-1]=W[(i+1)*NIF_Y-2];
 	}
 	#pragma omp for
 	for (int j = 0; j < NX; j++) {
@@ -134,7 +134,8 @@ void Update_State(const float *F, float *T,float *W,float *D,float *Tnew) {
     	for (int j = 0; j < NX; j++) {
                 for (int k = 0; k < NY; k++){
                         int index = j*NY+k;
-        		Tnew[index] = T[index] - ((DT/DX)*(F[index+NY] - F[index])) - ((DT/DY)*(W[index+1]-W[index])) + DT*D[index];
+			int index1 = j*NIF_Y+k;
+        		Tnew[index] = T[index] - ((DT/DX)*(F[index+NY] - F[index])) - ((DT/DY)*(W[index1+1]-W[index1])) + DT*D[index];
     		}
 	}
 	#pragma omp for
@@ -241,7 +242,7 @@ int main(void)
     // Find the average
     #pragma omp single
     {
-    	Total_error = (float)(Total_error / N);
+    	Total_error = (double)(Total_error / N);
     	printf("Total error %g\n", Total_error);
 	fprintf(pFile, "%d\t%g\n",N,Total_error); 
     }
@@ -254,7 +255,7 @@ int main(void)
         	float X = (i+0.5)*DX;
                 float Y = (j+0.5)*DY;
                 int index = i*NY +j;
-                fprintf(pFile, "%g\t%g\t%g\n", X, Y, T[index]);
+                fprintf(pFile, "%g\t%g\t%g\n",X, Y, T[index]);
         }
     }
     fclose(pFile);
