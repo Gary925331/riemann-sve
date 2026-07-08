@@ -111,7 +111,7 @@ void Update_State(const float *F, float *T,float *W,float *Tnew) {
     	for (int j = 0; j < NX; j++) {
                 for (int k = 0; k < NY; k++){
                         int index = j*NY+k;
-        		Tnew[index] = T[index] - ((DT/DX)*(F[index+NY] - F[index])) + W[index];
+        		Tnew[index] = T[index] - ((DT/DX)*(F[index+NY] - F[index])) + DT*W[index];
     		}
 	}
 	for (int j = 0; j < NX; j++) {
