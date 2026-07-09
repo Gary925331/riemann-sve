@@ -174,7 +174,7 @@ int main(void)
     fclose(fp);
 
     // Write U to file now
-    fp = fopen("results.dat", "w");
+    fp = fopen("result.data", "w");
     for (int cell = 0; cell < N; cell++) {
         double x = (cell+0.5)*DX;
         fprintf(fp, "%g\t%g\n", x, u[cell]);
