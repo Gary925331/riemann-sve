@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # 編譯 C 程式 (輸出成名為 myapp 的執行檔)
-RUN gcc -o myapp main.c
+RUN gcc -o /usr/local/bin/myapp main.c
 
 # 容器啟動時執行編譯好的程式
-CMD ["./myapp"]
+CMD ["/usr/local/bin/myapp"]
