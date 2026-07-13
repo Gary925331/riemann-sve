@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <math.h>
 #include <omp.h>
-#define N 100          /* number of cells */
+#define N 1000          /* number of cells */
 #define NIF (N+1)      /* number of interfaces */
 #define ALPHA 1.0    /* advection speed */
 #define L 1.0          /* domain length */
 #define DX (L / N)    /* cell size */
 #define MAX_TIMESTEPS 50000
-#define T_FINAL 1
+#define T_FINAL 0.1
 #define g 9.81
 #define CFL 0.25
 
@@ -35,7 +35,7 @@ void Calcaulation(float *u,float *mass_F,float *momentum_F,float *mass,float *mo
 		}else{
 			h[i] = 0.1;
 		}
-		printf("h[%d]=%f\n",i,h[i]);
+//		printf("h[%d]=%f\n",i,h[i]);
 		u[i] = 0;
 		mass[i] = h[i];
 		momentum[i] = h[i]*u[i];
@@ -73,15 +73,16 @@ void Calcaulation(float *u,float *mass_F,float *momentum_F,float *mass,float *mo
 			float momentum_right = h[i]*u[i]*u[i] + 0.5*g*h[i]*h[i];
                         mass_F[i] = 0.5*(mass_left + mass_right) - 0.5*Smax*(mass[i] - mass[i-1]);
 			momentum_F[i] = 0.5*(momentum_left + momentum_right) - 0.5*Smax*(momentum[i] - momentum[i-1]);
-			mass_F[0] = mass_F[1];
-			mass_F[NIF-1] = mass_F[NIF-2];
-			momentum_F[0] = momentum_F[1];
-			momentum_F[NIF-1] = momentum_F[NIF-2];
 		}
+		mass_F[0] = 0;
+                mass_F[NIF-1] = 0;
+                momentum_F[0] = 0.5*g*h[0]*h[0];
+                momentum_F[NIF-1] = 0.5*g*h[NIF-2]*h[NIF-2];
+
 		for(int i = 0;i < N;i++){
 			mass[i] = mass[i] - DT*(mass_F[i+1]-mass_F[i])/DX;
 			momentum[i] = momentum[i] - DT*(momentum_F[i+1]-momentum_F[i])/DX;
-			printf("%f,%f\n",mass[i],momentum[i]); 
+//			printf("%f,%f\n",mass[i],momentum[i]); 
 		}
 		for(int i = 0;i < N;i++){
 			h[i] = mass[i];
@@ -103,7 +104,7 @@ int main() {
 	FILE *fp = fopen("results.dat", "w");
     	for (int j = 0; j < N; j++) {
 		float X = (j+0.5)*DX;
-        	fprintf(fp, "%g\t%.15e\t%g\n", X, mass[j],momentum[j]);
+        	fprintf(fp, "%g\t%.15e\t%g\n", X, mass[j],u[j]);
     	}
     	fclose(fp);
         Free_memory(u,mass_F,momentum_F,mass,momentum,h);
