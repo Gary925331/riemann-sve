@@ -28,7 +28,7 @@ void Free_memory(float *u,float *mass_F,float *momentum_F,float *mass,float *mom
 	free(momentum);
 	free(h);
 }
-void Calcaulation(float *u,float *mass_F,float *momentum_F,float *mass,float *momentum,float *h){
+void Calculation(float *u,float *mass_F,float *momentum_F,float *mass,float *momentum,float *h){
 	for (int i = 0;i < N;i++){
 		if(i < N/2){
 			h[i] = 1;
@@ -100,7 +100,7 @@ int main() {
         float *momentum;
         float *h;
         Allocate_memory(&u,&mass_F,&momentum_F,&mass,&momentum,&h);
-	Calcaulation(u,mass_F,momentum_F,mass,momentum,h);
+	Calculation(u,mass_F,momentum_F,mass,momentum,h);
 	FILE *fp = fopen("results.dat", "w");
     	for (int j = 0; j < N; j++) {
 		float X = (j+0.5)*DX;
