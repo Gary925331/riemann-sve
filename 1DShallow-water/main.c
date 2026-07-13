@@ -43,9 +43,9 @@ void Calcaulation(float *u,float *mass_F,float *momentum_F,float *mass,float *mo
 	float time = 0;
         float Smax;
 	for (int timestep = 0; timestep < MAX_TIMESTEPS; timestep++){
-		for (int i = 0;i < N;i++){
-			float S_L = u[i] + sqrt(g*h[i]);
-			float S_R = u[i+1] + sqrt(g*h[i+1]);
+		for (int i = 1;i < NIF-1;i++){
+			float S_L = u[i-1] + sqrt(g*h[i-1]);
+			float S_R = u[i] + sqrt(g*h[i]);
 			float S_local_max;
 			if (S_L > S_R){
 				S_L = S_local_max;
@@ -64,7 +64,22 @@ void Calcaulation(float *u,float *mass_F,float *momentum_F,float *mass,float *mo
   		} else {
 	            	printf("Ran out of timesteps before reaching target time.\n");
         	}
-		
+		for (int i = 1;i < NIF-1;i++){
+			float mass_left = h[i-1]*u[i-1];
+			float mass_right = h[i]*u[i];
+			float momentum_left = h[i-1]*u[i-1]*u[i-1] + 0.5*g*h[i-1]*h[i-1];
+			float momentum_right = h[i]*u[i]*u[i] + 0.5*g*h[i]*h[i];
+                        mass_F[i] = 0.5*(mass_left + mass_right) + 0.5*Smax*(mass[i] - mass[i-1]);
+			momentum_F[i] = 0.5*(momentum_left + momentum_right) +0.5*Smax*(momentum[i] - momentum[i-1]);
+			mass_F[0] = mass_F[1];
+			mass_F[NIF-1] = mass_F[NIF-2];
+			momentum_F[0] = momentum_F[1];
+			momentum_F[NIF-1] = momentum[NIF-2];
+		}
+		for(int i = 1;i < N;i++){
+		}
+
+
 	}
 }
 int main() {
