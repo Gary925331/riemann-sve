@@ -7,14 +7,18 @@
 #define ALPHA 1.0    /* advection speed */
 #define L 1.0          /* domain length */
 #define DX (L / N)    /* cell size */
+#define MAX_TIMESTEPS 5000
+#define T_FINAL 0.1
+#define g 9.81
+#define CFL 0.5
 
-void Allocate_memory(float *u,float *mass_F,float *momentum_F,float *mass,float *momentum,float *h){
-	u = (float*)malloc(N*sizeof(float));
-	mass_F = (float*)malloc(NIF*sizeof(float));
-	momentum_F = (float*)malloc(NIF*sizeof(float));
-	mass = (float*)malloc(N*sizeof(float));
-	momentum = (float*)malloc(N*sizeof(float));
-	h = (float*)malloc(N*sizeof(float));
+void Allocate_memory(float **u,float **mass_F,float **momentum_F,float **mass,float **momentum,float **h){
+	*u = (float*)malloc(N*sizeof(float));
+	*mass_F = (float*)malloc(NIF*sizeof(float));
+	*momentum_F = (float*)malloc(NIF*sizeof(float));
+	*mass = (float*)malloc(N*sizeof(float));
+	*momentum = (float*)malloc(N*sizeof(float));
+	*h = (float*)malloc(N*sizeof(float));
 }
 void Free_memory(float *u,float *mass_F,float *momentum_F,float *mass,float *momentum,float *h){
 	free(u);
@@ -24,6 +28,45 @@ void Free_memory(float *u,float *mass_F,float *momentum_F,float *mass,float *mom
 	free(momentum);
 	free(h);
 }
+void Calcaulation(float *u,float *mass_F,float *momentum_F,float *mass,float *momentum,float *h){
+	for (int i = 0;i < N;i++){
+		if(i < N/2){
+			h[i] = 10;
+		}else{
+			h[i] = 1;
+		}
+		printf("h[%d]=%f\n",i,h[i]);
+		u[i] = 0;
+		mass[i] = h[i];
+		momentum[i] = h[i]*u[i];
+	}
+	float time = 0;
+        float Smax;
+	for (int timestep = 0; timestep < MAX_TIMESTEPS; timestep++){
+		for (int i = 0;i < N;i++){
+			float S_L = u[i] + sqrt(g*h[i]);
+			float S_R = u[i+1] + sqrt(g*h[i+1]);
+			float S_local_max;
+			if (S_L > S_R){
+				S_L = S_local_max;
+			}else{
+				S_R = S_local_max;
+			}
+			if(S_local_max > Smax){
+				Smax = S_local_max;
+			}
+		}
+		float DT = CFL*DX/Smax;
+		time = time + DT;
+        	if (time > T_FINAL) {
+            		printf("Arrived at target time; stopping.\n");
+            		break;
+  		} else {
+	            	printf("Ran out of timesteps before reaching target time.\n");
+        	}
+		
+	}
+}
 int main() {
         float *u;
         float *mass_F;
@@ -31,8 +74,8 @@ int main() {
         float *mass;
         float *momentum;
         float *h;
-        Allocate_memory(u,mass_F,momentum_F,mass,momentum,h);
+        Allocate_memory(&u,&mass_F,&momentum_F,&mass,&momentum,&h);
+	Calcaulation(u,mass_F,momentum_F,mass,momentum,h);
         Free_memory(u,mass_F,momentum_F,mass,momentum,h);
-        return 0;
 }
 
