@@ -33,7 +33,7 @@ void Calculation(float *u,float *mass_F,float *momentum_F,float *mass,float *mom
 		if(i < N/2){
 			h[i] = 1;
 		}else{
-			h[i] = 0.1;
+			h[i] = 1;
 		}
 //		printf("h[%d]=%f\n",i,h[i]);
 		u[i] = 0;
