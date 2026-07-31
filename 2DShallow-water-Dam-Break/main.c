@@ -12,23 +12,27 @@
 #define g 9.81
 #define CFL 0.25
 
-void Allocate_memory(float **u,float **mass_F,float **momentum_F,float **mass,float **momentum,float **h){
+void Allocate_memory(float **u,float **mass_F,float **momentum_F,float **mass,float **momentum,float **h,float **mass_slope,float **momentum_slope){
 	*u = (float*)malloc(N*sizeof(float));
 	*mass_F = (float*)malloc(NIF*sizeof(float));
 	*momentum_F = (float*)malloc(NIF*sizeof(float));
 	*mass = (float*)malloc(N*sizeof(float));
 	*momentum = (float*)malloc(N*sizeof(float));
 	*h = (float*)malloc(N*sizeof(float));
+	*mass_slope = (float*)malloc(N*sizeof(float));
+	*momentum_slope = (float*)malloc(N*sizeof(float));
 }
-void Free_memory(float *u,float *mass_F,float *momentum_F,float *mass,float *momentum,float *h){
+void Free_memory(float *u,float *mass_F,float *momentum_F,float *mass,float *momentum,float *h,float *mass_slope,float *momentum_slope){
 	free(u);
 	free(mass_F);
 	free(momentum_F);
 	free(mass);
 	free(momentum);
 	free(h);
+	free(mass_slope);
+	free(momentum_slope);
 }
-void Calculation(float *u,float *mass_F,float *momentum_F,float *mass,float *momentum,float *h){
+void Calculation(float *u,float *mass_F,float *momentum_F,float *mass,float *momentum,float *h,float *mass_slope,float *momentum_slope){
 	for (int i = 0;i < N;i++){
 		if(i < N/2){
 			h[i] = 1;
@@ -39,6 +43,8 @@ void Calculation(float *u,float *mass_F,float *momentum_F,float *mass,float *mom
 		u[i] = 0;
 		mass[i] = h[i];
 		momentum[i] = h[i]*u[i];
+		mass_slope[i] = 0;
+		momentum_slope[i] = 0;
 	}
 	float time = 0;
         
@@ -65,14 +71,45 @@ void Calculation(float *u,float *mass_F,float *momentum_F,float *mass,float *mom
             		break;
   		} else {
 	            	printf("Ran out of timesteps before reaching target time.\n");
-        	}
+   		}
+		for(int i = 0;i < N;i++){
+			float forward = (mass[i+1] - mass[i])/DX;
+			float backward = (mass[i] - mass[i-1])/DX;
+			if(forward*backward < 0){
+				mass_slope[i] = 0;
+			}else{
+				if(abs(forward)<abs(backward)){
+					mass_slope[i] = forward;
+				}else{
+					mass_slope[i] = backward;
+				}
+			}
+		}
+		for(int i = 0;i < N;i++){
+                        float forward = (momentum[i+1] - momentum[i])/DX;
+                        float backward = (momentum[i] - momentum[i-1])/DX;
+                        if(forward*backward < 0){
+                                momentum_slope[i] = 0;
+                        }else{
+                                if(abs(forward)<abs(backward)){
+                                        momentum_slope[i] = forward;
+                                }else{
+                                        momentum_slope[i] = backward;
+                                }
+			}
+                }
+
 		for (int i = 1;i < NIF-1;i++){
 			float mass_left = h[i-1]*u[i-1];
 			float mass_right = h[i]*u[i];
 			float momentum_left = h[i-1]*u[i-1]*u[i-1] + 0.5*g*h[i-1]*h[i-1];
 			float momentum_right = h[i]*u[i]*u[i] + 0.5*g*h[i]*h[i];
-                        mass_F[i] = 0.5*(mass_left + mass_right) - 0.5*Smax*(mass[i] - mass[i-1]);
-			momentum_F[i] = 0.5*(momentum_left + momentum_right) - 0.5*Smax*(momentum[i] - momentum[i-1]);
+			float mass_l = mass[i-1] + 0.5*DX*mass_slope[i-1];
+			float mass_r = mass[i] - 0.5*DX*mass_slope[i];
+			float momentum_l = momentum[i-1] + 0.5*DX*momentum_slope[i-1];
+			float momentum_r = momentum[i] - 0.5*DX*momentum_slope[i];
+                        mass_F[i] = 0.5*(mass_left + mass_right) - 0.5*Smax*(mass_r - mass_l);
+			momentum_F[i] = 0.5*(momentum_left + momentum_right) - 0.5*Smax*(momentum_r - momentum_l);
 		}
 		mass_F[0] = 0;
                 mass_F[NIF-1] = 0;
@@ -99,14 +136,16 @@ int main() {
         float *mass;
         float *momentum;
         float *h;
-        Allocate_memory(&u,&mass_F,&momentum_F,&mass,&momentum,&h);
-	Calculation(u,mass_F,momentum_F,mass,momentum,h);
+	float *mass_slope;
+	float *momentum_slope;
+        Allocate_memory(&u,&mass_F,&momentum_F,&mass,&momentum,&h,&mass_slope,&momentum_slope);
+	Calculation(u,mass_F,momentum_F,mass,momentum,h,mass_slope,momentum_slope);
 	FILE *fp = fopen("results.dat", "w");
     	for (int j = 0; j < N; j++) {
 		float X = (j+0.5)*DX;
         	fprintf(fp, "%g\t%.15e\t%g\n", X, mass[j],u[j]);
     	}
     	fclose(fp);
-        Free_memory(u,mass_F,momentum_F,mass,momentum,h);
+        Free_memory(u,mass_F,momentum_F,mass,momentum,h,mass_slope,momentum_slope);
 }
 
