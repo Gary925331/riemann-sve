@@ -14,7 +14,7 @@
 #define DX (L / NX)    /* cell size */
 #define DY (D / NY)    /* cell size */
 #define MAX_TIMESTEPS 50000
-#define T_FINAL 0.1
+#define T_FINAL 0.2
 #define g 9.81
 #define CFL 0.25
 
@@ -274,9 +274,9 @@ void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *mome
                                         S = S_T;
                                 }
 
-            			mass_F[i] = 0.5*(mass_left + mass_right) - 0.5*S*(mass_r - mass_l);
-            			momentum_F_X[i] = 0.5*(mom_left_X + mom_right_X) - 0.5*S*(momentum_X_r - momentum_X_l);
-				momentum_F_Y[i] = 0.5*(mom_left_Y + mom_right_Y) - 0.5*S*(momentum_Y_r - momentum_Y_l);
+            			mass_F[index] = 0.5*(mass_left + mass_right) - 0.5*S*(mass_r - mass_l);
+            			momentum_F_X[index] = 0.5*(mom_left_X + mom_right_X) - 0.5*S*(momentum_X_r - momentum_X_l);
+				momentum_F_Y[index] = 0.5*(mom_left_Y + mom_right_Y) - 0.5*S*(momentum_Y_r - momentum_Y_l);
 			}
         	}
 		for (int i=0; i<NY+2; i++){
