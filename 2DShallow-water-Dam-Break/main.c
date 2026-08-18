@@ -14,7 +14,7 @@
 #define DX (L / NX)    /* cell size */
 #define DY (D / NY)    /* cell size */
 #define MAX_TIMESTEPS 50000
-#define T_FINAL 0.04
+#define T_FINAL 0.2
 #define g 9.81
 #define CFL 0.25
 
@@ -77,7 +77,7 @@ void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *mome
 		for (int j = 0;j < NY+2;j++){
 			int index = i*(NY+2)+j;
 			if(i < (NX+2)/2){
-				h[index] = 1;
+				h[index] = 10;
 			}else{
 				h[index] = 1;
 			}
@@ -239,6 +239,33 @@ void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *mome
                         //printf("momentum_slope[%d] = %f\n",i,momentum_slope[i]);
                 }
 		int wall = (NX+2)/2;
+		//避免兩邊minmod出問題
+		for (int i = 1; i < NX + 1; i++) {
+    			for (int j = 1; j < NY + 1; j++) {
+        			int index = i*(NY+2)+j;
+        			if (j <= 80 || j >= 120) {
+            				if (i == wall - 1 || i == wall) {
+                				mass_slope_X[index] = 0.0;
+                				momentum_slope_X_X[index] = 0.0;
+                				momentum_slope_X_Y[index] = 0.0;
+                				mass_slope_Y[index] = 0.0;
+                				momentum_slope_Y_X[index] = 0.0;
+                				momentum_slope_Y_Y[index] = 0.0;
+            				}
+        			}
+				if (i == wall || i == wall - 1) {
+                         		if (j == 81 || j == 119) {
+                            			mass_slope_X[index] = 0.0;
+                            			momentum_slope_X_X[index] = 0.0;
+                            			momentum_slope_X_Y[index] = 0.0;
+                            			mass_slope_Y[index] = 0.0;
+                            			momentum_slope_Y_X[index] = 0.0;
+                            			momentum_slope_Y_Y[index] = 0.0;
+                         		}
+                    		}
+    			}
+		}
+		//X direction flux
 		for (int i = 1; i < NIF_X+2; i++){
 			for (int j = 0; j < NY+2; j++){
 				int index = i*(NY+2)+j;
@@ -325,6 +352,7 @@ void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *mome
                         momentum_F_Y[N+i] = 0;
 
 		}
+		//Y direction flux
 		for (int i = 0; i < NX+2; i++){
                         for (int j = 1; j < NIF_Y+2; j++){
                                 int index = i*(NY+2)+j;
