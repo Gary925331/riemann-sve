@@ -18,9 +18,10 @@
 #define g 9.81
 #define CFL 0.25
 
-void Allocate_memory(float **u,float **v,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,float **momentum_X,float **momentum_Y,float **h,float **mass_slope_X,float **momentum_slope_X_X,float **momentum_slope_X_Y,float **mass_slope_Y,float **momentum_slope_Y_X,float **momentum_slope_Y_Y){
+void Allocate_memory(float **u,float **v,float **s,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,float **momentum_X,float **momentum_Y,float **h,float **mass_slope_X,float **momentum_slope_X_X,float **momentum_slope_X_Y,float **mass_slope_Y,float **momentum_slope_Y_X,float **momentum_slope_Y_Y){
 	*u = (float*)malloc(N*sizeof(float));
 	*v = (float*)malloc(N*sizeof(float));
+	*s = (float*)malloc(N*sizeof(float));
 	*mass_F = (float*)malloc(NIF*sizeof(float));
 	*momentum_F_X = (float*)malloc(NIF*sizeof(float));
 	*momentum_F_Y = (float*)malloc(NIF*sizeof(float));
@@ -38,9 +39,10 @@ void Allocate_memory(float **u,float **v,float **mass_F,float **momentum_F_X,flo
         *momentum_slope_Y_X = (float*)malloc(N*sizeof(float));
 	*momentum_slope_Y_Y = (float*)malloc(N*sizeof(float));
 }
-void Free_memory(float *u,float *v,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,float *momentum_Y,float *h,float *mass_slope_X,float *momentum_slope_X_X,float *momentum_slope_X_Y,float *mass_slope_Y,float *momentum_slope_Y_X,float *momentum_slope_Y_Y){
+void Free_memory(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,float *momentum_Y,float *h,float *mass_slope_X,float *momentum_slope_X_X,float *momentum_slope_X_Y,float *mass_slope_Y,float *momentum_slope_Y_X,float *momentum_slope_Y_Y){
 	free(u);
 	free(v);
+	free(s);
 	free(mass_F);
 	free(momentum_F_X);
 	free(momentum_F_Y);
@@ -72,12 +74,12 @@ void Free_memory(float *u,float *v,float *mass_F,float *momentum_F_X,float *mome
 	return dU_dx;
 }*/
 
-void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,float *momentum_Y,float *h,float *mass_slope_X,float *momentum_slope_X_X,float *momentum_slope_X_Y,float *mass_slope_Y,float *momentum_slope_Y_X,float *momentum_slope_Y_Y){
+void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,float *momentum_Y,float *h,float *mass_slope_X,float *momentum_slope_X_X,float *momentum_slope_X_Y,float *mass_slope_Y,float *momentum_slope_Y_X,float *momentum_slope_Y_Y){
 	for (int i = 0;i < NX+2;i++){
 		for (int j = 0;j < NY+2;j++){
 			int index = i*(NY+2)+j;
 			if(i < (NX+2)/2){
-				h[index] = 10;
+				h[index] = 1;
 			}else{
 				h[index] = 1;
 			}
@@ -94,8 +96,7 @@ void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *mome
             		mass_slope_Y[index] = 0;
             		momentum_slope_Y_X[index] = 0;
             		momentum_slope_Y_Y[index] = 0;
-		//mass_slope[i] = 0;
-		//momentum_slope[i] = 0;
+			
 		}
 	}
 	float time = 0;
@@ -452,6 +453,7 @@ void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *mome
 int main() {
         float *u;
 	float *v;
+	float *s;
         float *mass_F;
         float *momentum_F_X;
 	float *momentum_F_Y;
@@ -469,9 +471,9 @@ int main() {
 	float *momentum_slope_Y_X;
 	float *momentum_slope_Y_Y;
 
-        Allocate_memory(&u,&v,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
+        Allocate_memory(&u,&v,&s,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
 	&mass_slope_X,&momentum_slope_X_X,&momentum_slope_X_Y,&mass_slope_Y,&momentum_slope_Y_X,&momentum_slope_Y_Y);
-	Calculation(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+	Calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
 	mass_slope_X,momentum_slope_X_X,momentum_slope_X_Y,mass_slope_Y,momentum_slope_Y_X,momentum_slope_Y_Y);
 	FILE *fp = fopen("results.dat", "w");
     	for (int j = 1; j < NX+1; j++) {
@@ -483,6 +485,6 @@ int main() {
 		}
     	}
     	fclose(fp);
-        Free_memory(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,mass_slope_X,momentum_slope_X_X,momentum_slope_X_Y,mass_slope_Y,momentum_slope_Y_X,momentum_slope_Y_Y);
+        Free_memory(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,mass_slope_X,momentum_slope_X_X,momentum_slope_X_Y,mass_slope_Y,momentum_slope_Y_X,momentum_slope_Y_Y);
 }
 
