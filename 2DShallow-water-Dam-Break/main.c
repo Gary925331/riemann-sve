@@ -284,8 +284,8 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
                         //printf("momentum_slope[%d] = %f\n",i,momentum_slope[i]);
                 }
 		//避免兩邊minmod出問題
-		for (int i = 0; i < NX + 2; i++) {
-    			for (int j = 0; j < NY + 2; j++) {
+		for (int i = 1; i < NX + 1; i++) {
+    			for (int j = 1; j < NY + 1; j++) {
         			int index = i*(NY+2)+j;
         			if (s[index] == 1.0 || s[index-NY-2] == 1.0 || s[index+NY+2] == 1.0 || s[index-1] == 1.0 || s[index+1] == 1.0) {
                 			mass_slope_X[index] = 0.0;
@@ -495,7 +495,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
                         for (int j = 1; j < NY+1; j++){
                                 int index = i*(NY+2)+j;
 				h[index] = mass[index];
-				if(mass[index] > 1e-1){
+				if(s[index] == 0){
 					u[index] = momentum_X[index]/mass[index];
 					v[index] = momentum_Y[index]/mass[index];
 				}else{
