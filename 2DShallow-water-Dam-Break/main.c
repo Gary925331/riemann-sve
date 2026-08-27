@@ -10,14 +10,14 @@
 #define NIF_Y (NY+1)      /* number of Y interfaces */
 #define NIF (NIF_X+2)*(NIF_Y+2)
 #define ALPHA 1.0    /* advection speed */
-#define L 1.0          /* domain length */
-#define D 1.0          /* domain length */
+#define L 200.0          /* domain length */
+#define D 200.0          /* domain length */
 #define DX (L / NX)    /* cell size */
 #define DY (D / NY)    /* cell size */
 #define MAX_TIMESTEPS 50000
-#define T_FINAL 0.04
+#define T_FINAL 7.2
 #define g 9.81
-#define CFL 0.25
+#define CFL 0.5
 
 void Allocate_memory(float **u,float **v,float **s,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,float **momentum_X,float **momentum_Y,float **h,float **mass_slope_X,float **momentum_slope_X_X,float **momentum_slope_X_Y,float **mass_slope_Y,float **momentum_slope_Y_X,float **momentum_slope_Y_Y){
 	*u = (float*)malloc(N*sizeof(float));
@@ -82,7 +82,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 			if(i < (NX+2)/2){
 				h[index] = 10;
 			}else{
-				h[index] = 1;
+				h[index] = 5;
 			}
 //		printf("h[%d]=%f\n",i,h[i]);
 			u[index] = 0;
@@ -136,11 +136,11 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 	            	//printf("Ran out of timesteps before reaching target time.\n");
    		}
 		// ghost mesh X direction
-                for(int j = 1; j < NY+1; j++){
+/*                for(int j = 1; j < NY+1; j++){
 			int idx_R = 1*(NY+2)+j;      // 內部網格 Real mesh
 			int idx_F_left = 1*(NY+2)+j; // interface
                         
-			float h_R = mass[idx_R]+0.5*DX*mass_slope_X[idx_R];
+			float h_R = mass[idx_R]-0.5*DX*mass_slope_X[idx_R];
 			float momX_R = momentum_X[idx_R] - 0.5*DX*momentum_slope_X_X[idx_R];
             		float momY_R = momentum_Y[idx_R] - 0.5*DX*momentum_slope_X_Y[idx_R];
             		float u_R = momX_R / h_R;
@@ -159,8 +159,8 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 			float S = fabs(u_R) + sqrt(g * h_R); 
 			
 			mass_F[idx_F_left] = 0.5 * (F_G_mass + F_R_mass) - 0.5*S*(h_R - h_G);
-			momentum_F_X[idx_F_left] = 0.5*(F_G_momX + F_R_momX) - 0.5*S*(momentum_X[idx_R] - (h_G*u_G));
-			momentum_F_Y[idx_F_left] = 0.5*(F_G_momY + F_R_momY) - 0.5*S*(momentum_Y[idx_R] - (h_G*v_G));
+			momentum_F_X[idx_F_left] = 0.5*(F_G_momX + F_R_momX) - 0.5*S*(momX_R - (h_G*u_G));
+			momentum_F_Y[idx_F_left] = 0.5*(F_G_momY + F_R_momY) - 0.5*S*(momY_R - (h_G*v_G));
 			
 			int idx_L = NX*(NY+2)+j;         // Real mesh
 			int idx_F_right = (NX+1)*(NY+2)+j; // interface i=NX+1
@@ -180,9 +180,36 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
             		float F_G_r_momY = h_G_r * u_G_r * v_G_r;
             		float S1 = fabs(u_L) + sqrt(g * h_L);
             		mass_F[idx_F_right] = 0.5 * (F_L_mass + F_G_r_mass) - 0.5 * S1 * (h_G_r - h_L);
-            		momentum_F_X[idx_F_right] = 0.5 * (F_L_momX + F_G_r_momX) - 0.5 * S1 * ((h_G_r*u_G_r) - momentum_X[idx_L]);
-            		momentum_F_Y[idx_F_right] = 0.5 * (F_L_momY + F_G_r_momY) - 0.5 * S1 * ((h_G_r*v_G_r) - momentum_Y[idx_L]);   
-                }
+            		momentum_F_X[idx_F_right] = 0.5 * (F_L_momX + F_G_r_momX) - 0.5 * S1 * ((h_G_r*u_G_r) - momX_L);
+            		momentum_F_Y[idx_F_right] = 0.5 * (F_L_momY + F_G_r_momY) - 0.5 * S1 * ((h_G_r*v_G_r) - momY_L);
+			/*
+			int idx_wall = 101*(NY+2)+j;
+			int idx_F_wall = 101*(NY+2)+j;
+			if(j<=31 || j>=106){
+				float h_w = mass[idx_wall]+0.5*DX*mass_slope_X[idx_wall];
+                        	float momX_w = momentum_X[idx_wall] - 0.5*DX*momentum_slope_X_X[idx_wall];
+                        	float momY_w = momentum_Y[idx_wall] - 0.5*DX*momentum_slope_X_Y[idx_wall];
+                        	float u_w = momX_w / h_w;
+                        	float v_w = momY_w / h_w;
+                        	//ghost
+                        	float h_G_w = h_w;
+                        	float u_G_w = -u_w;
+                        	float v_G_w = v_w;
+                        	//U
+                        	float F_w_mass = h_w * u_w;
+                        	float F_w_momX = h_w * u_w * u_w + 0.5 * g * h_w * h_w;
+                        	float F_w_momY = h_w * u_w * v_w;
+                        	float F_G_w_mass = h_G_w * u_G_w;
+                        	float F_G_w_momX = h_G_w * u_G_w * u_G_w + 0.5 * g * h_G_w * h_G_w;
+                        	float F_G_w_momY = h_G_w * u_G_w * v_G_w;
+                        	float S = fabs(u_w) + sqrt(g * h_w);
+
+                        	mass_F[idx_F_wall] = 0.5 * (F_G_w_mass + F_w_mass) - 0.5*S*(h_w - h_G_w);
+                        	momentum_F_X[idx_F_wall] = 0.5*(F_G_w_momX + F_w_momX) - 0.5*S*(momX_w - (h_G_w*u_G_w));
+                        	momentum_F_Y[idx_F_wall] = 0.5*(F_G_momY + F_R_momY) - 0.5*S*(momY_w - (h_G_w*v_G_w));
+                	}
+		}
+		
 
                 // ghost mesh Y direction
                 for(int i = 1; i < NX+1; i++){
@@ -229,7 +256,27 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
             		mass_G[idx_G_top] = 0.5 * (G_B_mass + G_G_t_mass) - 0.5 * S_top * (h_G_t - h_B);
             		momentum_G_X[idx_G_top] = 0.5 * (G_B_momX + G_G_t_momX) - 0.5 * S_top * ((h_G_t*u_G_t) - momentum_X[idx_B]);
             		momentum_G_Y[idx_G_top] = 0.5 * (G_B_momY + G_G_t_momY) - 0.5 * S_top * ((h_G_t*v_G_t) - momentum_Y[idx_B]);
-                }
+                }*/
+		for(int j = 0; j < NY+2; j++){
+            		mass[0*(NY+2)+j] = mass[1*(NY+2)+j];
+            		momentum_X[0*(NY+2)+j] = -momentum_X[1*(NY+2)+j]; // 左牆反彈
+            		momentum_Y[0*(NY+2)+j] = momentum_Y[1*(NY+2)+j];
+            
+            		mass[(NX+1)*(NY+2)+j] = mass[NX*(NY+2)+j];
+            		momentum_X[(NX+1)*(NY+2)+j] = -momentum_X[NX*(NY+2)+j]; // 右牆反彈
+            		momentum_Y[(NX+1)*(NY+2)+j] = momentum_Y[NX*(NY+2)+j];
+
+		}
+        	for(int i = 0; i < NX+2; i++){
+            		mass[i*(NY+2)+0] = mass[i*(NY+2)+1];
+            		momentum_X[i*(NY+2)+0] = momentum_X[i*(NY+2)+1];
+            		momentum_Y[i*(NY+2)+0] = -momentum_Y[i*(NY+2)+1]; // 下牆反彈
+            
+            		mass[i*(NY+2)+NY+1] = mass[i*(NY+2)+NY];
+            		momentum_X[i*(NY+2)+NY+1] = momentum_X[i*(NY+2)+NY];
+            		momentum_Y[i*(NY+2)+NY+1] = -momentum_Y[i*(NY+2)+NY]; // 上牆反彈
+        	}
+		
 		for(int i = 1;i < NX+1;i++){
 			for(int j = 0;j < NY+2;j++){
 				int index = i*(NY+2)+j;
@@ -344,6 +391,18 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
             				float momentum_X_r = momentum_X[index] - 0.5*DX*momentum_slope_X_X[index];
 					float momentum_Y_l = momentum_Y[index-NY-2] + 0.5*DX*momentum_slope_X_Y[index-NY-2];
                                 	float momentum_Y_r = momentum_Y[index] - 0.5*DX*momentum_slope_X_Y[index];
+					if (j <= 96 || j >= 171) {
+            					if (i == 102) {
+                					mass_r = mass_l;
+                					momentum_X_r = -momentum_X_l;
+                					momentum_Y_r = momentum_Y_l;
+            					}
+            					else if (i == 103) {
+                					mass_l = mass_r;
+                					momentum_X_l = -momentum_X_r;
+                					momentum_Y_l = momentum_Y_r;
+            					}
+        				}
             				float u_l = momentum_X_l / mass_l;
             				float u_r = momentum_X_r / mass_r;
 					float v_l = momentum_Y_l / mass_l;
@@ -405,6 +464,9 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 			for (int j = 1; j < NY+1; j++){
 				int index = i*(NY+2)+j;
 				//int index1 = i*(NIF_Y+2)+j;
+				if (i == 102 && (j <= 96 || j >= 171)) {
+            				continue; 
+        			}
 				mass[index] = mass[index] - (DT*(mass_F[index+NY+2]-mass_F[index])/DX) - (DT*(mass_G[index+1]-mass_G[index])/DY);
 				momentum_X[index] = momentum_X[index] - (DT*(momentum_F_X[index+NY+2]-momentum_F_X[index])/DX)-(DT*(momentum_G_X[index+1]-momentum_G_X[index])/DY);
 				momentum_Y[index] = momentum_Y[index] - (DT*(momentum_F_Y[index+NY+2]-momentum_F_Y[index])/DX)-(DT*(momentum_G_Y[index+1]-momentum_G_Y[index])/DY);
