@@ -102,32 +102,32 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 	float time = 0;
 
 	for (int timestep = 0; timestep < MAX_TIMESTEPS; timestep++){
-		float Smax = 0.0;
-		
+		float Smax_X = 0.0;
+		float Smax_Y = 0.0;
 		for (int i = 1;i < NX+1;i++){
 			for (int j = 1;j < NY+1;j++){
 				int index = i*(NY+2)+j;
-				float S_L = fabs(u[index-NY-2]) + sqrt(g*h[index-NY-2]);
 				float S_R = fabs(u[index]) + sqrt(g*h[index]);
-				float S_B = fabs(v[index-1]) + sqrt(g*mass[index-1]);
+				if (S_R > Smax_X) {
+            				Smax_X = S_R;
+        			}
                         	float S_T = fabs(v[index]) + sqrt(g*mass[index]);
-				float S_local_max = S_L;
-				if (S_R > S_local_max){
-        				S_local_max = S_R;
-    				}
-    				if (S_B > S_local_max){
-        				S_local_max = S_B;
-    				}
-    				if (S_T > S_local_max){
-        				S_local_max = S_T;
-    				}
-    				if (S_local_max > Smax){
-        				Smax = S_local_max;
-    				}
+				if (S_T > Smax_Y) {
+            				Smax_Y = S_T;
+        			}
 			}
 		}
-		float DT = CFL*DX/Smax;
-		printf("%f\n",Smax);
+		float term_X = Smax_X / DX;
+		float term_Y = Smax_Y / DY;
+		float max_term;
+		if (term_X > term_Y) {
+    			max_term = term_X;
+		} else {
+    			max_term = term_Y;
+		}
+
+		float DT = CFL / max_term;
+		printf("%f\n",max_term);
 //		time = time + DT;
         	if (time > T_FINAL) {
             		//printf("Arrived at target time; stopping.\n");
@@ -156,6 +156,14 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
             		momentum_Y[i*(NY+2)+NY+1] = -momentum_Y[i*(NY+2)+NY]; // 上牆反彈
         	}
 		
+		for(int i = 0; i < NX+2; i++){
+                        for (int j = 0; j < NY+2; j++){
+                                int index = i*(NY+2)+j;
+                                h[index] = mass[index];
+                                u[index] = momentum_X[index]/mass[index];
+                                v[index] = momentum_Y[index]/mass[index];
+                        }
+                }
 		for(int i = 1;i < NX+1;i++){
 			for(int j = 0;j < NY+2;j++){
 				int index = i*(NY+2)+j;
@@ -195,8 +203,8 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 		for(int i = 1;i < NX+1;i++){
 			for(int j = 0;j < NY+2;j++){
 				int index = i*(NY+2)+j;
-                        	float forward = (momentum_X[index+NY+2] - momentum_X[index])/DX;
-                        	float backward = (momentum_X[index] - momentum_X[index-NY-2])/DX;
+                        	float forward = (u[index+NY+2] - u[index])/DX;
+                        	float backward = (u[index] - u[index-NY-2])/DX;
                         	if(forward*backward < 0){
                                 	momentum_slope_X_X[index] = 0;
                         	}else{
@@ -212,8 +220,8 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 		for(int i = 1;i < NX+1;i++){
 			for(int j = 0;j < NY+2;j++){
                                 int index = i*(NY+2)+j;
-                        	float forward = (momentum_Y[index+NY+2] - momentum_Y[index])/DY;
-                        	float backward = (momentum_Y[index] - momentum_Y[index-NY-2])/DY;
+                        	float forward = (v[index+NY+2] - v[index])/DX;
+                        	float backward = (v[index] - v[index-NY-2])/DX;
                         	if(forward*backward < 0){
                                 	momentum_slope_X_Y[index] = 0;
                         	}else{
@@ -229,8 +237,8 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 		for(int i = 0;i < NX+2;i++){
                         for(int j = 1;j < NY+1;j++){
                                 int index = i*(NY+2)+j;
-                                float forward = (momentum_X[index+1] - momentum_X[index])/DX;
-                                float backward = (momentum_X[index] - momentum_X[index-1])/DX;
+                                float forward = (u[index+1] - u[index])/DY;
+                                float backward = (u[index] - u[index-1])/DY;
                                 if(forward*backward < 0){
                                         momentum_slope_Y_X[index] = 0;
                                 }else{
@@ -246,8 +254,8 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 		for(int i = 1;i < NX+1;i++){
                         for(int j = 0;j < NY+2;j++){
                                 int index = i*(NY+2)+j;
-                                float forward = (momentum_Y[index+1] - momentum_Y[index])/DY;
-                                float backward = (momentum_Y[index] - momentum_Y[index-1])/DY;
+                                float forward = (v[index+1] - v[index])/DY;
+                                float backward = (v[index] - v[index-1])/DY;
                                 if(forward*backward < 0){
                                         momentum_slope_Y_Y[index] = 0;
                                 }else{
@@ -266,42 +274,44 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 				int index = i*(NY+2)+j;
             				float mass_l = mass[index-NY-2] + 0.5*DX*mass_slope_X[index-NY-2];
             				float mass_r = mass[index] - 0.5*DX*mass_slope_X[index];
-            				float momentum_X_l = momentum_X[index-NY-2] + 0.5*DX*momentum_slope_X_X[index-NY-2];
-            				float momentum_X_r = momentum_X[index] - 0.5*DX*momentum_slope_X_X[index];
-					float momentum_Y_l = momentum_Y[index-NY-2] + 0.5*DX*momentum_slope_X_Y[index-NY-2];
-                                	float momentum_Y_r = momentum_Y[index] - 0.5*DX*momentum_slope_X_Y[index];
+            				float u_X_l = u[index-NY-2] + 0.5*DX*momentum_slope_X_X[index-NY-2];
+            				float u_X_r = u[index] - 0.5*DX*momentum_slope_X_X[index];
+					float v_Y_l = v[index-NY-2] + 0.5*DX*momentum_slope_X_Y[index-NY-2];
+                                	float v_Y_r = v[index] - 0.5*DX*momentum_slope_X_Y[index];
 					if (j <= 96 || j >= 171) {
-            					if (i == 102) {
+            					if (i == 101) {
                 					mass_r = mass_l;
-                					momentum_X_r = -momentum_X_l;
-                					momentum_Y_r = momentum_Y_l;
+                					u_X_r = -u_X_l;
+                					v_Y_r = v_Y_l;
             					}
-            					else if (i == 103) {
+            					else if (i == 102) {
                 					mass_l = mass_r;
-                					momentum_X_l = -momentum_X_r;
-                					momentum_Y_l = momentum_Y_r;
+                					u_X_l = -u_X_r;
+                					v_Y_l = v_Y_r;
             					}
         				}
-            				float u_l = momentum_X_l / mass_l;
-            				float u_r = momentum_X_r / mass_r;
-					float v_l = momentum_Y_l / mass_l;
-					float v_r = momentum_Y_r / mass_r;
+            				float u_l = u_X_l;
+            				float u_r = u_X_r;
+					float v_l = v_Y_l;
+					float v_r = v_Y_r;
             				float mass_left = mass_l * u_l;
             				float mass_right = mass_r * u_r;
-            				float mom_left_X = momentum_X_l * u_l + 0.5*g*mass_l*mass_l;
-            				float mom_right_X = momentum_X_r * u_r + 0.5*g*mass_r*mass_r;
-					float mom_left_Y = momentum_Y_l * u_l;
-                                	float mom_right_Y = momentum_Y_r * u_r; 
+            				float mom_left_X = mass_l * u_l * u_l + 0.5*g*mass_l*mass_l;
+            				float mom_right_X = mass_r * u_r * u_r + 0.5*g*mass_r*mass_r;
+					float mom_left_Y = mass_l * v_l * u_l;
+                                	float mom_right_Y = mass_r * v_r * u_r; 
 
             				float S_L = fabs(u_l) + sqrt(g*mass_l);
             				float S_R = fabs(u_r) + sqrt(g*mass_r);
-					float S = S_L;
-                                	if (S_R > S){
-                                        	S = S_R;
-                                	}
+                                	float S;
+					if (S_L > S_R) {
+    						S = S_L;
+					} else {
+    						S = S_R;
+					}
             				mass_F[index] = 0.5*(mass_left + mass_right) - 0.5*S*(mass_r - mass_l);
-            				momentum_F_X[index] = 0.5*(mom_left_X + mom_right_X) - 0.5*S*(momentum_X_r - momentum_X_l);
-					momentum_F_Y[index] = 0.5*(mom_left_Y + mom_right_Y) - 0.5*S*(momentum_Y_r - momentum_Y_l);
+            				momentum_F_X[index] = 0.5*(mom_left_X + mom_right_X) - 0.5*S*(mass_r * u_r - mass_l * u_l);
+					momentum_F_Y[index] = 0.5*(mom_left_Y + mom_right_Y) - 0.5*S*(mass_r * v_r - mass_l * v_l);
 			}
         	}
 
@@ -312,50 +322,52 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 				//int index1 = i*(NIF_Y+2)+j;
                                 float mass_B = mass[index-1] + 0.5*DY*mass_slope_Y[index-1];
                                 float mass_T = mass[index] - 0.5*DY*mass_slope_Y[index];
-                                float momentum_X_B = momentum_X[index-1] + 0.5*DY*momentum_slope_Y_X[index-1];
-                                float momentum_X_T = momentum_X[index] - 0.5*DY*momentum_slope_Y_X[index];
-				float momentum_Y_B = momentum_Y[index-1] + 0.5*DY*momentum_slope_Y_Y[index-1];
-                                float momentum_Y_T = momentum_Y[index] - 0.5*DY*momentum_slope_Y_Y[index];
-				if(i == 102){
-					if(j == 96 ){
+                                float u_X_B = u[index-1] + 0.5*DY*momentum_slope_Y_X[index-1];
+                                float u_X_T = u[index] - 0.5*DY*momentum_slope_Y_X[index];
+				float v_Y_B = v[index-1] + 0.5*DY*momentum_slope_Y_Y[index-1];
+                                float v_Y_T = v[index] - 0.5*DY*momentum_slope_Y_Y[index];
+				if(i == 101){
+					if(j == 97 ){
 						mass_B = mass_T;
-						momentum_X_B = momentum_X_T;
-						momentum_Y_B = -momentum_Y_T;
+						u_X_B = u_X_T;
+						v_Y_B = -v_Y_T;
 					}
 					if(j == 171){
 						mass_T = mass_B;
-						momentum_X_T = momentum_X_B;
-						momentum_Y_T = -momentum_Y_B;
+						u_X_T = u_X_B;
+						v_Y_T = -v_Y_B;
 					}
 				}
-                                float u_B = momentum_X_B / mass_B;
-                                float u_T = momentum_X_T / mass_T;
-				float v_B = momentum_Y_B / mass_B;
-				float v_T = momentum_Y_T / mass_T;
+                                float u_B = u_X_B;
+                                float u_T = u_X_T;
+				float v_B = v_Y_B;
+				float v_T = v_Y_T;
                                 float mass_Bottom = mass_B * v_B;
                                 float mass_Top = mass_T * v_T;
-                                float mom_Bottom_X = momentum_X_B * v_B;
-                                float mom_Top_X = momentum_X_T * v_T;
-				float mom_Bottom_Y = momentum_Y_B * v_B + 0.5*g*mass_B*mass_B;
-                                float mom_Top_Y = momentum_Y_T * v_T + 0.5*g*mass_T*mass_T;
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+                                float mom_Top_X = mass_T * u_T * v_T;
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5*g*mass_B*mass_B;
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5*g*mass_T*mass_T;
 
                                 float S_B = fabs(v_B) + sqrt(g*mass_B);
                                 float S_T = fabs(v_T) + sqrt(g*mass_T);
-                                float S = S_B;
-                                if (S_T > S){
+                                float S;
+                                if (S_T > S_B){
                                         S = S_T;
-                                }
+                                }else{
+					S = S_B;
+				}
 
                                 mass_G[index] = 0.5*(mass_Bottom + mass_Top) - 0.5*S*(mass_T - mass_B);
-                                momentum_G_X[index] = 0.5*(mom_Bottom_X + mom_Top_X) - 0.5*S*(momentum_X_T - momentum_X_B);
-				momentum_G_Y[index] = 0.5*(mom_Bottom_Y + mom_Top_Y) - 0.5*S*(momentum_Y_T - momentum_Y_B);
+                                momentum_G_X[index] = 0.5*(mom_Bottom_X + mom_Top_X) - 0.5*S*(mass_T * u_T - mass_B * u_B);
+				momentum_G_Y[index] = 0.5*(mom_Bottom_Y + mom_Top_Y) - 0.5*S*(mass_T * v_T - mass_B * v_B);
                         }
                 }
 		for(int i = 1;i < NX+1;i++){
 			for (int j = 1; j < NY+1; j++){
 				int index = i*(NY+2)+j;
 				//int index1 = i*(NIF_Y+2)+j;
-				if (i == 102 && (j <= 96 || j >= 171)) {
+				if (i == 101 && (j <= 96 || j >= 171)) {
             				continue; 
         			}
 				mass[index] = mass[index] - (DT*(mass_F[index+NY+2]-mass_F[index])/DX) - (DT*(mass_G[index+1]-mass_G[index])/DY);
@@ -364,8 +376,8 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 //			printf("%f,%f\n",mass[i],momentum[i]);
 			} 
 		}
-		for(int i = 1;i < NX+1;i++){
-                        for (int j = 1; j < NY+1; j++){
+		for(int i = 0;i < NX+2;i++){
+                        for (int j = 0; j < NY+2; j++){
                                 int index = i*(NY+2)+j;
 				h[index] = mass[index];
 				u[index] = momentum_X[index]/mass[index];
