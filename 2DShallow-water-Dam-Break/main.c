@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -138,11 +137,11 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 
 		for(int j = 0; j < NY+2; j++){
             		mass[0*(NY+2)+j] = mass[1*(NY+2)+j];
-            		momentum_X[0*(NY+2)+j] = -momentum_X[1*(NY+2)+j]; // 左牆反彈
+            		momentum_X[0*(NY+2)+j] = momentum_X[1*(NY+2)+j]; 
             		momentum_Y[0*(NY+2)+j] = momentum_Y[1*(NY+2)+j];
             
             		mass[(NX+1)*(NY+2)+j] = mass[NX*(NY+2)+j];
-            		momentum_X[(NX+1)*(NY+2)+j] = -momentum_X[NX*(NY+2)+j]; // 右牆反彈
+            		momentum_X[(NX+1)*(NY+2)+j] = momentum_X[NX*(NY+2)+j]; 
             		momentum_Y[(NX+1)*(NY+2)+j] = momentum_Y[NX*(NY+2)+j];
 
 		}
@@ -272,12 +271,12 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 		for (int i = 1; i < NIF_X+2; i++){
 			for (int j = 0; j < NY+2; j++){
 				int index = i*(NY+2)+j;
-            				float mass_l = mass[index-NY-2] + 0.5*DX*mass_slope_X[index-NY-2];
-            				float mass_r = mass[index] - 0.5*DX*mass_slope_X[index];
-            				float u_X_l = u[index-NY-2] + 0.5*DX*momentum_slope_X_X[index-NY-2];
-            				float u_X_r = u[index] - 0.5*DX*momentum_slope_X_X[index];
-					float v_Y_l = v[index-NY-2] + 0.5*DX*momentum_slope_X_Y[index-NY-2];
-                                	float v_Y_r = v[index] - 0.5*DX*momentum_slope_X_Y[index];
+            				float mass_l = mass[index-NY-2] ;//+ 0.5*DX*mass_slope_X[index-NY-2];
+            				float mass_r = mass[index] ;//- 0.5*DX*mass_slope_X[index];
+            				float u_X_l = u[index-NY-2] ;//+ 0.5*DX*momentum_slope_X_X[index-NY-2];
+            				float u_X_r = u[index] ;//- 0.5*DX*momentum_slope_X_X[index];
+					float v_Y_l = v[index-NY-2] ;//+ 0.5*DX*momentum_slope_X_Y[index-NY-2];
+                                	float v_Y_r = v[index] ;//- 0.5*DX*momentum_slope_X_Y[index];
 					if (j <= 96 || j >= 171) {
             					if (i == 101) {
                 					mass_r = mass_l;
@@ -320,12 +319,12 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
                         for (int j = 1; j < NIF_Y+2; j++){
                                 int index = i*(NY+2)+j;
 				//int index1 = i*(NIF_Y+2)+j;
-                                float mass_B = mass[index-1] + 0.5*DY*mass_slope_Y[index-1];
-                                float mass_T = mass[index] - 0.5*DY*mass_slope_Y[index];
-                                float u_X_B = u[index-1] + 0.5*DY*momentum_slope_Y_X[index-1];
-                                float u_X_T = u[index] - 0.5*DY*momentum_slope_Y_X[index];
-				float v_Y_B = v[index-1] + 0.5*DY*momentum_slope_Y_Y[index-1];
-                                float v_Y_T = v[index] - 0.5*DY*momentum_slope_Y_Y[index];
+                                float mass_B = mass[index-1] ;//+ 0.5*DY*mass_slope_Y[index-1];
+                                float mass_T = mass[index] ;//- 0.5*DY*mass_slope_Y[index];
+                                float u_X_B = u[index-1] ;//+ 0.5*DY*momentum_slope_Y_X[index-1];
+                                float u_X_T = u[index] ;//- 0.5*DY*momentum_slope_Y_X[index];
+				float v_Y_B = v[index-1] ;//+ 0.5*DY*momentum_slope_Y_Y[index-1];
+                                float v_Y_T = v[index] ;//- 0.5*DY*momentum_slope_Y_Y[index];
 				if(i == 101){
 					if(j == 97 ){
 						mass_B = mass_T;
