@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -137,11 +138,11 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 
 		for(int j = 0; j < NY+2; j++){
             		mass[0*(NY+2)+j] = mass[1*(NY+2)+j];
-            		momentum_X[0*(NY+2)+j] = momentum_X[1*(NY+2)+j]; 
+            		momentum_X[0*(NY+2)+j] = -momentum_X[1*(NY+2)+j]; // 左牆反彈
             		momentum_Y[0*(NY+2)+j] = momentum_Y[1*(NY+2)+j];
             
             		mass[(NX+1)*(NY+2)+j] = mass[NX*(NY+2)+j];
-            		momentum_X[(NX+1)*(NY+2)+j] = momentum_X[NX*(NY+2)+j]; 
+            		momentum_X[(NX+1)*(NY+2)+j] = -momentum_X[NX*(NY+2)+j]; // 右牆反彈
             		momentum_Y[(NX+1)*(NY+2)+j] = momentum_Y[NX*(NY+2)+j];
 
 		}
@@ -300,17 +301,35 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 					float mom_left_Y = mass_l * v_l * u_l;
                                 	float mom_right_Y = mass_r * v_r * u_r; 
 
-            				float S_L = fabs(u_l) + sqrt(g*mass_l);
-            				float S_R = fabs(u_r) + sqrt(g*mass_r);
-                                	float S;
-					if (S_L > S_R) {
-    						S = S_L;
+            				float SL1 = (u_l) - sqrt(g*mass_l);
+            				float SR1 = (u_r) - sqrt(g*mass_r);
+                                	float S1; //SL
+					if (SL1 > SR1) {
+    						S1 = SR1;
 					} else {
-    						S = S_R;
+    						S1 = SL1;
 					}
-            				mass_F[index] = 0.5*(mass_left + mass_right) - 0.5*S*(mass_r - mass_l);
-            				momentum_F_X[index] = 0.5*(mom_left_X + mom_right_X) - 0.5*S*(mass_r * u_r - mass_l * u_l);
-					momentum_F_Y[index] = 0.5*(mom_left_Y + mom_right_Y) - 0.5*S*(mass_r * v_r - mass_l * v_l);
+					float SL2 = (u_l) + sqrt(g*mass_l);
+					float SR2 = (u_r) + sqrt(g*mass_r);
+					float S2; //SR
+					if (SL2 > SR2) {
+                                                S2 = SL2;
+                                        } else {
+                                                S2 = SR2;
+                                        }
+					if(S1 > 0){
+						mass_F[index] = mass_left;
+						momentum_F_X[index] = mom_left_X;
+						momentum_F_Y[index] = mom_left_Y;
+					}else if(S2 < 0){
+						mass_F[index] = mass_right;
+                                                momentum_F_X[index] = mom_right_X;
+                                                momentum_F_Y[index] = mom_right_Y;
+					}else{
+            					mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+            					momentum_F_X[index] = (S2*mom_left_X - S1*mom_right_X)/(S2-S1) + S1*S2*(mass_r * u_r - mass_l * u_l)/(S2-S1);
+						momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+					}
 			}
         	}
 
@@ -326,7 +345,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 				float v_Y_B = v[index-1] + 0.5*DY*momentum_slope_Y_Y[index-1];
                                 float v_Y_T = v[index] - 0.5*DY*momentum_slope_Y_Y[index];
 				if(i == 101){
-					if(j == 97){
+					if(j == 97 ){
 						mass_B = mass_T;
 						u_X_B = u_X_T;
 						v_Y_B = -v_Y_T;
@@ -348,18 +367,35 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5*g*mass_B*mass_B;
                                 float mom_Top_Y = mass_T * v_T * v_T + 0.5*g*mass_T*mass_T;
 
-                                float S_B = fabs(v_B) + sqrt(g*mass_B);
-                                float S_T = fabs(v_T) + sqrt(g*mass_T);
-                                float S;
-                                if (S_T > S_B){
-                                        S = S_T;
+                                float SB1 = (v_B) - sqrt(g*mass_B);
+                                float ST1 = (v_T) - sqrt(g*mass_T);
+                                float S1; //SL
+                                if (ST1 > SB1){
+                                        S1 = SB1;
                                 }else{
-					S = S_B;
+					S1 = ST1;
 				}
-
-                                mass_G[index] = 0.5*(mass_Bottom + mass_Top) - 0.5*S*(mass_T - mass_B);
-                                momentum_G_X[index] = 0.5*(mom_Bottom_X + mom_Top_X) - 0.5*S*(mass_T * u_T - mass_B * u_B);
-				momentum_G_Y[index] = 0.5*(mom_Bottom_Y + mom_Top_Y) - 0.5*S*(mass_T * v_T - mass_B * v_B);
+				float SB2 = (v_B) + sqrt(g*mass_B);
+                                float ST2 = (v_T) + sqrt(g*mass_T);
+                                float S2; //SR
+                                if (ST2 > SB2){
+                                        S2 = ST2;
+                                }else{
+                                        S2 = SB2;
+                                }
+				if(S1 > 0){
+					mass_G[index] = mass_Bottom;
+					momentum_G_X[index] = mom_Bottom_X;
+					momentum_G_Y[index] = mom_Bottom_Y;
+				}else if(S2 < 0){
+					mass_G[index] = mass_Top;
+                                        momentum_G_X[index] = mom_Top_X;
+                                        momentum_G_Y[index] = mom_Top_Y;
+				}else{
+                                	mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+                                	momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+					momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+				}
                         }
                 }
 		for(int i = 1;i < NX+1;i++){
