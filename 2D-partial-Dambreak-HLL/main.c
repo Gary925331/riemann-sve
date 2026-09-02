@@ -17,7 +17,7 @@
 #define MAX_TIMESTEPS 50000
 #define T_FINAL 7.2
 #define g 9.81
-#define CFL 0.5
+#define CFL 0.25
 
 void Allocate_memory(float **u,float **v,float **s,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,float **momentum_X,float **momentum_Y,float **h,float **mass_slope_X,float **momentum_slope_X_X,float **momentum_slope_X_Y,float **mass_slope_Y,float **momentum_slope_Y_X,float **momentum_slope_Y_Y){
 	*u = (float*)malloc(N*sizeof(float));
@@ -269,7 +269,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
                         //printf("momentum_slope[%d] = %f\n",i,momentum_slope[i]);
                 }
 		//X direction flux
-		for (int i = 1; i < NIF_X+2; i++){
+		for (int i = 1; i < NX+2; i++){
 			for (int j = 0; j < NY+2; j++){
 				int index = i*(NY+2)+j;
             				float mass_l = mass[index-NY-2] + 0.5*DX*mass_slope_X[index-NY-2];
@@ -335,7 +335,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 
 		//Y direction flux
 		for (int i = 0; i < NX+2; i++){
-                        for (int j = 1; j < NIF_Y+2; j++){
+                        for (int j = 1; j < NY+2; j++){
                                 int index = i*(NY+2)+j;
 				//int index1 = i*(NIF_Y+2)+j;
                                 float mass_B = mass[index-1] + 0.5*DY*mass_slope_Y[index-1];
