@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <omp.h>
+#include <time.h>
 #define NX 200          /* number of X cells */
 #define NY 200          /* number of Y cells */
 #define N (NX+2)*(NY+2)
@@ -127,7 +128,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 		}
 
 		float DT = CFL / max_term;
-		printf("%f\n",max_term);
+//		printf("%f\n",max_term);
 //		time = time + DT;
         	if (time > T_FINAL) {
             		//printf("Arrived at target time; stopping.\n");
@@ -421,7 +422,13 @@ int main() {
 
         Allocate_memory(&u,&v,&s,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
 	&mass_slope_X,&momentum_slope_X_X,&momentum_slope_X_Y,&mass_slope_Y,&momentum_slope_Y_X,&momentum_slope_Y_Y);
+	
+	time_t start_date;
+    	time(&start_date);
+    	printf("Simulation started at: %s", ctime(&start_date));
 
+    	double start_wtime = omp_get_wtime(); // 取得開始的精確秒數
+	
 	omp_set_num_threads(8);
         #pragma omp parallel
         {
@@ -429,6 +436,15 @@ int main() {
 	Calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
 	mass_slope_X,momentum_slope_X_X,momentum_slope_X_Y,mass_slope_Y,momentum_slope_Y_X,momentum_slope_Y_Y);
 	}
+	double end_wtime = omp_get_wtime(); // 取得結束的精確秒數
+
+    	time_t end_date;
+    	time(&end_date);
+    	printf("Simulation finished at: %s", ctime(&end_date));
+
+    	// 印出精確的執行時間
+    	printf("Total Execution Time: %f seconds\n", end_wtime - start_wtime);
+	
 	FILE *fp = fopen("results.dat", "w");
     	for (int j = 1; j < NX+1; j++) {
 		 for (int k = 1; k < NY+1; k++) {
