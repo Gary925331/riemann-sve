@@ -103,6 +103,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 	for (int timestep = 0; timestep < MAX_TIMESTEPS; timestep++){
 		float Smax_X = 0.0;
 		float Smax_Y = 0.0;
+		//#pragma omp for
 		for (int i = 1;i < NX+1;i++){
 			for (int j = 1;j < NY+1;j++){
 				int index = i*(NY+2)+j;
@@ -134,7 +135,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
   		} else {
 	            	//printf("Ran out of timesteps before reaching target time.\n");
    		}
-
+		#pragma omp for
 		for(int j = 0; j < NY+2; j++){
             		mass[0*(NY+2)+j] = mass[1*(NY+2)+j];
             		momentum_X[0*(NY+2)+j] = momentum_X[1*(NY+2)+j]; 
@@ -145,6 +146,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
             		momentum_Y[(NX+1)*(NY+2)+j] = momentum_Y[NX*(NY+2)+j];
 
 		}
+		#pragma omp for
         	for(int i = 0; i < NX+2; i++){
             		mass[i*(NY+2)+0] = mass[i*(NY+2)+1];
             		momentum_X[i*(NY+2)+0] = momentum_X[i*(NY+2)+1];
@@ -154,7 +156,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
             		momentum_X[i*(NY+2)+NY+1] = momentum_X[i*(NY+2)+NY];
             		momentum_Y[i*(NY+2)+NY+1] = -momentum_Y[i*(NY+2)+NY]; // 上牆反彈
         	}
-		
+		#pragma omp for
 		for(int i = 0; i < NX+2; i++){
                         for (int j = 0; j < NY+2; j++){
                                 int index = i*(NY+2)+j;
@@ -163,6 +165,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
                                 v[index] = momentum_Y[index]/mass[index];
                         }
                 }
+		#pragma omp for
 		for(int i = 1;i < NX+1;i++){
 			for(int j = 0;j < NY+2;j++){
 				int index = i*(NY+2)+j;
@@ -180,6 +183,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 //			printf("mass_slope[%d] = %f\n",i,mass_slope[i]);
 			}
 		}
+		#pragma omp for
 		for(int i = 0;i < NX+2;i++){
                         for(int j = 1;j < NY+1;j++){
                                 int index = i*(NY+2)+j;
@@ -197,7 +201,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 //                      printf("mass_slope[%d] = %f\n",i,mass_slope[i]);
                         }
                 }
-
+		#pragma omp for
 //		printf("mass_slope[%d] = %f\n",i,mass_slope[i]);
 		for(int i = 1;i < NX+1;i++){
 			for(int j = 0;j < NY+2;j++){
@@ -216,6 +220,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 			}
 			//printf("momentum_slope[%d] = %f\n",i,momentum_slope[i]);
                 }
+		#pragma omp for
 		for(int i = 1;i < NX+1;i++){
 			for(int j = 0;j < NY+2;j++){
                                 int index = i*(NY+2)+j;
@@ -233,6 +238,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 			}
                         //printf("momentum_slope[%d] = %f\n",i,momentum_slope[i]);
                 }
+		#pragma omp for
 		for(int i = 0;i < NX+2;i++){
                         for(int j = 1;j < NY+1;j++){
                                 int index = i*(NY+2)+j;
@@ -250,6 +256,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 			}
                         //printf("momentum_slope[%d] = %f\n",i,momentum_slope[i]);
                 }
+		#pragma omp for
 		for(int i = 1;i < NX+1;i++){
                         for(int j = 0;j < NY+2;j++){
                                 int index = i*(NY+2)+j;
@@ -268,6 +275,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
                         //printf("momentum_slope[%d] = %f\n",i,momentum_slope[i]);
                 }
 		//X direction flux
+		#pragma omp for
 		for (int i = 1; i < NIF_X+2; i++){
 			for (int j = 0; j < NY+2; j++){
 				int index = i*(NY+2)+j;
@@ -315,6 +323,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
         	}
 
 		//Y direction flux
+		#pragma omp for
 		for (int i = 0; i < NX+2; i++){
                         for (int j = 1; j < NIF_Y+2; j++){
                                 int index = i*(NY+2)+j;
@@ -362,6 +371,7 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 				momentum_G_Y[index] = 0.5*(mom_Bottom_Y + mom_Top_Y) - 0.5*S*(mass_T * v_T - mass_B * v_B);
                         }
                 }
+		#pragma omp for
 		for(int i = 1;i < NX+1;i++){
 			for (int j = 1; j < NY+1; j++){
 				int index = i*(NY+2)+j;
@@ -373,8 +383,9 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 				momentum_X[index] = momentum_X[index] - (DT*(momentum_F_X[index+NY+2]-momentum_F_X[index])/DX)-(DT*(momentum_G_X[index+1]-momentum_G_X[index])/DY);
 				momentum_Y[index] = momentum_Y[index] - (DT*(momentum_F_Y[index+NY+2]-momentum_F_Y[index])/DX)-(DT*(momentum_G_Y[index+1]-momentum_G_Y[index])/DY);
 //			printf("%f,%f\n",mass[i],momentum[i]);
-			} 
+			}
 		}
+		#pragma omp for
 		for(int i = 0;i < NX+2;i++){
                         for (int j = 0; j < NY+2; j++){
                                 int index = i*(NY+2)+j;
@@ -410,8 +421,14 @@ int main() {
 
         Allocate_memory(&u,&v,&s,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
 	&mass_slope_X,&momentum_slope_X_X,&momentum_slope_X_Y,&mass_slope_Y,&momentum_slope_Y_X,&momentum_slope_Y_Y);
+
+	omp_set_num_threads(8);
+        #pragma omp parallel
+        {
+        int tid = omp_get_thread_num();
 	Calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
 	mass_slope_X,momentum_slope_X_X,momentum_slope_X_Y,mass_slope_Y,momentum_slope_Y_X,momentum_slope_Y_Y);
+	}
 	FILE *fp = fopen("results.dat", "w");
     	for (int j = 1; j < NX+1; j++) {
 		 for (int k = 1; k < NY+1; k++) {
