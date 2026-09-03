@@ -76,6 +76,7 @@ void Free_memory(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 }*/
 
 void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,float *momentum_Y,float *h,float *mass_slope_X,float *momentum_slope_X_X,float *momentum_slope_X_Y,float *mass_slope_Y,float *momentum_slope_Y_X,float *momentum_slope_Y_Y){
+
 	for (int i = 0;i < NX+2;i++){
 		for (int j = 0;j < NY+2;j++){
 			int index = i*(NY+2)+j;
@@ -100,10 +101,19 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 		}
 	}
 	float time = 0;
-
+	float Smax_X;
+        float Smax_Y;
+	float DT;
+	int stop_flag = 0;
+	#pragma omp parallel
+	{
 	for (int timestep = 0; timestep < MAX_TIMESTEPS; timestep++){
-		float Smax_X = 0.0;
-		float Smax_Y = 0.0;
+		#pragma omp single
+		{
+			Smax_X = 0.0;
+			Smax_Y = 0.0;
+		}
+		#pragma omp for reduction(max:Smax_X, Smax_Y)
 		for (int i = 1;i < NX+1;i++){
 			for (int j = 1;j < NY+1;j++){
 				int index = i*(NY+2)+j;
@@ -117,6 +127,8 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
         			}
 			}
 		}
+		#pragma omp master
+                {
 		float term_X = Smax_X / DX;
 		float term_Y = Smax_Y / DY;
 		float max_term;
@@ -126,15 +138,19 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
     			max_term = term_Y;
 		}
 
-		float DT = CFL / max_term;
+		DT = CFL / max_term;
+		
 //		printf("%f\n",max_term);
 //		time = time + DT;
         	if (time > T_FINAL) {
             		//printf("Arrived at target time; stopping.\n");
+            		stop_flag = 1;
+  		} 
+		}
+		#pragma omp barrier
+		if (stop_flag == 1) {
             		break;
-  		} else {
-	            	//printf("Ran out of timesteps before reaching target time.\n");
-   		}
+        	}
 		#pragma omp for
 		for(int j = 0; j < NY+2; j++){
             		mass[0*(NY+2)+j] = mass[1*(NY+2)+j];
@@ -427,8 +443,12 @@ void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,fl
 				v[index] = momentum_Y[index]/mass[index];
 			}
 		}
+		#pragma omp master
+		{
 		time = time + DT;
-
+		}
+		#pragma omp barrier
+	}
 	}
 }
 int main() {
@@ -460,11 +480,10 @@ int main() {
 
     	double start_wtime = omp_get_wtime(); // 取得開始的精確秒數
 	omp_set_num_threads(8);
-    	#pragma omp parallel
-    	{
+
 	Calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
 	mass_slope_X,momentum_slope_X_X,momentum_slope_X_Y,mass_slope_Y,momentum_slope_Y_X,momentum_slope_Y_Y);
-	}
+	
 	double end_wtime = omp_get_wtime(); // 取得結束的精確秒數
 
     	time_t end_date;
