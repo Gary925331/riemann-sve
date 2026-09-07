@@ -3,8 +3,8 @@
 #include <math.h>
 #include <omp.h>
 #include <time.h>
-#define NX 200          /* number of X cells */
-#define NY 200          /* number of Y cells */
+#define NX 1000          /* number of X cells */
+#define NY 1000          /* number of Y cells */
 #define N (NX+2)*(NY+2)
 #define NIF_X (NX+1)      /* number of X interfaces */
 #define NIF_Y (NY+1)      /* number of Y interfaces */
@@ -17,7 +17,7 @@
 #define MAX_TIMESTEPS 50000
 #define T_FINAL 7.2
 #define g 9.81
-#define CFL 0.25
+#define CFL 0.1
 
 void Allocate_memory(float **u,float **v,float **s,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,float **momentum_X,float **momentum_Y,float **h,float **h_slope_X,float **u_slope_X_X,float **v_slope_X_Y,float **h_slope_Y,float **u_slope_Y_X,float **v_slope_Y_Y){
 	*u = (float*)malloc(N*sizeof(float));
