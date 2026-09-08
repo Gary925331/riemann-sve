@@ -79,5 +79,24 @@ for timesteps in range (0,MAX_TIMESTEPS):
     		max_term = term_Y
 	DT = CFL / max_term
 	print(DT)
+	if (time > T_FINAL):
+            	break;
+	for j in range (0,NY+2):
+            	mass[0*(NY+2)+j] = mass[1*(NY+2)+j]
+            	momentum_X[0*(NY+2)+j] = momentum_X[1*(NY+2)+j] 
+            	momentum_Y[0*(NY+2)+j] = momentum_Y[1*(NY+2)+j]
+            
+            	mass[(NX+1)*(NY+2)+j] = mass[NX*(NY+2)+j]
+            	momentum_X[(NX+1)*(NY+2)+j] = momentum_X[NX*(NY+2)+j] 
+            	momentum_Y[(NX+1)*(NY+2)+j] = momentum_Y[NX*(NY+2)+j]
+	for i in range(0,NX+2):
+		mass[i*(NY+2)+0] = mass[i*(NY+2)+1]
+		momentum_X[i*(NY+2)+0] = momentum_X[i*(NY+2)+1]
+		momentum_Y[i*(NY+2)+0] = -momentum_Y[i*(NY+2)+1] #// 下牆反彈
+            
+		mass[i*(NY+2)+NY+1] = mass[i*(NY+2)+NY]
+		momentum_X[i*(NY+2)+NY+1] = momentum_X[i*(NY+2)+NY]
+		momentum_Y[i*(NY+2)+NY+1] = -momentum_Y[i*(NY+2)+NY] # // 上牆反彈
+
 print("Hello world")
 
