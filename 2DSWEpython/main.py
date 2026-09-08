@@ -37,5 +37,26 @@ h_slope_Y = np.zeros(N)
 u_slope_Y_X = np.zeros(N)
 v_slope_Y_Y = np.zeros(N)
 
+for i in range(0,NX+2):
+	for j in range(0,NY+2):
+		index = i*(NY+2)+j;
+		if(i < (NX+2)/2):
+			h[index] = 10;
+		else:
+			h[index] = 5;
+		#print(i,h[i])
+		u[index] = 0
+		v[index] = 0
+		mass[index] = h[index]
+		momentum_X[index] = h[index]*u[index]
+		momentum_Y[index] = h[index]*v[index]
+
+		h_slope_X[index] = 0
+		u_slope_X_X[index] = 0
+		v_slope_X_Y[index] = 0
+		h_slope_Y[index] = 0
+		u_slope_Y_X[index] = 0
+		v_slope_Y_Y[index] = 0
+
 print("Hello world")
 
