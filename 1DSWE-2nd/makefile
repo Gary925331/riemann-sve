@@ -1,0 +1,2 @@
+all:
+	gcc -fopenmp -O3 main.c -o main -lm
