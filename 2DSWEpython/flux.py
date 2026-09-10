@@ -1,6 +1,6 @@
 import numpy as np
 
-def flux(mass,u,v):
+def flux(mass, u, v, NX, NY, DX, DY, g, h_slope_X, h_slope_Y, u_slope_X_X, u_slope_Y_X, v_slope_X_Y, v_slope_Y_Y, mass_F, momentum_F_X, momentum_F_Y, mass_G, momentum_G_X, momentum_G_Y):
 	#X direction
 	for i in range(1,NX+2):
 		for j in range (0,NY+2):
@@ -39,7 +39,7 @@ def flux(mass,u,v):
 			else:
 				S1 = SL1
 			SL2 = (u_l) + np.sqrt(g*mass_l)
-			SR2 = (u_r) + sqrt(g*mass_r)
+			SR2 = (u_r) + np.sqrt(g*mass_r)
 			if (SL2 > SR2):
 				S2 = SL2 #SR
 			else:
@@ -87,14 +87,14 @@ def flux(mass,u,v):
 			mom_Bottom_Y = mass_B * v_B * v_B + 0.5*g*mass_B*mass_B
 			mom_Top_Y = mass_T * v_T * v_T + 0.5*g*mass_T*mass_T;
 
-			SB1 = (v_B) - sqrt(g*mass_B)
-			ST1 = (v_T) - sqrt(g*mass_T)
+			SB1 = (v_B) - np.sqrt(g*mass_B)
+			ST1 = (v_T) - np.sqrt(g*mass_T)
 			if (ST1 > SB1):
 				S1 = SB1 #SL
 			else:
 				S1 = ST1
-			SB2 = (v_B) + sqrt(g*mass_B)
-			ST2 = (v_T) + sqrt(g*mass_T)
+			SB2 = (v_B) + np.sqrt(g*mass_B)
+			ST2 = (v_T) + np.sqrt(g*mass_T)
 			if (ST2 > SB2):
 				S2 = ST2
 			else:
@@ -111,6 +111,3 @@ def flux(mass,u,v):
 				mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1)
 				momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1)
 				momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1)
-				
-                        
-                

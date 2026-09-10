@@ -1,6 +1,6 @@
 import numpy as np
 
-def minmod(h,u,v):
+def minmod(h, u, v, NX, NY, DX, DY, h_slope_X, h_slope_Y, u_slope_X_X, u_slope_Y_X, v_slope_X_Y, v_slope_Y_Y):
 	for i in range (1,NX+1):
 		for j in range (0,NY+2):
 			index = i*(NY+2)+j
@@ -21,7 +21,7 @@ def minmod(h,u,v):
 			if(forward*backward < 0):
 				h_slope_Y[index] = 0
 			else:
-				if(fabs(forward)<fabs(backward)):
+				if(np.abs(forward)<np.abs(backward)):
 					h_slope_Y[index] = forward
 				else:
 					h_slope_Y[index] = backward
@@ -33,7 +33,7 @@ def minmod(h,u,v):
 			if(forward*backward < 0):
 				u_slope_X_X[index] = 0
 			else:
-				if(fabs(forward)<fabs(backward)):
+				if(np.abs(forward)<np.abs(backward)):
 					u_slope_X_X[index] = forward
 				else:
 					u_slope_X_X[index] = backward
@@ -45,7 +45,7 @@ def minmod(h,u,v):
 			if(forward*backward < 0):
 				v_slope_X_Y[index] = 0
 			else:
-				if(fabs(forward)<fabs(backward)):
+				if(np.abs(forward)<np.abs(backward)):
 					v_slope_X_Y[index] = forward
 				else:
 					v_slope_X_Y[index] = backward
@@ -57,7 +57,7 @@ def minmod(h,u,v):
 			if(forward*backward < 0):
 				u_slope_Y_X[index] = 0
 			else:
-				if(fabs(forward)<fabs(backward)):
+				if(np.abs(forward)<np.abs(backward)):
 					u_slope_Y_X[index] = forward
 				else:
 					u_slope_Y_X[index] = backward
@@ -69,7 +69,7 @@ def minmod(h,u,v):
 			if(forward*backward < 0):
 				v_slope_Y_Y[index] = 0
 			else:
-				if(fabs(forward)<fabs(backward)):
+				if(np.abs(forward)<np.abs(backward)):
 					v_slope_Y_Y[index] = forward
 				else:
 					v_slope_Y_Y[index] = backward
