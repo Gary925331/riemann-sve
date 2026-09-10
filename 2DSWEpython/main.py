@@ -5,8 +5,8 @@ from minmod import minmod
 from flux import flux
 from state import state
 
-NX = 100        #  /* number of X cells */
-NY = 100         # /* number of Y cells */
+NX = 200        #  /* number of X cells */
+NY = 200         # /* number of Y cells */
 N = (NX+2)*(NY+2)
 NIF_X = (NX+1)     # /* number of X interfaces */
 NIF_Y = (NY+1)     # /* number of Y interfaces */
@@ -101,6 +101,13 @@ for timesteps in range (0,MAX_TIMESTEPS):
 		mass[i*(NY+2)+NY+1] = mass[i*(NY+2)+NY]
 		momentum_X[i*(NY+2)+NY+1] = momentum_X[i*(NY+2)+NY]
 		momentum_Y[i*(NY+2)+NY+1] = -momentum_Y[i*(NY+2)+NY] # // 上牆反彈
+	for i in range (0,NX+2):
+                for j in range (0,NY+2):
+                        index = i*(NY+2)+j
+                        h[index] = mass[index]
+                        u[index] = momentum_X[index]/mass[index]
+                        v[index] = momentum_Y[index]/mass[index]
+
 	minmod(h, u, v, NX, NY, DX, DY, h_slope_X, h_slope_Y, u_slope_X_X, u_slope_Y_X, v_slope_X_Y, v_slope_Y_Y)
 	flux(mass, u, v, NX, NY, DX, DY, g, h_slope_X, h_slope_Y, u_slope_X_X, u_slope_Y_X, v_slope_X_Y, v_slope_Y_Y, mass_F, momentum_F_X, momentum_F_Y, mass_G, momentum_G_X, momentum_G_Y)
 	state(NX, NY, DX, DY, DT, mass, momentum_X, momentum_Y, mass_F, momentum_F_X, momentum_F_Y, mass_G, momentum_G_X, momentum_G_Y, h, u, v) 
