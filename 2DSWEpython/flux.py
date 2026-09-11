@@ -68,7 +68,7 @@ def flux(mass, u, v, NX, NY, DX, DY, g, h_slope_X, h_slope_Y, u_slope_X_X, u_slo
 			v_Y_B = v[index-1] + 0.5*DY*v_slope_Y_Y[index-1]
 			v_Y_T = v[index] - 0.5*DY*v_slope_Y_Y[index]
 			if(i == 101):
-				if(j == 97 ):
+				if(j == 97):
 					mass_B = mass_T
 					u_X_B = u_X_T
 					v_Y_B = -v_Y_T
