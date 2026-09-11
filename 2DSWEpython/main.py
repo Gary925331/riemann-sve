@@ -1,6 +1,7 @@
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+from time import perf_counter
 from minmod import minmod
 from flux import flux
 from state import state
@@ -62,6 +63,8 @@ for i in range(0,NX+2):
 		u_slope_Y_X[index] = 0
 		v_slope_Y_Y[index] = 0
 
+print("開始執行模擬計算...")
+start_wall_time = perf_counter()  # 記錄迴圈開始的真實時間
 time = 0
 for timesteps in range (0,MAX_TIMESTEPS):
 	Smax_X = 0.0;
@@ -82,7 +85,7 @@ for timesteps in range (0,MAX_TIMESTEPS):
 	else:
 		max_term = term_Y
 	DT = CFL / max_term
-	print(DT)
+	#print(DT)
 	if (time > T_FINAL):
 		break;
 	for j in range (0,NY+2):
@@ -112,6 +115,8 @@ for timesteps in range (0,MAX_TIMESTEPS):
 	flux(mass, u, v, NX, NY, DX, DY, g, h_slope_X, h_slope_Y, u_slope_X_X, u_slope_Y_X, v_slope_X_Y, v_slope_Y_Y, mass_F, momentum_F_X, momentum_F_Y, mass_G, momentum_G_X, momentum_G_Y)
 	state(NX, NY, DX, DY, DT, mass, momentum_X, momentum_Y, mass_F, momentum_F_X, momentum_F_Y, mass_G, momentum_G_X, momentum_G_Y, h, u, v) 
 	time += DT
+end_wall_time = perf_counter()  # 記錄迴圈結束的真實時間
+print(f"模擬結束！總共花費時間: {end_wall_time - start_wall_time:.2f} 秒")
 print("Hello world")
 X_grid = np.zeros((NX, NY))
 Y_grid = np.zeros((NX, NY))
