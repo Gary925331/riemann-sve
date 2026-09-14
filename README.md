@@ -42,3 +42,30 @@ This is the 2D Advection Diffusion code,and the parts of Advection using Rusanov
 
 Parallel the code of 2D_a_d,using Openmp
 
+# Euler
+
+The simple python code of Euler
+
+# HelloworldC
+
+The Helloworld code in C
+
+# HelloworldPython
+
+The Helloworld code in python
+
+# HelloWorldPythonDocker
+
+The Helloworld code in python,then run in Docker container
+
+# diffusion
+
+This is the 1D diffusion code
+
+# diffusion parallel
+
+This is the parallel version of the 1D diffusion code
+
+# upgrade 1D advection
+
+This is the 1D advection code,using three different method to calculate flux
