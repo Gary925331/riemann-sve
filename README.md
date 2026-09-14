@@ -29,3 +29,16 @@ This is the code for 2D partial Dam break,and it used HLL flux to calculate
 2DShallow-water-Dam-Break-OMP
 
 This is the code for 2D partial Dam break,and it used Rusanov flux to calculate,and using Openmp to parallel
+
+2DShallow-water-Dam-Break
+
+This is the code for 2D partial Dam break,and it used Rusanov flux to calculate
+
+2D_a_d
+
+This is the 2D Advection Diffusion code,and the parts of Advection using Rusanov flux,and the parts of Diffusion using central difference
+
+2d_diffusion_parallel
+
+Parallel the code of 2D_a_d,using Openmp
+
