@@ -50,38 +50,58 @@ More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/m
 
 This is the code for 2D partial Dam break,and it used Rusanov flux to calculate
 
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/2DShallow-water-Dam-Break)
+
 # 2D_a_d
 
 This is the 2D Advection Diffusion code,and the parts of Advection using Rusanov flux,and the parts of Diffusion using central difference
+
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/2d_a_d)
 
 # 2d_diffusion_parallel
 
 Parallel the code of 2D_a_d,using Openmp
 
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/2d_diffusion_parallel)
+
 # Euler
 
 The simple python code of Euler
+
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/Euler)
 
 # HelloworldC
 
 The Helloworld code in C
 
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/HelloWorldC)
+
 # HelloworldPython
 
 The Helloworld code in python
+
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/HelloWorldPython)
 
 # HelloWorldPythonDocker
 
 The Helloworld code in python,then run in Docker container
 
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/HelloWorldPythonDocker)
+
 # diffusion
 
 This is the 1D diffusion code
+
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/diffusion)
 
 # diffusion parallel
 
 This is the parallel version of the 1D diffusion code
 
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/diffusion_parallel)
+
 # upgrade 1D advection
 
 This is the 1D advection code,using three different method to calculate flux
+
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/upgrade%201D%20advection)
