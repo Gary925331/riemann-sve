@@ -2,33 +2,49 @@
 
 This is the code for 1D Advection in Dockerfile
 
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/1DAdvectionDocker)
+
 # 1D Advection Docker-compose
 
 This is the code for 1D Advection in Docker-compose
+
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/1DAdvectionDockercompose)
 
 # 1D SWE-2nd
 
 This is the code upgrade from 1D Shallow water in first order
 
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/1DSWE-2nd)
+
 # 1D Shallow water 
 
 This is the C code for 1D Shallow water
+
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/1DShallow-water)
 
 # 1D Advection parallel
 
 This is the code upgrade from 1D Advection,and it used Openmp to parallel
 
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/1d_advection_parallel)
+
 # 2D-partial-Dambreak-HLL-OMP
 
 This is the code for 2D partial Dam break,and it used HLL flux to calculate,and using Openmp to parallel
+
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/2D-partial-Dambreak-HLL-OMP)
 
 # 2D-partial-Dambreak-HLL
 
 This is the code for 2D partial Dam break,and it used HLL flux to calculate
 
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/2D-partial-Dambreak-HLL)
+
 # 2DShallow-water-Dam-Break-OMP
 
 This is the code for 2D partial Dam break,and it used Rusanov flux to calculate,and using Openmp to parallel
+
+More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/2DShallow-water-Dam-Break-OMP)
 
 # 2DShallow-water-Dam-Break
 
