@@ -6,8 +6,8 @@ from minmod import minmod
 from flux import flux
 from state import state
 
-NX = 200        #  /* number of X cells */
-NY = 200         # /* number of Y cells */
+NX = 1000        #  /* number of X cells */
+NY = 1000         # /* number of Y cells */
 N = (NX+2)*(NY+2)
 NIF_X = (NX+1)     # /* number of X interfaces */
 NIF_Y = (NY+1)     # /* number of Y interfaces */
@@ -20,7 +20,7 @@ DY = (D / NY)    #/* cell size */
 MAX_TIMESTEPS = 50000
 T_FINAL = 7.2
 g = 9.81
-CFL = 0.1
+CFL = 0.02
 
 u = np.zeros(N)
 v = np.zeros(N)
@@ -85,7 +85,8 @@ for timesteps in range (0,MAX_TIMESTEPS):
 	else:
 		max_term = term_Y
 	DT = CFL / max_term
-	#print(DT)
+	if (timesteps % 100 == 0):
+		print(timesteps)
 	if (time > T_FINAL):
 		break;
 	for j in range (0,NY+2):
