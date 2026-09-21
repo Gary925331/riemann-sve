@@ -11,12 +11,12 @@ def flux(mass, u, v, NX, NY, DX, DY, g, h_slope_X, h_slope_Y, u_slope_X_X, u_slo
 			u_X_r = u[index] - 0.5*DX*u_slope_X_X[index]
 			v_Y_l = v[index-NY-2] + 0.5*DX*v_slope_X_Y[index-NY-2]
 			v_Y_r = v[index] - 0.5*DX*v_slope_X_Y[index]
-			if (j <= 96 or j >= 171):
-				if (i == 101):
+			if (j <= NY*96/200 or j >= NY*171/200):
+				if (i == NX//2+1):
 					mass_r = mass_l
 					u_X_r = -u_X_l
 					v_Y_r = v_Y_l
-				elif (i == 102):
+				elif (i == NX//2+2):
 					mass_l = mass_r
 					u_X_l = -u_X_r
 					v_Y_l = v_Y_r
@@ -67,12 +67,12 @@ def flux(mass, u, v, NX, NY, DX, DY, g, h_slope_X, h_slope_Y, u_slope_X_X, u_slo
 			u_X_T = u[index] - 0.5*DY*u_slope_Y_X[index]
 			v_Y_B = v[index-1] + 0.5*DY*v_slope_Y_Y[index-1]
 			v_Y_T = v[index] - 0.5*DY*v_slope_Y_Y[index]
-			if(i == 101):
-				if(j == 97):
+			if(i == NX//2+1):
+				if(j == NY*96/200 +1):
 					mass_B = mass_T
 					u_X_B = u_X_T
 					v_Y_B = -v_Y_T
-				if(j == 171):
+				if(j == NY*171/200):
 					mass_T = mass_B
 					u_X_T = u_X_B
 					v_Y_T = -v_Y_B
