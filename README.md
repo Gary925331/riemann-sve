@@ -106,10 +106,9 @@ More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/m
 This is the 1D advection code,using three different method to calculate flux
 
 More informations are in [here](https://github.com/Gary925331/riemann-sve/tree/main/upgrade%201D%20advection)
-=======
+
 # 2DSWEpython
 
 This code recreate the 2D shallow water solver using Python
 
 more information is in [here](https://github.com/Gary925331/riemann-sve/tree/SWEpython/2DSWEpython)
->>>>>>> 3ee3281 (Add README for 2D shallow water solver in Python)
