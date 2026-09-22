@@ -24,10 +24,10 @@
 #define MAX_TIMESTEPS 50000
 #define T_FINAL 7.2
 #define g 9.81
-#define CFL 0.1
+#define CFL 0.02
 
-void time(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
-float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y){
+void time_calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
+float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y,int type){
 	float time = 0;
 	float Smax_X;
         float Smax_Y;
@@ -78,6 +78,18 @@ float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_
 		if (stop_flag == 1) {
             		break;
         	}
+		ghost(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY);
+
+        	minmod(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY,DX,DY);
+
+        	Calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,type,NX,NY,DX,DY,g);
+
+        	state(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY,DX,DY,DT);
+
 		#pragma omp master
 		{
 		time = time + DT;
@@ -92,7 +104,17 @@ int main(int argc, char *argv[]) {
     	if (argc > 1) {
         	num_cores = atoi(argv[1]);
     	}
-
+	int type = FLUX_HLL;
+	if (argc > 2) {
+    		type = atoi(argv[2]);   // ./program 8 0  → HLL；./program 8 1 → LF
+	}
+	if (type == FLUX_HLL) {
+    		printf(">>> 目前使用的通量算法：HLL (type=%d)\n", type);
+	} else if (type == FLUX_RUS) {
+    		printf(">>> 目前使用的通量算法：Rusnaov (type=%d)\n", type);
+	} else {
+    		printf(">>> 警告：type=%d 不是有效值，程式會走 else 分支\n", type);
+	}
         float *u;
 	float *v;
 	float *s;
@@ -112,9 +134,9 @@ int main(int argc, char *argv[]) {
 	float *h_slope_Y;
 	float *u_slope_Y_X;
 	float *v_slope_Y_Y;
-
+	
         Allocate_memory(&u,&v,&s,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
-	&h_slope_X,&u_slope_X_X,&v_slope_X_Y,&h_slope_Y,&u_slope_Y_X,&v_slope_Y_Y);
+	&h_slope_X,&u_slope_X_X,&v_slope_X_Y,&h_slope_Y,&u_slope_Y_X,&v_slope_Y_Y,N,NIF);
 	
 	time_t start_date;
     	time(&start_date);
@@ -122,10 +144,13 @@ int main(int argc, char *argv[]) {
 
     	double start_wtime = omp_get_wtime(); // 取得開始的精確秒數
 	
-	omp_set_num_threads(num_cores);
+	Initial(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY);
 	
-	Calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
-	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y);
+	omp_set_num_threads(num_cores);
+
+	time_calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,type);
 
 	double end_wtime = omp_get_wtime(); // 取得結束的精確秒數
 
@@ -146,5 +171,7 @@ int main(int argc, char *argv[]) {
 		}
     	}
     	fclose(fp);
-        Free_memory(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y);
+        Free_memory(&u,&v,&s,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
+        &h_slope_X,&u_slope_X_X,&v_slope_X_Y,&h_slope_Y,&u_slope_Y_X,&v_slope_Y_Y);
+
 }
