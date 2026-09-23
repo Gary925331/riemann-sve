@@ -10,8 +10,8 @@
 #include "state.h"
 #include "ghost.h"
 
-#define NX 1000          /* number of X cells */
-#define NY 1000          /* number of Y cells */
+#define NX 2000          /* number of X cells */
+#define NY 2000          /* number of Y cells */
 #define N (NX+2)*(NY+2)
 #define NIF_X (NX+1)      /* number of X interfaces */
 #define NIF_Y (NY+1)      /* number of Y interfaces */
@@ -21,10 +21,10 @@
 #define D 200.0          /* domain length */
 #define DX (L / NX)    /* cell size */
 #define DY (D / NY)    /* cell size */
-#define MAX_TIMESTEPS 50000
+#define MAX_TIMESTEPS 200000
 #define T_FINAL 7.2
 #define g 9.81
-#define CFL 0.02
+#define CFL 0.01
 
 void time_calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
 float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y,int type){
@@ -96,6 +96,9 @@ float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_
 		}
 		#pragma omp barrier
 
+	}
+	if (timestep >= MAX_TIMESTEPS) {
+    		printf(">>> 警告：撞到 MAX_TIMESTEPS 上限，模擬還沒跑到 T_FINAL 就被迫停止！目前 time=%f\n", time);
 	}
 	}//end of parallel
 }
