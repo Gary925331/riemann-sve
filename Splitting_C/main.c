@@ -9,9 +9,10 @@
 #include "minmod.h"
 #include "state.h"
 #include "ghost.h"
+#include "mclimiter.h"
 
-#define NX 4000          /* number of X cells */
-#define NY 4000          /* number of Y cells */
+#define NX 2000          /* number of X cells */
+#define NY 2000          /* number of Y cells */
 #define N (NX+2)*(NY+2)
 #define NIF_X (NX+1)      /* number of X interfaces */
 #define NIF_Y (NY+1)      /* number of Y interfaces */
@@ -27,7 +28,7 @@
 #define CFL 0.1
 
 void time_calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
-float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y,int type){
+float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y,int type,int type_limiter){
 	float time = 0;
 	float Smax_X;
         float Smax_Y;
@@ -80,10 +81,13 @@ float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_
         	}
 		ghost(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY);
-
-        	minmod(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
-        	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY,DX,DY);
-
+		if(type_limiter == MC){
+			mclimiter(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+                	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY,DX,DY);
+		}else{
+        		minmod(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        		h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY,DX,DY);
+		}
         	Calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,type,NX,NY,DX,DY,g);
 
@@ -121,6 +125,19 @@ int main(int argc, char *argv[]) {
 	} else {
     		printf(">>> 警告：type=%d 不是有效值，程式會走 else 分支\n", type);
 	}
+	int type_limiter = MC;
+	if (argc > 3) {
+                type_limiter = atoi(argv[3]);
+        }
+	if (type_limiter == MC) {
+                printf(">>> Limiter：MC (type_limiter=%d)\n", type_limiter);
+        } else if (type_limiter == MINMOD) {
+                printf(">>> Limiter：Minmod (type_limiter=%d)\n", type_limiter);
+        } else {
+                printf(">>> 警告：type_limiter=%d 不是有效值，程式會走 else 分支\n", type_limiter);
+        }
+
+
         float *u;
 	float *v;
 	float *s;
@@ -156,7 +173,7 @@ int main(int argc, char *argv[]) {
 	omp_set_num_threads(num_cores);
 
 	time_calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
-        h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,type);
+        h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,type,type_limiter);
 
 	double end_wtime = omp_get_wtime(); // 取得結束的精確秒數
 
