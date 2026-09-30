@@ -11,8 +11,8 @@
 #include "ghost.h"
 #include "mclimiter.h"
 
-#define NX 400          /* number of X cells */
-#define NY 400          /* number of Y cells */
+#define NX 2000          /* number of X cells */
+#define NY 2000          /* number of Y cells */
 #define N (NX+2)*(NY+2)
 #define NIF_X (NX+1)      /* number of X interfaces */
 #define NIF_Y (NY+1)      /* number of Y interfaces */
