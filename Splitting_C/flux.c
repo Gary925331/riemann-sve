@@ -5,7 +5,7 @@
 #include "flux.h"
 
 void Calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
-float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y,int type,int NX,int NY,float DX,float DY,int g){	
+float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y,int type,int NX,int NY,float DX,float DY,float g){	
 	#pragma omp for	
 	for (int i = 1; i < NX+2; i++){
 			for (int j = 0; j < NY+2; j++){
@@ -97,6 +97,12 @@ float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_
                                 float u_X_T = u[index] - 0.5*DY*u_slope_Y_X[index];
 				float v_Y_B = v[index-1] + 0.5*DY*v_slope_Y_Y[index-1];
                                 float v_Y_T = v[index] - 0.5*DY*v_slope_Y_Y[index];
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+					mass_B = mass_T;  u_X_B = u_X_T;  v_Y_B = -v_Y_T;
+				}
+				if (j == NY+1) {              // 上牆
+					mass_T = mass_B;  u_X_T = u_X_B;  v_Y_T = -v_Y_B;
+				}
 				if(i == (NX+2)/2){
 					if(j == NY*96/200 +1){
 						mass_B = mass_T;

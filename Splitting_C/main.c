@@ -11,8 +11,8 @@
 #include "ghost.h"
 #include "mclimiter.h"
 
-#define NX 2000          /* number of X cells */
-#define NY 2000          /* number of Y cells */
+#define NX 400          /* number of X cells */
+#define NY 400          /* number of Y cells */
 #define N (NX+2)*(NY+2)
 #define NIF_X (NX+1)      /* number of X interfaces */
 #define NIF_Y (NY+1)      /* number of Y interfaces */
@@ -93,9 +93,20 @@ float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_
 
         	state(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY,DX,DY,DT);
+		
 
 		#pragma omp master
 		{
+		/*if (timestep % 200 == 0) {
+    			double total = 0.0;
+    			for (int i = 1; i < NX+1; i++){
+        			for (int j = 1; j < NY+1; j++) {
+            				if (i == NX/2+1 && (j <= NY*96/200 || j >= NY*171/200)) continue;
+            					total += mass[i*(NY+2)+j];
+        			}
+			}
+    			printf("step %6d  t=%.4f  M=%.8e\n", timestep, time, total*DX*DY);
+		}*/
 		time = time + DT;
 		}
 		#pragma omp barrier

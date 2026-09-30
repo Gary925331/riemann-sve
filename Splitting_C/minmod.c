@@ -97,8 +97,8 @@ float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_
                         //printf("momentum_slope[%d] = %f\n",i,momentum_slope[i]);
                 }
 		#pragma omp for
-		for(int i = 1;i < NX+1;i++){
-                        for(int j = 0;j < NY+2;j++){
+		for(int i = 1;i < NX+2;i++){
+                        for(int j = 0;j < NY+1;j++){
                                 int index = i*(NY+2)+j;
                                 float forward = (v[index+1] - v[index])/DY;
                                 float backward = (v[index] - v[index-1])/DY;
