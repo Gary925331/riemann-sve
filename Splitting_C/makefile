@@ -7,7 +7,7 @@ bench: all
 			echo "=================================="; \
 			echo "用 $$cores 核心跑，第 $$run 次"; \
 			echo "=================================="; \
-			./main $$cores 0; \
+			./main $$cores 1; \
 			mv results.dat results_$${cores}cores_run$${run}.dat; \
 			echo "已存成 results_$${cores}cores_run$${run}.dat"; \
 			echo ""; \
