@@ -1,0 +1,14 @@
+services:
+  cfd-solver:
+    # 用當前目錄的 Dockerfile 建置
+    build: .
+
+    # 程式會把 results.dat 寫在工作目錄，所以把工作目錄設成掛載點
+    working_dir: /out
+
+    volumes:
+      # 主機的 docker-omp/result_data 對應到容器內的 /out
+      - ./result_data:/out
+
+    # 參數依序是：執行緒數、通量 (0=HLL, 1=Rusanov)、Limiter (0=Minmod, 1=MC)
+    command: ["/usr/src/app/myapp", "1", "0", "1"]
