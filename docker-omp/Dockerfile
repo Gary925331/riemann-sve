@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # 編譯 C 程式 (輸出成名為 myapp 的執行檔)
-RUN gcc -fopenmp -O3 -o myapp main.c flux.c mclimiter.c state.c ghost.c memory.c initial.c minmod.c -lm
+RUN gcc -fopenmp -O1 -o myapp main.c flux.c mclimiter.c state.c ghost.c memory.c initial.c minmod.c -lm
 
 # 容器啟動時執行編譯好的程式
 CMD ["./myapp"]
