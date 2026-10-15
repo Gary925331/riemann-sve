@@ -1,5 +1,5 @@
 all:
-	gcc -fopenmp -O1 main.c flux.c ghost.c initial.c memory.c minmod.c state.c mclimiter.c -o main -lm
+	gcc -fopenmp -O2 main.c flux.c ghost.c initial.c memory.c minmod.c state.c mclimiter.c -o main -lm
 
 bench: all
 	@for cores in 1 2 4; do \
