@@ -11,4 +11,4 @@ services:
       - ./result_data:/out
 
     # 參數依序是：執行緒數、通量 (0=HLL, 1=Rusanov)、Limiter (0=Minmod, 1=MC)
-    command: ["/usr/src/app/main", "1", "0", "1"]
+    command: ["/usr/src/app/main", "2", "0", "1"]

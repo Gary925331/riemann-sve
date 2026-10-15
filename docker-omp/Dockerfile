@@ -5,7 +5,7 @@ FROM gcc:13
 WORKDIR /usr/src/app
 
 # 將當前資料夾的原始碼複製到容器中
-COPY . .
+COPY makefile *.c *.h ./
 
 # 編譯 C 程式 (輸出成名為 main 的執行檔)
 RUN make
