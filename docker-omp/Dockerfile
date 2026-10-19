@@ -11,4 +11,4 @@ COPY makefile *.c *.h ./
 RUN make
 
 # 容器啟動時執行編譯好的程式
-CMD ["./main"]
+CMD ["./main", "4", "0", "1"]
