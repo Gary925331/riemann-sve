@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <omp.h>
+//#include <omp.h>
 #include <time.h>
 #include "memory.h"
 #include "flux.h"
@@ -24,7 +24,7 @@
 #define DY (D / NY)    /* cell size */
 #define MAX_TIMESTEPS 200000
 #define T_FINAL 7.2
-#define g 9.81
+#define g 9.81f
 #define CFL 0.1
 
 void time_calculation(float *u,float *v,float *s,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
@@ -46,11 +46,11 @@ float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_
 		for (int i = 1;i < NX+1;i++){
 			for (int j = 1;j < NY+1;j++){
 				int index = i*(NY+2)+j;
-				float S_R = fabs(u[index]) + sqrt(g*h[index]);
+				float S_R = fabsf(u[index]) + sqrtf(g*h[index]);
 				if (S_R > Smax_X) {
             				Smax_X = S_R;
         			}
-                        	float S_T = fabs(v[index]) + sqrt(g*mass[index]);
+                        	float S_T = fabsf(v[index]) + sqrtf(g*mass[index]);
 				if (S_T > Smax_Y) {
             				Smax_Y = S_T;
         			}
@@ -171,29 +171,28 @@ int main(int argc, char *argv[]) {
 	
         Allocate_memory(&u,&v,&s,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
 	&h_slope_X,&u_slope_X_X,&v_slope_X_Y,&h_slope_Y,&u_slope_Y_X,&v_slope_Y_Y,N,NIF);
-	
-	time_t start_date;
-    	time(&start_date);
-    	printf("Simulation started at: %s", ctime(&start_date));
+//	time_t start_date;
+//    	time(&start_date);
+//    	printf("Simulation started at: %s", ctime(&start_date));
 
-    	double start_wtime = omp_get_wtime(); // 取得開始的精確秒數
+//    	double start_wtime = omp_get_wtime(); // 取得開始的精確秒數
 	
 	Initial(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY);
 	
-	omp_set_num_threads(num_cores);
+//	omp_set_num_threads(num_cores);
 
 	time_calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,type,type_limiter);
 
-	double end_wtime = omp_get_wtime(); // 取得結束的精確秒數
+//	double end_wtime = omp_get_wtime(); // 取得結束的精確秒數
 
-    	time_t end_date;
-    	time(&end_date);
-    	printf("Simulation finished at: %s", ctime(&end_date));
+//    	time_t end_date;
+//    	time(&end_date);
+//    	printf("Simulation finished at: %s", ctime(&end_date));
 
     	// 印出精確的執行時間
-    	printf("Total Execution Time: %f seconds\n", end_wtime - start_wtime);
+//    	printf("Total Execution Time: %f seconds\n", end_wtime - start_wtime);
 	
 	FILE *fp = fopen("results.dat", "w");
     	for (int j = 1; j < NX+1; j++) {
