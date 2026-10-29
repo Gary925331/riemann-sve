@@ -5,6 +5,7 @@ CFLAGS = -O3 -ffast-math
 all: main main_musl
 
 main: $(SRC) $(HDR)
+	gcc $(CLFAGS) $(SRC) -c main.c -lm
 	gcc $(CFLAGS) $(SRC) -o main -lm
 
 main_musl: $(SRC) $(HDR)
