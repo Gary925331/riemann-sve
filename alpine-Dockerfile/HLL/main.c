@@ -23,7 +23,7 @@
 #define DX (L / NX)    /* cell size */
 #define DY (D / NY)    /* cell size */
 #define MAX_TIMESTEPS 200000
-#define T_FINAL 7.2
+#define T_FINAL 1
 #define g 9.81f
 #define CFL 0.1
 

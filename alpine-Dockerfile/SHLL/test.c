@@ -28,7 +28,7 @@ const float CFL = 0.25;
 float DT;
 float DT_ON_DX, DT_ON_DY;
 int NO_STEPS = 0;
-const float TOTAL_TIME = 7.2; // Seconds for water
+const float TOTAL_TIME = 1; // Seconds for water
 
 void Allocate_and_Init_Memory() {
     size_t alignment = 32; int i, j, cell_index;
