@@ -1,6 +1,6 @@
-SRC    = main.c flux.c ghost.c initial.c memory.c minmod.c state.c mclimiter.c 
+SRC    = main.c flux2.c ghost.c initial.c memory.c minmod.c state.c mclimiter.c 
 HDR    = $(wildcard *.h)
-CFLAGS = -O3 -ffast-math -march=native
+CFLAGS = -O3 -ffast-math -march=native 
 
 all: main main_musl
 
