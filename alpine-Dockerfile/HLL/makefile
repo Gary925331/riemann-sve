@@ -1,12 +1,12 @@
-SRC    = main.c flux2.c ghost.c initial.c memory.c minmod.c state.c mclimiter.c 
+SRC    = main2.c flux2.c ghost.c initial.c memory.c minmod.c state.c mclimiter.c 
 HDR    = $(wildcard *.h)
 CFLAGS = -O3 -ffast-math -march=native 
 
 all: main main_musl
 
 main: $(SRC) $(HDR)
-	gcc $(CFLAGS) $(SRC) -c main.c -lm
-	gcc $(CFLAGS) $(SRC) -o main -lm
+	gcc $(CFLAGS) $(SRC) -c main2.c -lm -pg
+	gcc $(CFLAGS) $(SRC) -o main -lm -pg
 
 main_musl: $(SRC) $(HDR)
 	musl-gcc $(CFLAGS) $(SRC) -o main_musl -lm
