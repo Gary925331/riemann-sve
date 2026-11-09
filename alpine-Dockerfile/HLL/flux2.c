@@ -5,7 +5,7 @@
 #include "flux.h"
 
 /* [只加 restrict] 其他完全沒改 */
-void Calculation(float *restrict u,float *restrict v,float *restrict s,float *restrict mass_F,float *restrict momentum_F_X,float *restrict momentum_F_Y,float *restrict mass_G,float *restrict momentum_G_X,float *restrict momentum_G_Y,float *restrict mass,float *restrict momentum_X,
+void Calculation(float *restrict u,float *restrict v,float *restrict mass_F,float *restrict momentum_F_X,float *restrict momentum_F_Y,float *restrict mass_G,float *restrict momentum_G_X,float *restrict momentum_G_Y,float *restrict mass,float *restrict momentum_X,
 float *restrict momentum_Y,float *restrict h,float *restrict h_slope_X,float *restrict u_slope_X_X,float *restrict v_slope_X_Y,float *restrict h_slope_Y,float *restrict u_slope_Y_X,float *restrict v_slope_Y_Y,int type,int NX,int NY,float DX,float DY,float g){	
 	#pragma omp for	
 	for (int i = 1; i < NX+2; i++){

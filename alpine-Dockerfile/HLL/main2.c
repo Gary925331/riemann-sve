@@ -58,7 +58,6 @@ int main(int argc, char *argv[]) {
 
         float *u;
 	float *v;
-	float *s;
         float *mass_F;
         float *momentum_F_X;
 	float *momentum_F_Y;
@@ -76,7 +75,7 @@ int main(int argc, char *argv[]) {
 	float *u_slope_Y_X;
 	float *v_slope_Y_Y;
 
-        Allocate_memory(&u,&v,&s,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
+        Allocate_memory(&u,&v,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
 	&h_slope_X,&u_slope_X_X,&v_slope_X_Y,&h_slope_Y,&u_slope_Y_X,&v_slope_Y_Y,N,NIF);
 //	time_t start_date;
 //    	time(&start_date);
@@ -84,7 +83,7 @@ int main(int argc, char *argv[]) {
 
 //    	double start_wtime = omp_get_wtime(); // 取得開始的精確秒數
 
-	Initial(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+	Initial(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY);
 
 //	omp_set_num_threads(num_cores);
@@ -138,19 +137,19 @@ int main(int argc, char *argv[]) {
 		if (stop_flag == 1) {
             		break;
         	}
-		ghost(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+		ghost(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY);
 		if(type_limiter == MC){
-			mclimiter(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+			mclimiter(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
                 	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY,DX,DY);
 		}else{
-        		minmod(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        		minmod(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         		h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY,DX,DY);
 		}
-        	Calculation(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        	Calculation(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,type,NX,NY,DX,DY,g);
 
-        	state(u,v,s,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        	state(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         	h_slope_X,u_slope_X_X,v_slope_X_Y,h_slope_Y,u_slope_Y_X,v_slope_Y_Y,NX,NY,DX,DY,DT);
 
 		#pragma omp master
@@ -197,7 +196,7 @@ int main(int argc, char *argv[]) {
 		}
     	}
     	fclose(fp);
-        Free_memory(&u,&v,&s,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
+        Free_memory(&u,&v,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,
         &h_slope_X,&u_slope_X_X,&v_slope_X_Y,&h_slope_Y,&u_slope_Y_X,&v_slope_Y_Y);
 
 }
