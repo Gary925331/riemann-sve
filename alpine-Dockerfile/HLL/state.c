@@ -2,7 +2,7 @@
 #include <math.h>
 #include <omp.h>
 void state(float *u,float *v,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
-float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y,int NX,int NY,float DX,float DY,float DT){
+float *momentum_Y,float *h,int NX,int NY,float DX,float DY,float DT){
 		#pragma omp for
                 for(int i = 1;i < NX+1;i++){
                         for (int j = 1; j < NY+1; j++){

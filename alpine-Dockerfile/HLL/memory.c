@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 void Allocate_memory(float **u,float **v,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,
-float **momentum_X,float **momentum_Y,float **h,float **h_slope_X,float **u_slope_X_X,float **v_slope_X_Y,float **h_slope_Y,float **u_slope_Y_X,float **v_slope_Y_Y,int N,int NIF){
+float **momentum_X,float **momentum_Y,float **h,int N,int NIF){
 	*u = (float*)malloc(N*sizeof(float));
 	*v = (float*)malloc(N*sizeof(float));
 	*mass_F = (float*)malloc(NIF*sizeof(float));
@@ -15,14 +15,14 @@ float **momentum_X,float **momentum_Y,float **h,float **h_slope_X,float **u_slop
 	*momentum_X = (float*)malloc(NIF*sizeof(float));
 	*momentum_Y = (float*)malloc(NIF*sizeof(float));
 	*h = (float*)malloc(N*sizeof(float));
-	*h_slope_X = (float*)malloc(N*sizeof(float));
+	/*h_slope_X = (float*)malloc(N*sizeof(float));
 	*u_slope_X_X = (float*)malloc(N*sizeof(float));
 	*v_slope_X_Y = (float*)malloc(N*sizeof(float));
 	*h_slope_Y = (float*)malloc(N*sizeof(float));
         *u_slope_Y_X = (float*)malloc(N*sizeof(float));
-	*v_slope_Y_Y = (float*)malloc(N*sizeof(float));
+	*v_slope_Y_Y = (float*)malloc(N*sizeof(float));*/
 }
-void Free_memory(float **u,float **v,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,float **momentum_X,float **momentum_Y,float **h,float **h_slope_X,float **u_slope_X_X,float **v_slope_X_Y,float **h_slope_Y,float **u_slope_Y_X,float **v_slope_Y_Y){
+void Free_memory(float **u,float **v,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,float **momentum_X,float **momentum_Y,float **h){
 	free(*u);
 	free(*v);
 	free(*mass_F);
@@ -35,10 +35,10 @@ void Free_memory(float **u,float **v,float **mass_F,float **momentum_F_X,float *
 	free(*momentum_X);
 	free(*momentum_Y);
 	free(*h);
-	free(*h_slope_X);
+	/*free(*h_slope_X);
 	free(*u_slope_X_X);
 	free(*v_slope_X_Y);
 	free(*h_slope_Y);
         free(*u_slope_Y_X);
-	free(*v_slope_Y_Y);
+	free(*v_slope_Y_Y);*/
 }

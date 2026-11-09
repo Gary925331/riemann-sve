@@ -3,19 +3,64 @@
 #include <math.h>
 #include <omp.h>
 #include "flux.h"
+#include "mclimiter.h"
+	
+	static inline float slope_minmod(float U_L, float U_C, float U_R, float dx){
+	float dU_dx;
+        float Forward  = (U_R - U_C) / dx;
+        float Backward = (U_C - U_L) / dx;
+        if (Backward * Forward < 0.0f) {
+                dU_dx = 0.0f;
+        } else if (fabsf(Forward) < fabsf(Backward)) {
+                dU_dx = Forward;
+        } else {
+                dU_dx = Backward;
+        }
+        return dU_dx;
+        }       
+
+        static inline float slope_limit(int type_limiter, float U_L, float U_C, float U_R, float dx){
+        float result;
+        float m       = slope_minmod(U_L, U_C, U_R, dx);
+        float Central = (U_R - U_L) / (2.0f*dx);
+        if (type_limiter == MC) {
+                if (fabsf(Central) > 2.0f*fabsf(m)) {
+                        result = 2.0f*m;
+                } else {
+                        result = Central;
+                }
+        } else {
+                result = m;
+        }
+        return result;
+        }
 
 void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
-float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y,int type,int NX,int NY,float DX,float DY,float g){	
+float *momentum_Y,float *h,int type,int type_limiter,int NX,int NY,
+float DX,float DY,float g){	
 	#pragma omp for	
 	for (int i = 1; i < NX+2; i++){
+			float wL = 1.0f, wR = 1.0f;
+			int   offLL = 2*(NY+2);      /* 左格的左邊 = 第 i-2 列 */
+			int   offRR = NY+2;          /* 右格的右邊 = 第 i+1 列 */
+			if (i == 1) {                /* 左格是第 0 列（ghost）：沒有第 -1 列 */
+				wL = 0.0f;
+				offLL = NY+2;
+			}
+			if (i == NX+1) {             /* 右格是第 NX+1 列（ghost）：沒有第 NX+2 列 */
+				wR = 0.0f;
+				offRR = 0;
+			}
+
 			for (int j = 0; j < NY+2; j++){
 				int index = i*(NY+2)+j;
-            				float mass_l = mass[index-NY-2] + 0.5f*DX*h_slope_X[index-NY-2];
-            				float mass_r = mass[index] - 0.5f*DX*h_slope_X[index];
-            				float u_X_l = u[index-NY-2] + 0.5f*DX*u_slope_X_X[index-NY-2];
-            				float u_X_r = u[index] - 0.5f*DX*u_slope_X_X[index];
-					float v_Y_l = v[index-NY-2] + 0.5f*DX*v_slope_X_Y[index-NY-2];
-                                	float v_Y_r = v[index] - 0.5f*DX*v_slope_X_Y[index];
+				int kLL = index - offLL, kL = index - NY-2, kR = index, kRR = index + offRR;
+            				float mass_l = mass[index-NY-2] + 0.5f*DX*slope_limit(type_limiter,mass[kLL],mass[kL],mass[kR],DX);
+            				float mass_r = mass[index] - 0.5f*DX*slope_limit(type_limiter,mass[kL],mass[kR],mass[kRR],DX);
+            				float u_X_l = u[index-NY-2] + 0.5f*DX*slope_limit(type_limiter,u[kLL],u[kL],u[kR],DX);
+            				float u_X_r = u[index] - 0.5f*DX*slope_limit(type_limiter,u[kL],u[kR],u[kRR],DX);
+					float v_Y_l = v[index-NY-2] + 0.5f*DX*slope_limit(type_limiter,v[kLL],v[kL],v[kR],DX);
+                                	float v_Y_r = v[index] - 0.5f*DX*slope_limit(type_limiter,v[kL],v[kR],v[kRR],DX);
 					if (j <= NY*96/200 || j >= NY*171/200) {
             					if (i == (NX/2)+1) {
                 					mass_r = mass_l;
@@ -91,12 +136,13 @@ float *momentum_Y,float *h,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_
                         for (int j = 1; j < NY+2; j++){
                                 int index = i*(NY+2)+j;
 				//int index1 = i*(NIF_Y+2)+j;
-                                float mass_B = mass[index-1] + 0.5f*DY*h_slope_Y[index-1];
-                                float mass_T = mass[index] - 0.5f*DY*h_slope_Y[index];
-                                float u_X_B = u[index-1] + 0.5f*DY*u_slope_Y_X[index-1];
-                                float u_X_T = u[index] - 0.5f*DY*u_slope_Y_X[index];
-				float v_Y_B = v[index-1] + 0.5f*DY*v_slope_Y_Y[index-1];
-                                float v_Y_T = v[index] - 0.5f*DY*v_slope_Y_Y[index];
+				int kBB = index-2, kB = index-1, kT = index, kTT = index+1;
+                                float mass_B = mass[index-1] + 0.5f*DY*slope_limit(type_limiter,mass[kBB],mass[kB],mass[kT],DY);
+                                float mass_T = mass[index] - 0.5f*DY*slope_limit(type_limiter,mass[kB],mass[kT],mass[kTT],DY);
+                                float u_X_B = u[index-1] + 0.5f*DY*slope_limit(type_limiter,u[kBB],u[kB],u[kT],DY);
+                                float u_X_T = u[index] - 0.5f*DY*slope_limit(type_limiter,u[kB],u[kT],u[kTT],DY);
+				float v_Y_B = v[index-1] + 0.5f*DY*slope_limit(type_limiter,v[kBB],v[kB],v[kT],DY);
+                                float v_Y_T = v[index] - 0.5f*DY*slope_limit(type_limiter,v[kB],v[kT],v[kTT],DY);
 				if (j == 1) {                 // 下牆：鏡射重建後的面值
 					mass_B = mass_T;  u_X_B = u_X_T;  v_Y_B = -v_Y_T;
 				}
