@@ -39,7 +39,7 @@ void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *mome
 float *momentum_Y,float *h,int type,int type_limiter,int NX,int NY,
 float DX,float DY,float g){	
 	#pragma omp for	
-	for (int i = 1; i < NX+2; i++){
+	for (int i = 0; i < NX+2; i++){
 			float wL = 1.0f, wR = 1.0f;
 			int   offLL = 2*(NY+2);      /* 左格的左邊 = 第 i-2 列 */
 			int   offRR = NY+2;          /* 右格的右邊 = 第 i+1 列 */
@@ -128,12 +128,96 @@ float DX,float DY,float g){
                                         	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
 					}
 
-			}
-        	}
-		#pragma omp for
+				//int index = i*(NY+2)+j;
+				//int index1 = i*(NIF_Y+2)+j;
+				int kBB = index-2, kB = index-1, kT = index, kTT = index+1;
+                                float mass_B = mass[index-1];
+                                float mass_T = mass[index];
+                                float u_X_B = u[index-1];
+                                float u_X_T = u[index];
+				float v_Y_B = v[index-1];
+                                float v_Y_T = v[index];
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+					mass_B = mass_T;  u_X_B = u_X_T;  v_Y_B = -v_Y_T;
+				}
+				if (j == NY+1) {              // 上牆
+					mass_T = mass_B;  u_X_T = u_X_B;  v_Y_T = -v_Y_B;
+				}
+				if(i == (NX+2)/2){
+					if(j == NY*96/200 +1){
+						mass_B = mass_T;
+						u_X_B = u_X_T;
+						v_Y_B = -v_Y_T;
+					}
+					if(j == NY*171/200){
+						mass_T = mass_B;
+						u_X_T = u_X_B;
+						v_Y_T = -v_Y_B;
+					}
+				}
+                                float u_B = u_X_B;
+                                float u_T = u_X_T;
+				float v_B = v_Y_B;
+				float v_T = v_Y_T;
+                                float mass_Bottom = mass_B * v_B;
+                                float mass_Top = mass_T * v_T;
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+                                float mom_Top_X = mass_T * u_T * v_T;
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+			
+				if (type == FLUX_HLL) {
+                                	float SB1 = (v_B) - sqrtf(g*mass_B);
+                                	float ST1 = (v_T) - sqrtf(g*mass_T);
+                                	float S1; //SL
+                                	if (ST1 > SB1){
+                                        	S1 = SB1;
+                                	}else{
+						S1 = ST1;
+					}
+					float SB2 = (v_B) + sqrtf(g*mass_B);
+                                	float ST2 = (v_T) + sqrtf(g*mass_T);
+                                	float S2; //SR
+                                	if (ST2 > SB2){
+                                        	S2 = ST2;
+                                	}else{
+                                        	S2 = SB2;
+                                	}
+					if(S1 > 0){
+						mass_G[index] = mass_Bottom;
+						momentum_G_X[index] = mom_Bottom_X;
+						momentum_G_Y[index] = mom_Bottom_Y;
+					}else if(S2 < 0){
+						mass_G[index] = mass_Top;
+                                        	momentum_G_X[index] = mom_Top_X;
+                                        	momentum_G_Y[index] = mom_Top_Y;
+					}else{
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+					}
+				}else{
+					float S_B = fabsf(v_B) + sqrtf(g*mass_B);
+                                	float S_T = fabsf(v_T) + sqrtf(g*mass_T);
+                                	float S;
+                                	if (S_T > S_B){
+                                        	S = S_T;
+                                	}else{
+                                        	S = S_B;
+                                	}
+
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+
+				}
+        		}
+		}
+}
+/*		#pragma omp for
 		//Y direction flux
 		for (int i = 0; i < NX+2; i++){
-                        for (int j = 1; j < NY+2; j++){
+                        for (int j = 0; j < NY+2; j++){
                                 int index = i*(NY+2)+j;
 				//int index1 = i*(NIF_Y+2)+j;
 				int kBB = index-2, kB = index-1, kT = index, kTT = index+1;
@@ -218,4 +302,4 @@ float DX,float DY,float g){
 				}
                         }
                 }
-}
+}*/

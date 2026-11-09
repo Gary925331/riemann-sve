@@ -3,18 +3,24 @@
 
 void Allocate_memory(float **u,float **v,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,
 float **momentum_X,float **momentum_Y,float **h,int N,int NIF){
-	*u = (float*)malloc(N*sizeof(float));
-	*v = (float*)malloc(N*sizeof(float));
-	*mass_F = (float*)malloc(NIF*sizeof(float));
-	*momentum_F_X = (float*)malloc(NIF*sizeof(float));
-	*momentum_F_Y = (float*)malloc(NIF*sizeof(float));
-	*mass_G = (float*)malloc(NIF*sizeof(float));
-        *momentum_G_X = (float*)malloc(NIF*sizeof(float));
-	*momentum_G_Y = (float*)malloc(NIF*sizeof(float));
-	*mass = (float*)malloc(NIF*sizeof(float));
-	*momentum_X = (float*)malloc(NIF*sizeof(float));
-	*momentum_Y = (float*)malloc(NIF*sizeof(float));
-	*h = (float*)malloc(N*sizeof(float));
+	size_t alignment = 32;
+	int err = 0;
+	err |= posix_memalign((void**)u,            alignment, N*sizeof(float));
+	err |= posix_memalign((void**)v,            alignment, N*sizeof(float));
+	err |= posix_memalign((void**)mass_F,       alignment, NIF*sizeof(float));
+	err |= posix_memalign((void**)momentum_F_X, alignment, NIF*sizeof(float));
+	err |= posix_memalign((void**)momentum_F_Y, alignment, NIF*sizeof(float));
+	err |= posix_memalign((void**)mass_G,       alignment, NIF*sizeof(float));
+        err |= posix_memalign((void**)momentum_G_X, alignment, NIF*sizeof(float));
+	err |= posix_memalign((void**)momentum_G_Y, alignment, NIF*sizeof(float));
+	err |= posix_memalign((void**)mass,         alignment, NIF*sizeof(float));
+	err |= posix_memalign((void**)momentum_X,   alignment, NIF*sizeof(float));
+	err |= posix_memalign((void**)momentum_Y,   alignment, NIF*sizeof(float));
+	err |= posix_memalign((void**)h,            alignment, N*sizeof(float));
+	if (err != 0) {
+		fprintf(stderr, "posix_memalign 配置記憶體失敗\n");
+		exit(EXIT_FAILURE);
+	}
 	/*h_slope_X = (float*)malloc(N*sizeof(float));
 	*u_slope_X_X = (float*)malloc(N*sizeof(float));
 	*v_slope_X_Y = (float*)malloc(N*sizeof(float));
