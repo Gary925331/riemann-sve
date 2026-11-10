@@ -1,15 +1,16 @@
 SRC    = main.c flux.c ghost.c initial.c memory.c minmod.c state.c  
 HDR    = $(wildcard *.h)
 CFLAGS = -O3 -ffast-math -march=native 
+FASTMATH_O := $(shell gcc -print-file-name=crtfastmath.o)
 
 all: main main_musl
 
 main: $(SRC) $(HDR)
-	gcc $(CFLAGS) $(SRC) -c main.c -lm -pg
-	gcc $(CFLAGS) $(SRC) -o main -lm -pg
+	gcc $(CFLAGS) $(SRC) -c main.c -lm 
+	gcc $(CFLAGS) $(SRC) -o main -lm 
 
 main_musl: $(SRC) $(HDR)
-	musl-gcc $(CFLAGS) $(SRC) -o main_musl -lm
+	musl-gcc $(CFLAGS) $(SRC)  $(FASTMATH_O) -o main_musl -lm
 
 clean:
 	rm -f main main_musl results_*cores_run*.dat results.dat *.o

@@ -28,7 +28,7 @@
 #define CFL 0.1
 
 void time_calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
-float *momentum_Y,float *h/*,float *h_slope_X,float *u_slope_X_X,float *v_slope_X_Y,float *h_slope_Y,float *u_slope_Y_X,float *v_slope_Y_Y*/,int type,int type_limiter){
+float *momentum_Y,float *h,int type,int type_limiter){
 	float time = 0;
 	float Smax_X;
         float Smax_Y;
