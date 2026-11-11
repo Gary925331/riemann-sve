@@ -46,11 +46,11 @@ float *momentum_Y,float *h,int type,int type_limiter){
 		for (int i = 1;i < NX+1;i++){
 			for (int j = 1;j < NY+1;j++){
 				int index = i*(NY+2)+j;
-				float S_R = fabsf(u[index]) + sqrtf(g*h[index]);
+				float S_R = fabsf(u[index]) + a[index];
 				if (S_R > Smax_X) {
             				Smax_X = S_R;
         			}
-                        	float S_T = fabsf(v[index]) + sqrtf(g*mass[index]);
+                        	float S_T = fabsf(v[index]) + a[index];
 				if (S_T > Smax_Y) {
             				Smax_Y = S_T;
         			}

@@ -15,16 +15,22 @@ float *momentum_Y,float *h,int NX,int NY,float DX,float DY,float DT,float g){
                                 momentum_X[index] = momentum_X[index] - (DT*(momentum_F_X[index+NY+2]-momentum_F_X[index])/DX)-(DT*(momentum_G_X[index+1]-momentum_G_X[index])/DY);
                                 momentum_Y[index] = momentum_Y[index] - (DT*(momentum_F_Y[index+NY+2]-momentum_F_Y[index])/DX)-(DT*(momentum_G_Y[index+1]-momentum_G_Y[index])/DY);
 //                      printf("%f,%f\n",mass[i],momentum[i]);
+				float inv = 1.0f/mass[index];
+				h[index] = mass[index];
+                                u[index] = momentum_X[index]*inv;
+                                v[index] = momentum_Y[index]*inv;
+                                a[index] = sqrtf(g*mass[index]); 
                         }
                 }
-                #pragma omp for
+               /* #pragma omp for
                 for(int i = 0;i < NX+2;i++){
                         for (int j = 0; j < NY+2; j++){
                                 int index = i*(NY+2)+j;
+				float inv = 1.0f/mass[index];
                                 h[index] = mass[index];
-                                u[index] = momentum_X[index]/mass[index];
-                                v[index] = momentum_Y[index]/mass[index];
+                                u[index] = momentum_X[index]*inv;
+                                v[index] = momentum_Y[index]*inv;
 				a[index] = sqrtf(g*mass[index]); 
                         }
-                }
+                }*/
 }
