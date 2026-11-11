@@ -27,7 +27,7 @@
 #define g 9.81f
 #define CFL 0.1
 
-void time_calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
+void time_calculation(float *u,float *v,float *a,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
 float *momentum_Y,float *h,int type,int type_limiter){
 	float time = 0;
 	float Smax_X;
@@ -79,7 +79,7 @@ float *momentum_Y,float *h,int type,int type_limiter){
 		if (stop_flag == 1) {
             		break;
         	}
-		ghost(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,NX,NY);
+		ghost(u,v,a,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,NX,NY,g);
 		/*if(type_limiter == MC){
 			mclimiter(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
                 	NX,NY,DX,DY);
@@ -87,9 +87,9 @@ float *momentum_Y,float *h,int type,int type_limiter){
         		minmod(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         		NX,NY,DX,DY);
 		}*/
-        	Calculation(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,type,type_limiter,NX,NY,DX,DY,g);
+        	Calculation(u,v,a,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,type,type_limiter,NX,NY,DX,DY,g);
 
-        	state(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,NX,NY,DX,DY,DT);
+        	state(u,v,a,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,NX,NY,DX,DY,DT,g);
 		
 
 		#pragma omp master
@@ -148,6 +148,7 @@ int main(int argc, char *argv[]) {
 
         float *u;
 	float *v;
+	float *a;
         float *mass_F;
         float *momentum_F_X;
 	float *momentum_F_Y;
@@ -165,19 +166,19 @@ int main(int argc, char *argv[]) {
 	float *u_slope_Y_X;
 	float *v_slope_Y_Y;*/
 	
-        Allocate_memory(&u,&v,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,N,NIF);
+        Allocate_memory(&u,&v,&a,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h,N,NIF);
 //	time_t start_date;
 //    	time(&start_date);
 //    	printf("Simulation started at: %s", ctime(&start_date));
 
 //    	double start_wtime = omp_get_wtime(); // 取得開始的精確秒數
 	
-	Initial(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
-        NX,NY);
+	Initial(u,v,a,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+        NX,NY,g);
 	
 //	omp_set_num_threads(num_cores);
 
-	time_calculation(u,v,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
+	time_calculation(u,v,a,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,
         type,type_limiter);
 
 //	double end_wtime = omp_get_wtime(); // 取得結束的精確秒數
@@ -199,6 +200,6 @@ int main(int argc, char *argv[]) {
 		}
     	}
     	fclose(fp);
-        Free_memory(&u,&v,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h);
+        Free_memory(&u,&v,&a,&mass_F,&momentum_F_X,&momentum_F_Y,&mass_G,&momentum_G_X,&momentum_G_Y,&mass,&momentum_X,&momentum_Y,&h);
 
 }

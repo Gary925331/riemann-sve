@@ -1,12 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void Allocate_memory(float **u,float **v,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,
+void Allocate_memory(float **u,float **v,float **a,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,
 float **momentum_X,float **momentum_Y,float **h,int N,int NIF){
 	size_t alignment = 32;
 	int err = 0;
 	err |= posix_memalign((void**)u,            alignment, N*sizeof(float));
 	err |= posix_memalign((void**)v,            alignment, N*sizeof(float));
+	err |= posix_memalign((void**)a,         alignment, NIF*sizeof(float));
 	err |= posix_memalign((void**)mass_F,       alignment, NIF*sizeof(float));
 	err |= posix_memalign((void**)momentum_F_X, alignment, NIF*sizeof(float));
 	err |= posix_memalign((void**)momentum_F_Y, alignment, NIF*sizeof(float));
@@ -28,9 +29,10 @@ float **momentum_X,float **momentum_Y,float **h,int N,int NIF){
         *u_slope_Y_X = (float*)malloc(N*sizeof(float));
 	*v_slope_Y_Y = (float*)malloc(N*sizeof(float));*/
 }
-void Free_memory(float **u,float **v,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,float **momentum_X,float **momentum_Y,float **h){
+void Free_memory(float **u,float **v,float **a,float **mass_F,float **momentum_F_X,float **momentum_F_Y,float **mass_G,float **momentum_G_X,float **momentum_G_Y,float **mass,float **momentum_X,float **momentum_Y,float **h){
 	free(*u);
 	free(*v);
+	free(*a);
 	free(*mass_F);
 	free(*momentum_F_X);
 	free(*momentum_F_Y);

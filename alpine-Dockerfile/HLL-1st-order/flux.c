@@ -35,7 +35,7 @@
         return result;
         }
 
-void Calculation(float *u,float *v,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
+void Calculation(float *u,float *v,float *a,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
 float *momentum_Y,float *h,int type,int type_limiter,int NX,int NY,
 float DX,float DY,float g){	
 	#pragma omp for	
@@ -61,6 +61,8 @@ float DX,float DY,float g){
             				float u_X_r = u[index];
 					float v_Y_l = v[index-NY-2];
                                 	float v_Y_r = v[index];
+					float a_l = a[index-NY-2];   /* √(g·h)：在 ghost() 裡每格只算一次 */
+					float a_r = a[index];
 					if (j <= NY*96/200 || j >= NY*171/200) {
             					if (i == (NX/2)+1) {
                 					mass_r = mass_l;
@@ -85,16 +87,16 @@ float DX,float DY,float g){
                                 	float mom_right_Y = mass_r * v_r * u_r; 
 					
 					if (type == FLUX_HLL) {
-            					float SL1 = (u_l) - sqrtf(g*mass_l);
-            					float SR1 = (u_r) - sqrtf(g*mass_r);
+            					float SL1 = (u_l) - a_l;
+            					float SR1 = (u_r) - a_r;
                                 		float S1; //SL
 						if (SL1 > SR1) {
     							S1 = SR1;
 						} else {
     							S1 = SL1;
 						}
-						float SL2 = (u_l) + sqrtf(g*mass_l);
-						float SR2 = (u_r) + sqrtf(g*mass_r);
+						float SL2 = (u_l) + a_l;
+						float SR2 = (u_r) + a_r;
 						float S2; //SR
 						if (SL2 > SR2) {
                                                 	S2 = SL2;
@@ -115,8 +117,8 @@ float DX,float DY,float g){
 							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
 						}
 					}else{
-						float S_L = fabsf(u_l) + sqrtf(g*mass_l);
-                                        	float S_R = fabsf(u_r) + sqrtf(g*mass_r);
+						float S_L = fabsf(u_l) + a_l;
+                                        	float S_R = fabsf(u_r) + a_r;
                                         	float S;
                                         	if (S_L > S_R) {
                                                 	S = S_L;
@@ -137,6 +139,8 @@ float DX,float DY,float g){
                                 float u_X_T = u[index];
 				float v_Y_B = v[index-1];
                                 float v_Y_T = v[index];
+				float a_B = a[index-1];       /* √(g·h)：在 ghost() 裡每格只算一次 */
+				float a_T = a[index];
 				if (j == 1) {                 // 下牆：鏡射重建後的面值
 					mass_B = mass_T;  u_X_B = u_X_T;  v_Y_B = -v_Y_T;
 				}
@@ -167,16 +171,16 @@ float DX,float DY,float g){
                                 float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
 			
 				if (type == FLUX_HLL) {
-                                	float SB1 = (v_B) - sqrtf(g*mass_B);
-                                	float ST1 = (v_T) - sqrtf(g*mass_T);
+                                	float SB1 = (v_B) - a_B;
+                                	float ST1 = (v_T) - a_T;
                                 	float S1; //SL
                                 	if (ST1 > SB1){
                                         	S1 = SB1;
                                 	}else{
 						S1 = ST1;
 					}
-					float SB2 = (v_B) + sqrtf(g*mass_B);
-                                	float ST2 = (v_T) + sqrtf(g*mass_T);
+					float SB2 = (v_B) + a_B;
+                                	float ST2 = (v_T) + a_T;
                                 	float S2; //SR
                                 	if (ST2 > SB2){
                                         	S2 = ST2;
@@ -197,8 +201,8 @@ float DX,float DY,float g){
 						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
 					}
 				}else{
-					float S_B = fabsf(v_B) + sqrtf(g*mass_B);
-                                	float S_T = fabsf(v_T) + sqrtf(g*mass_T);
+					float S_B = fabsf(v_B) + a_B;
+                                	float S_T = fabsf(v_T) + a_T;
                                 	float S;
                                 	if (S_T > S_B){
                                         	S = S_T;

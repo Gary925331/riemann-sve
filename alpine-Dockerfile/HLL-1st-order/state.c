@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <omp.h>
-void state(float *u,float *v,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
-float *momentum_Y,float *h,int NX,int NY,float DX,float DY,float DT){
+void state(float *u,float *v,float *a,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
+float *momentum_Y,float *h,int NX,int NY,float DX,float DY,float DT,float g){
 		#pragma omp for
                 for(int i = 1;i < NX+1;i++){
                         for (int j = 1; j < NY+1; j++){
@@ -24,6 +24,7 @@ float *momentum_Y,float *h,int NX,int NY,float DX,float DY,float DT){
                                 h[index] = mass[index];
                                 u[index] = momentum_X[index]/mass[index];
                                 v[index] = momentum_Y[index]/mass[index];
+				a[index] = sqrtf(g*mass[index]); 
                         }
                 }
 }
