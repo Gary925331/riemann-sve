@@ -1,0 +1,1746 @@
+
+flux.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <Calculation>:
+        return result;
+        }
+
+void Calculation(float *u,float *v,float *a,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
+float *momentum_Y,float *h,int type,int type_limiter,int NX,int NY,
+float DX,float DY,float g){	
+       0:	endbr64
+       4:	push   %r15
+       6:	push   %r14
+       8:	push   %r13
+       a:	push   %r12
+       c:	push   %rbp
+       d:	push   %rbx
+       e:	sub    $0x50,%rsp
+      12:	mov    0xd0(%rsp),%eax
+      19:	mov    %rcx,-0x58(%rsp)
+      1e:	mov    %r8,-0x50(%rsp)
+      23:	mov    0xa0(%rsp),%r10
+	#pragma omp for	
+	for (int i = 1; i < NX+2; i++){
+      2b:	test   %eax,%eax
+float DX,float DY,float g){	
+      2d:	mov    %r9,-0x8(%rsp)
+      32:	mov    0xc0(%rsp),%r14d
+	for (int i = 1; i < NX+2; i++){
+      3a:	js     968 <Calculation+0x968>
+			if (i == NX+1) {             /* 右格是第 NX+1 列（ghost）：沒有第 NX+2 列 */
+				wR = 0.0f;
+				offRR = 0;
+			}
+
+			for (int j = 1; j < NY+2; j++){
+      40:	mov    0xd8(%rsp),%ebx
+      47:	mov    %rsi,%rbp
+      4a:	mov    %rdx,%rsi
+      4d:	mov    %rdi,%r15
+      50:	vmulss 0x0(%rip),%xmm2,%xmm15        # 58 <Calculation+0x58>
+            				float u_X_r = u[index];
+					float v_Y_l = v[index-NY-2];
+                                	float v_Y_r = v[index];
+					float a_l = a[index-NY-2];   /* √(g·h)：在 ghost() 裡每格只算一次 */
+					float a_r = a[index];
+					if (j <= NY*96/200 || j >= NY*171/200) {
+      58:	lea    (%rbx,%rbx,2),%edx
+			for (int j = 1; j < NY+2; j++){
+      5b:	lea    0x1(%rbx),%edi
+					if (j <= NY*96/200 || j >= NY*171/200) {
+      5e:	shl    $0x5,%edx
+			for (int j = 1; j < NY+2; j++){
+      61:	mov    %edi,-0x74(%rsp)
+					if (j <= NY*96/200 || j >= NY*171/200) {
+      65:	mov    %edx,%ebx
+      67:	mov    %edx,0x28(%rsp)
+      6b:	movslq %edx,%rdx
+      6e:	imul   $0x51eb851f,%rdx,%rdx
+      75:	sar    $0x1f,%ebx
+      78:	mov    %ebx,%ecx
+      7a:	sar    $0x26,%rdx
+      7e:	mov    %edx,%ebx
+      80:	sub    %ecx,%ebx
+      82:	imul   $0xab,0xd8(%rsp),%ecx
+      8d:	mov    %ebx,0x2c(%rsp)
+      91:	movslq %ecx,%rdx
+      94:	sar    $0x1f,%ecx
+      97:	imul   $0x51eb851f,%rdx,%rdx
+      9e:	sar    $0x26,%rdx
+      a2:	sub    %ecx,%edx
+      a4:	mov    %edx,-0x18(%rsp)
+            					if (i == (NX/2)+1) {
+      a8:	mov    %eax,%edx
+					mass_B = mass_T;  u_X_B = u_X_T;  v_Y_B = -v_Y_T;
+				}
+				if (j == NY+1) {              // 上牆
+					mass_T = mass_B;  u_X_T = u_X_B;  v_Y_T = -v_Y_B;
+				}
+				if(i == (NX+2)/2){
+      aa:	add    $0x2,%eax
+      ad:	mov    %eax,0x8(%rsp)
+      b1:	sar    $1,%eax
+            					if (i == (NX/2)+1) {
+      b3:	sar    $1,%edx
+				if(i == (NX+2)/2){
+      b5:	mov    %eax,0xc(%rsp)
+					if(j == NY*96/200 +1){
+      b9:	lea    0x1(%rbx),%eax
+            					if (i == (NX/2)+1) {
+      bc:	lea    0x1(%rdx),%r11d
+            					else if (i == (NX/2)+2) {
+      c0:	add    $0x2,%edx
+					if(j == NY*96/200 +1){
+      c3:	mov    %eax,-0x10(%rsp)
+			int   offLL = 2*(NY+2);      /* 左格的左邊 = 第 i-2 列 */
+      c7:	mov    0xd8(%rsp),%eax
+            					else if (i == (NX/2)+2) {
+      ce:	mov    %edx,-0x64(%rsp)
+			int   offLL = 2*(NY+2);      /* 左格的左邊 = 第 i-2 列 */
+      d2:	add    $0x2,%eax
+      d5:	test   %edi,%edi
+      d7:	jle    968 <Calculation+0x968>
+      dd:	movslq %eax,%rdx
+      e0:	movslq 0xd8(%rsp),%rax
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+					}
+				}else{
+					float S_B = fabsf(v_B) + a_B;
+      e8:	mov    %r11d,-0xc(%rsp)
+      ed:	lea    0x0(,%rdx,4),%rdi
+      f5:	mov    %rdx,0x10(%rsp)
+      fa:	mov    %rax,0x30(%rsp)
+      ff:	neg    %rax
+     102:	lea    (%rdi,%rax,4),%rax
+     106:	mov    %rdi,0x18(%rsp)
+     10b:	lea    (%r10,%rax,1),%r13
+     10f:	lea    (%r15,%rax,1),%r12
+			int   offLL = 2*(NY+2);      /* 左格的左邊 = 第 i-2 列 */
+     113:	mov    %rdx,(%rsp)
+	for (int i = 1; i < NX+2; i++){
+     117:	mov    $0x1,%edx
+     11c:	lea    0x0(%rbp,%rax,1),%rbx
+     121:	add    %rsi,%rax
+					float S_B = fabsf(v_B) + a_B;
+     124:	mov    %r13,-0x70(%rsp)
+     129:	mov    %rax,-0x60(%rsp)
+			int   offLL = 2*(NY+2);      /* 左格的左邊 = 第 i-2 列 */
+     12e:	mov    %rdi,%rax
+					float S_B = fabsf(v_B) + a_B;
+     131:	mov    %rbx,%rdi
+     134:	mov    %r12,%rbx
+     137:	mov    %rax,%r13
+     13a:	mov    %rdi,%r12
+     13d:	nopl   (%rax)
+			for (int j = 1; j < NY+2; j++){
+     140:	cmp    %edx,0xc(%rsp)
+     144:	je     a78 <Calculation+0xa78>
+     14a:	cmpl   $0xc7,0x28(%rsp)
+     152:	jle    11c8 <Calculation+0x11c8>
+     158:	mov    0x2c(%rsp),%edi
+     15c:	mov    -0x74(%rsp),%eax
+     160:	lea    (%r10,%r13,1),%r8
+     164:	lea    (%rsi,%r13,1),%r9
+     168:	mov    -0x58(%rsp),%r11
+     16d:	mov    %r13,0x20(%rsp)
+     172:	lea    0x0(%rbp,%r13,1),%rcx
+     177:	cmp    %eax,%edi
+     179:	vmovss %xmm15,-0x68(%rsp)
+     17f:	cmovle %edi,%eax
+     182:	add    %r13,%r11
+     185:	lea    (%r15,%r13,1),%rdi
+     189:	mov    %r11,-0x38(%rsp)
+     18e:	mov    -0x50(%rsp),%r11
+     193:	mov    %eax,-0x14(%rsp)
+	for (int i = 1; i < NX+2; i++){
+     197:	mov    $0x1,%eax
+     19c:	add    %r13,%r11
+     19f:	mov    %r11,-0x30(%rsp)
+     1a4:	mov    -0x8(%rsp),%r11
+     1a9:	add    %r13,%r11
+     1ac:	mov    %r11,-0x28(%rsp)
+     1b1:	mov    0x88(%rsp),%r11
+     1b9:	add    %r13,%r11
+     1bc:	mov    %r11,-0x20(%rsp)
+     1c1:	mov    0x90(%rsp),%r11
+     1c9:	add    %r13,%r11
+     1cc:	mov    %r11,-0x48(%rsp)
+     1d1:	mov    0x98(%rsp),%r11
+     1d9:	add    %r13,%r11
+     1dc:	mov    %r11,-0x40(%rsp)
+     1e1:	mov    -0xc(%rsp),%r11d
+     1e6:	cs nopw 0x0(%rax,%rax,1)
+            				float mass_l = mass[index-NY-2];
+     1f0:	mov    -0x70(%rsp),%r13
+            					if (i == (NX/2)+1) {
+     1f5:	cmp    %edx,%r11d
+            				float u_X_r = u[index];
+     1f8:	vmovss 0x4(%rdi),%xmm2
+            				float mass_r = mass[index];
+     1fd:	vmovss 0x4(%r8),%xmm4
+            				float u_X_l = u[index-NY-2];
+     203:	vmovss -0x8(%rbx,%rax,4),%xmm0
+            				float mass_l = mass[index-NY-2];
+     209:	vmovss -0x8(%r13,%rax,4),%xmm1
+					float v_Y_l = v[index-NY-2];
+     210:	vmovss -0x8(%r12,%rax,4),%xmm6
+                                	float v_Y_r = v[index];
+     217:	vmovss 0x4(%rcx),%xmm7
+            					if (i == (NX/2)+1) {
+     21c:	je     748 <Calculation+0x748>
+            					else if (i == (NX/2)+2) {
+     222:	cmp    %edx,-0x64(%rsp)
+     226:	jne    238 <Calculation+0x238>
+                					u_X_l = -u_X_r;
+     228:	vxorps 0x0(%rip),%xmm2,%xmm0        # 230 <Calculation+0x230>
+                					v_Y_l = v_Y_r;
+     230:	vmovaps %xmm7,%xmm6
+                					mass_l = mass_r;
+     234:	vmovaps %xmm4,%xmm1
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     238:	vmulss %xmm1,%xmm1,%xmm3
+     23c:	vmovss -0x68(%rsp),%xmm14
+					float a_l = a[index-NY-2];   /* √(g·h)：在 ghost() 裡每格只算一次 */
+     242:	mov    -0x60(%rsp),%r13
+					if (type == FLUX_HLL) {
+     247:	test   %r14d,%r14d
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     24a:	vmulss %xmm4,%xmm4,%xmm8
+					float a_r = a[index];
+     24e:	vmovss 0x4(%r9),%xmm10
+            				float mass_left = mass_l * u_l;
+     254:	vmulss %xmm0,%xmm1,%xmm5
+					float a_l = a[index-NY-2];   /* √(g·h)：在 ghost() 裡每格只算一次 */
+     258:	vmovss -0x8(%r13,%rax,4),%xmm13
+            				float mass_right = mass_r * u_r;
+     25f:	vmulss %xmm2,%xmm4,%xmm12
+					float mom_left_Y = mass_l * v_l * u_l;
+     263:	vmulss %xmm6,%xmm1,%xmm6
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     267:	vmulss %xmm14,%xmm3,%xmm3
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     26c:	vmulss %xmm14,%xmm8,%xmm8
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     271:	vmulss %xmm7,%xmm4,%xmm7
+					float mom_left_Y = mass_l * v_l * u_l;
+     275:	vmulss %xmm6,%xmm0,%xmm9
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     279:	vfmadd231ss %xmm5,%xmm0,%xmm3
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     27e:	vfmadd231ss %xmm12,%xmm2,%xmm8
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     283:	vmulss %xmm7,%xmm2,%xmm14
+					if (type == FLUX_HLL) {
+     287:	je     870 <Calculation+0x870>
+						float S_L = fabsf(u_l) + a_l;
+     28d:	vandps 0x0(%rip),%xmm0,%xmm0        # 295 <Calculation+0x295>
+                                        	float S_R = fabsf(u_r) + a_r;
+     295:	vandps 0x0(%rip),%xmm2,%xmm2        # 29d <Calculation+0x29d>
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     29d:	vaddss %xmm8,%xmm3,%xmm3
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     2a2:	vaddss %xmm14,%xmm9,%xmm9
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     2a7:	vsubss %xmm4,%xmm1,%xmm1
+                                        	float S_R = fabsf(u_r) + a_r;
+     2ab:	vaddss %xmm10,%xmm2,%xmm2
+						float S_L = fabsf(u_l) + a_l;
+     2b0:	vaddss %xmm13,%xmm0,%xmm0
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     2b5:	vsubss %xmm7,%xmm6,%xmm6
+                                        	if (S_L > S_R) {
+     2b9:	vmaxss %xmm2,%xmm0,%xmm0
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     2bd:	vaddss %xmm12,%xmm5,%xmm2
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     2c2:	vsubss %xmm12,%xmm5,%xmm5
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     2c7:	vfmadd132ss %xmm0,%xmm2,%xmm1
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     2cc:	vfmadd132ss %xmm0,%xmm3,%xmm5
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     2d1:	vfmadd132ss %xmm6,%xmm9,%xmm0
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     2d6:	vmulss 0x0(%rip),%xmm5,%xmm3        # 2de <Calculation+0x2de>
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     2de:	vmulss 0x0(%rip),%xmm0,%xmm9        # 2e6 <Calculation+0x2e6>
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     2e6:	vmulss 0x0(%rip),%xmm1,%xmm5        # 2ee <Calculation+0x2ee>
+							mass_F[index] = mass_right;
+     2ee:	mov    -0x38(%rsp),%r13
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+     2f3:	cmp    $0x1,%rax
+							mass_F[index] = mass_right;
+     2f7:	vmovss %xmm5,0x0(%r13,%rax,4)
+                                                	momentum_F_X[index] = mom_right_X;
+     2fe:	mov    -0x30(%rsp),%r13
+     303:	vmovss %xmm3,0x0(%r13,%rax,4)
+                                                	momentum_F_Y[index] = mom_right_Y;
+     30a:	mov    -0x28(%rsp),%r13
+     30f:	vmovss %xmm9,0x0(%r13,%rax,4)
+                                float mass_T = mass[index];
+     316:	mov    %eax,%r13d
+     319:	vmovss 0x4(%r8),%xmm4
+                                float u_X_T = u[index];
+     31f:	vmovss 0x4(%rdi),%xmm7
+                                float v_Y_T = v[index];
+     324:	vmovss 0x4(%rcx),%xmm3
+				float a_B = a[index-1];       /* √(g·h)：在 ghost() 裡每格只算一次 */
+     329:	vmovss (%r9),%xmm13
+				float a_T = a[index];
+     32e:	vmovss 0x4(%r9),%xmm10
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+     334:	je     9e0 <Calculation+0x9e0>
+                                float mass_B = mass[index-1];
+     33a:	vmovss (%r8),%xmm2
+                                float u_X_B = u[index-1];
+     33f:	vmovss (%rdi),%xmm5
+				float v_Y_B = v[index-1];
+     343:	vmovss (%rcx),%xmm0
+				if (j == NY+1) {              // 上牆
+     347:	cmp    %r13d,-0x74(%rsp)
+     34c:	je     9c8 <Calculation+0x9c8>
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     352:	vmulss %xmm2,%xmm2,%xmm1
+     356:	vmovss -0x68(%rsp),%xmm15
+				if (type == FLUX_HLL) {
+     35c:	test   %r14d,%r14d
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     35f:	vmulss %xmm4,%xmm4,%xmm8
+                                float mass_Bottom = mass_B * v_B;
+     363:	vmulss %xmm0,%xmm2,%xmm6
+                                float mass_Top = mass_T * v_T;
+     367:	vmulss %xmm3,%xmm4,%xmm12
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+     36b:	vmulss %xmm5,%xmm2,%xmm5
+                                float mom_Top_X = mass_T * u_T * v_T;
+     36f:	vmulss %xmm7,%xmm4,%xmm7
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     373:	vmulss %xmm15,%xmm1,%xmm1
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     378:	vmulss %xmm15,%xmm8,%xmm8
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+     37d:	vmulss %xmm5,%xmm0,%xmm9
+                                float mom_Top_X = mass_T * u_T * v_T;
+     381:	vmulss %xmm7,%xmm3,%xmm14
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     385:	vfmadd231ss %xmm6,%xmm0,%xmm1
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     38a:	vfmadd231ss %xmm12,%xmm3,%xmm8
+				if (type == FLUX_HLL) {
+     38f:	je     7d0 <Calculation+0x7d0>
+					float S_B = fabsf(v_B) + a_B;
+     395:	vandps 0x0(%rip),%xmm0,%xmm0        # 39d <Calculation+0x39d>
+                                	float S_T = fabsf(v_T) + a_T;
+     39d:	vandps 0x0(%rip),%xmm3,%xmm3        # 3a5 <Calculation+0x3a5>
+                                	}else{
+                                        	S = S_B;
+                                	}
+
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+     3a5:	vaddss %xmm14,%xmm9,%xmm9
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+     3aa:	vaddss %xmm8,%xmm1,%xmm1
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+     3af:	vsubss %xmm4,%xmm2,%xmm2
+                                	float S_T = fabsf(v_T) + a_T;
+     3b3:	vaddss %xmm10,%xmm3,%xmm3
+					float S_B = fabsf(v_B) + a_B;
+     3b8:	vaddss %xmm13,%xmm0,%xmm0
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+     3bd:	vsubss %xmm7,%xmm5,%xmm5
+                                	if (S_T > S_B){
+     3c1:	vmaxss %xmm3,%xmm0,%xmm0
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+     3c5:	vaddss %xmm12,%xmm6,%xmm3
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+     3ca:	vsubss %xmm12,%xmm6,%xmm6
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+     3cf:	vfmadd132ss %xmm0,%xmm3,%xmm2
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+     3d4:	vfmadd132ss %xmm0,%xmm9,%xmm5
+     3d9:	vmulss 0x0(%rip),%xmm5,%xmm9        # 3e1 <Calculation+0x3e1>
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+     3e1:	vfmadd132ss %xmm6,%xmm1,%xmm0
+     3e6:	vmulss 0x0(%rip),%xmm0,%xmm1        # 3ee <Calculation+0x3ee>
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+     3ee:	vmulss 0x0(%rip),%xmm2,%xmm6        # 3f6 <Calculation+0x3f6>
+			for (int j = 1; j < NY+2; j++){
+     3f6:	add    $0x4,%r8
+     3fa:	add    $0x4,%rdi
+     3fe:	add    $0x4,%rcx
+     402:	add    $0x4,%r9
+						mass_G[index] = mass_Top;
+     406:	mov    -0x20(%rsp),%r13
+     40b:	vmovss %xmm6,0x0(%r13,%rax,4)
+                                        	momentum_G_X[index] = mom_Top_X;
+     412:	mov    -0x48(%rsp),%r13
+     417:	vmovss %xmm9,0x0(%r13,%rax,4)
+                                        	momentum_G_Y[index] = mom_Top_Y;
+     41e:	mov    -0x40(%rsp),%r13
+     423:	vmovss %xmm1,0x0(%r13,%rax,4)
+			for (int j = 1; j < NY+2; j++){
+     42a:	lea    0x1(%rax),%r13
+     42e:	cmp    %r13d,-0x14(%rsp)
+     433:	jge    910 <Calculation+0x910>
+     439:	cmp    %eax,0xd8(%rsp)
+     440:	mov    %r11d,-0xc(%rsp)
+     445:	lea    0x1(%rax),%ecx
+     448:	vmovss -0x68(%rsp),%xmm15
+     44e:	mov    0x20(%rsp),%r13
+     453:	jl     93a <Calculation+0x93a>
+     459:	mov    (%rsp),%rdi
+     45d:	mov    0x30(%rsp),%r11
+     462:	movslq %ecx,%r8
+     465:	mov    %r13,-0x48(%rsp)
+     46a:	mov    %rbx,-0x40(%rsp)
+     46f:	mov    -0x8(%rsp),%r9
+     474:	lea    (%r8,%rdi,1),%rax
+     478:	sub    %r11,%rdi
+     47b:	mov    %r12,-0x38(%rsp)
+     480:	mov    -0xc(%rsp),%r11d
+     485:	add    %r8,%rdi
+     488:	mov    0x88(%rsp),%rbx
+     490:	shl    $0x2,%rax
+     494:	mov    0x90(%rsp),%r12
+     49c:	mov    0x98(%rsp),%r13
+     4a4:	lea    -0x8(,%rdi,4),%rdi
+     4ac:	vmovss %xmm15,-0x68(%rsp)
+     4b2:	jmp    611 <Calculation+0x611>
+     4b7:	nopw   0x0(%rax,%rax,1)
+						float S_L = fabsf(u_l) + a_l;
+     4c0:	vandps 0x0(%rip),%xmm0,%xmm0        # 4c8 <Calculation+0x4c8>
+                                        	float S_R = fabsf(u_r) + a_r;
+     4c8:	vandps 0x0(%rip),%xmm4,%xmm4        # 4d0 <Calculation+0x4d0>
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     4d0:	vaddss %xmm7,%xmm1,%xmm1
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     4d4:	vaddss %xmm14,%xmm9,%xmm9
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     4d9:	vsubss %xmm5,%xmm2,%xmm2
+                                        	float S_R = fabsf(u_r) + a_r;
+     4dd:	vaddss %xmm10,%xmm4,%xmm4
+						float S_L = fabsf(u_l) + a_l;
+     4e2:	vaddss %xmm13,%xmm0,%xmm0
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     4e7:	vsubss %xmm8,%xmm6,%xmm6
+                                        	if (S_L > S_R) {
+     4ec:	vmaxss %xmm4,%xmm0,%xmm0
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     4f0:	vaddss %xmm12,%xmm3,%xmm4
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     4f5:	vsubss %xmm12,%xmm3,%xmm3
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     4fa:	vfmadd132ss %xmm0,%xmm4,%xmm2
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     4ff:	vfmadd132ss %xmm0,%xmm1,%xmm3
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     504:	vfmadd132ss %xmm6,%xmm9,%xmm0
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     509:	vmulss 0x0(%rip),%xmm3,%xmm1        # 511 <Calculation+0x511>
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     511:	vmulss 0x0(%rip),%xmm0,%xmm9        # 519 <Calculation+0x519>
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     519:	vmulss 0x0(%rip),%xmm2,%xmm3        # 521 <Calculation+0x521>
+							mass_F[index] = mass_right;
+     521:	mov    -0x58(%rsp),%r8
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+     526:	cmp    $0x1,%ecx
+							mass_F[index] = mass_right;
+     529:	vmovss %xmm3,(%r8,%rax,1)
+                                                	momentum_F_X[index] = mom_right_X;
+     52f:	mov    -0x50(%rsp),%r8
+     534:	vmovss %xmm1,(%r8,%rax,1)
+                                                	momentum_F_Y[index] = mom_right_Y;
+     53a:	vmovss %xmm9,(%r9,%rax,1)
+                                float mass_T = mass[index];
+     540:	vmovss (%r10,%rax,1),%xmm4
+                                float u_X_T = u[index];
+     546:	vmovss (%r15,%rax,1),%xmm7
+                                float v_Y_T = v[index];
+     54c:	vmovss 0x0(%rbp,%rax,1),%xmm3
+				float a_B = a[index-1];       /* √(g·h)：在 ghost() 裡每格只算一次 */
+     552:	vmovss -0x4(%rsi,%rax,1),%xmm13
+				float a_T = a[index];
+     558:	vmovss (%rsi,%rax,1),%xmm10
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+     55d:	je     9b0 <Calculation+0x9b0>
+                                float mass_B = mass[index-1];
+     563:	vmovss -0x4(%r10,%rax,1),%xmm2
+                                float u_X_B = u[index-1];
+     56a:	vmovss -0x4(%r15,%rax,1),%xmm5
+				float v_Y_B = v[index-1];
+     571:	vmovss -0x4(%rbp,%rax,1),%xmm0
+				if (j == NY+1) {              // 上牆
+     577:	cmp    %ecx,-0x74(%rsp)
+     57b:	je     998 <Calculation+0x998>
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     581:	vmulss %xmm2,%xmm2,%xmm1
+     585:	vmovss -0x68(%rsp),%xmm11
+				if (type == FLUX_HLL) {
+     58b:	test   %r14d,%r14d
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     58e:	vmulss %xmm4,%xmm4,%xmm8
+                                float mass_Bottom = mass_B * v_B;
+     592:	vmulss %xmm0,%xmm2,%xmm6
+                                float mass_Top = mass_T * v_T;
+     596:	vmulss %xmm3,%xmm4,%xmm12
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+     59a:	vmulss %xmm5,%xmm2,%xmm5
+                                float mom_Top_X = mass_T * u_T * v_T;
+     59e:	vmulss %xmm7,%xmm4,%xmm7
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     5a2:	vmulss %xmm11,%xmm1,%xmm1
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     5a7:	vmulss %xmm11,%xmm8,%xmm8
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+     5ac:	vmulss %xmm5,%xmm0,%xmm9
+                                float mom_Top_X = mass_T * u_T * v_T;
+     5b0:	vmulss %xmm7,%xmm3,%xmm14
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     5b4:	vfmadd231ss %xmm6,%xmm0,%xmm1
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     5b9:	vfmadd231ss %xmm12,%xmm3,%xmm8
+				if (type == FLUX_HLL) {
+     5be:	jne    760 <Calculation+0x760>
+                                	float ST1 = (v_T) - a_T;
+     5c4:	vsubss %xmm10,%xmm3,%xmm15
+                                	float SB1 = (v_B) - a_B;
+     5c9:	vsubss %xmm13,%xmm0,%xmm11
+                                	if (ST1 > SB1){
+     5ce:	vminss %xmm15,%xmm11,%xmm11
+					if(S1 > 0){
+     5d3:	vxorps %xmm15,%xmm15,%xmm15
+     5d8:	vcomiss %xmm15,%xmm11
+     5dd:	jbe    9f8 <Calculation+0x9f8>
+						mass_G[index] = mass_Top;
+     5e3:	vmovss %xmm6,(%rbx,%rax,1)
+			for (int j = 1; j < NY+2; j++){
+     5e8:	add    $0x4,%rdi
+     5ec:	lea    0x1(%rcx),%r8d
+                                        	momentum_G_X[index] = mom_Top_X;
+     5f0:	vmovss %xmm9,(%r12,%rax,1)
+                                        	momentum_G_Y[index] = mom_Top_Y;
+     5f6:	vmovss %xmm1,0x0(%r13,%rax,1)
+			for (int j = 1; j < NY+2; j++){
+     5fd:	add    $0x4,%rax
+     601:	cmp    %ecx,0xd8(%rsp)
+     608:	jl     920 <Calculation+0x920>
+     60e:	mov    %r8d,%ecx
+					if (j <= NY*96/200 || j >= NY*171/200) {
+     611:	cmp    %ecx,-0x18(%rsp)
+            				float mass_l = mass[index-NY-2];
+     615:	vmovss (%r10,%rdi,1),%xmm2
+            				float mass_r = mass[index];
+     61b:	vmovss (%r10,%rax,1),%xmm5
+            				float u_X_l = u[index-NY-2];
+     621:	vmovss (%r15,%rdi,1),%xmm0
+            				float u_X_r = u[index];
+     627:	vmovss (%r15,%rax,1),%xmm4
+					float v_Y_l = v[index-NY-2];
+     62d:	vmovss 0x0(%rbp,%rdi,1),%xmm6
+                                	float v_Y_r = v[index];
+     633:	vmovss 0x0(%rbp,%rax,1),%xmm8
+					float a_l = a[index-NY-2];   /* √(g·h)：在 ghost() 裡每格只算一次 */
+     639:	vmovss (%rsi,%rdi,1),%xmm13
+					float a_r = a[index];
+     63e:	vmovss (%rsi,%rax,1),%xmm10
+					if (j <= NY*96/200 || j >= NY*171/200) {
+     643:	jg     668 <Calculation+0x668>
+            					if (i == (NX/2)+1) {
+     645:	cmp    %edx,%r11d
+     648:	je     980 <Calculation+0x980>
+            					else if (i == (NX/2)+2) {
+     64e:	cmp    %edx,-0x64(%rsp)
+     652:	jne    668 <Calculation+0x668>
+                					u_X_l = -u_X_r;
+     654:	vxorps 0x0(%rip),%xmm4,%xmm0        # 65c <Calculation+0x65c>
+                					v_Y_l = v_Y_r;
+     65c:	vmovaps %xmm8,%xmm6
+                					mass_l = mass_r;
+     660:	vmovaps %xmm5,%xmm2
+     664:	nopl   0x0(%rax)
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     668:	vmulss %xmm2,%xmm2,%xmm1
+     66c:	vmovss -0x68(%rsp),%xmm14
+					if (type == FLUX_HLL) {
+     672:	test   %r14d,%r14d
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     675:	vmulss %xmm5,%xmm5,%xmm7
+            				float mass_left = mass_l * u_l;
+     679:	vmulss %xmm0,%xmm2,%xmm3
+            				float mass_right = mass_r * u_r;
+     67d:	vmulss %xmm4,%xmm5,%xmm12
+					float mom_left_Y = mass_l * v_l * u_l;
+     681:	vmulss %xmm6,%xmm2,%xmm6
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     685:	vmulss %xmm14,%xmm1,%xmm1
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     68a:	vmulss %xmm14,%xmm7,%xmm7
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     68f:	vmulss %xmm8,%xmm5,%xmm8
+					float mom_left_Y = mass_l * v_l * u_l;
+     694:	vmulss %xmm6,%xmm0,%xmm9
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     698:	vfmadd231ss %xmm3,%xmm0,%xmm1
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     69d:	vfmadd231ss %xmm12,%xmm4,%xmm7
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     6a2:	vmulss %xmm8,%xmm4,%xmm14
+					if (type == FLUX_HLL) {
+     6a7:	jne    4c0 <Calculation+0x4c0>
+            					float SR1 = (u_r) - a_r;
+     6ad:	vsubss %xmm10,%xmm4,%xmm15
+            					float SL1 = (u_l) - a_l;
+     6b2:	vsubss %xmm13,%xmm0,%xmm11
+						if (SL1 > SR1) {
+     6b7:	vminss %xmm15,%xmm11,%xmm11
+						if(S1 > 0){
+     6bc:	vxorps %xmm15,%xmm15,%xmm15
+     6c1:	vcomiss %xmm15,%xmm11
+     6c6:	ja     521 <Calculation+0x521>
+						float SR2 = (u_r) + a_r;
+     6cc:	vaddss %xmm4,%xmm10,%xmm10
+						float SL2 = (u_l) + a_l;
+     6d0:	vaddss %xmm0,%xmm13,%xmm13
+						if (SL2 > SR2) {
+     6d4:	vmaxss %xmm13,%xmm10,%xmm10
+						}else if(S2 < 0){
+     6d9:	vcomiss %xmm10,%xmm15
+     6de:	ja     1438 <Calculation+0x1438>
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+     6e4:	vmulss %xmm10,%xmm11,%xmm0
+     6e9:	vsubss %xmm2,%xmm5,%xmm5
+     6ed:	vsubss %xmm11,%xmm10,%xmm2
+     6f2:	vmovss 0x0(%rip),%xmm4        # 6fa <Calculation+0x6fa>
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+     6fa:	vsubss %xmm6,%xmm8,%xmm8
+     6fe:	vdivss %xmm2,%xmm4,%xmm2
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+     702:	vmulss %xmm0,%xmm5,%xmm5
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+     706:	vmulss %xmm0,%xmm8,%xmm8
+     70a:	vfnmadd231ss %xmm11,%xmm12,%xmm5
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+     70f:	vfmadd231ss %xmm10,%xmm3,%xmm5
+            						momentum_F_X[index] = (S2*mom_left_X - S1*mom_right_X)/(S2-S1) + S1*S2*(mass_r * u_r - mass_l * u_l)/(S2-S1);
+     714:	vsubss %xmm3,%xmm12,%xmm3
+     718:	vmulss %xmm0,%xmm3,%xmm3
+     71c:	vfmadd132ss %xmm10,%xmm3,%xmm1
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+     721:	vmulss %xmm5,%xmm2,%xmm3
+            						momentum_F_X[index] = (S2*mom_left_X - S1*mom_right_X)/(S2-S1) + S1*S2*(mass_r * u_r - mass_l * u_l)/(S2-S1);
+     725:	vfnmadd231ss %xmm11,%xmm7,%xmm1
+     72a:	vfnmadd132ss %xmm14,%xmm8,%xmm11
+     72f:	vmulss %xmm1,%xmm2,%xmm1
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+     733:	vfmadd132ss %xmm9,%xmm11,%xmm10
+     738:	vmulss %xmm10,%xmm2,%xmm9
+     73d:	jmp    521 <Calculation+0x521>
+     742:	nopw   0x0(%rax,%rax,1)
+                					u_X_r = -u_X_l;
+     748:	vxorps 0x0(%rip),%xmm0,%xmm2        # 750 <Calculation+0x750>
+                					v_Y_r = v_Y_l;
+     750:	vmovaps %xmm6,%xmm7
+                					mass_r = mass_l;
+     754:	vmovaps %xmm1,%xmm4
+     758:	jmp    238 <Calculation+0x238>
+     75d:	nopl   (%rax)
+					float S_B = fabsf(v_B) + a_B;
+     760:	vandps 0x0(%rip),%xmm0,%xmm0        # 768 <Calculation+0x768>
+                                	float S_T = fabsf(v_T) + a_T;
+     768:	vandps 0x0(%rip),%xmm3,%xmm3        # 770 <Calculation+0x770>
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+     770:	vaddss %xmm14,%xmm9,%xmm9
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+     775:	vaddss %xmm8,%xmm1,%xmm1
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+     77a:	vsubss %xmm4,%xmm2,%xmm2
+                                	float S_T = fabsf(v_T) + a_T;
+     77e:	vaddss %xmm10,%xmm3,%xmm3
+					float S_B = fabsf(v_B) + a_B;
+     783:	vaddss %xmm13,%xmm0,%xmm0
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+     788:	vsubss %xmm7,%xmm5,%xmm5
+                                	if (S_T > S_B){
+     78c:	vmaxss %xmm3,%xmm0,%xmm0
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+     790:	vaddss %xmm12,%xmm6,%xmm3
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+     795:	vsubss %xmm12,%xmm6,%xmm6
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+     79a:	vfmadd132ss %xmm0,%xmm3,%xmm2
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+     79f:	vfmadd132ss %xmm0,%xmm9,%xmm5
+     7a4:	vmulss 0x0(%rip),%xmm5,%xmm9        # 7ac <Calculation+0x7ac>
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+     7ac:	vfmadd132ss %xmm6,%xmm1,%xmm0
+     7b1:	vmulss 0x0(%rip),%xmm0,%xmm1        # 7b9 <Calculation+0x7b9>
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+     7b9:	vmulss 0x0(%rip),%xmm2,%xmm6        # 7c1 <Calculation+0x7c1>
+     7c1:	jmp    5e3 <Calculation+0x5e3>
+     7c6:	cs nopw 0x0(%rax,%rax,1)
+                                	float ST1 = (v_T) - a_T;
+     7d0:	vsubss %xmm10,%xmm3,%xmm15
+                                	float SB1 = (v_B) - a_B;
+     7d5:	vsubss %xmm13,%xmm0,%xmm11
+                                	if (ST1 > SB1){
+     7da:	vminss %xmm15,%xmm11,%xmm11
+					if(S1 > 0){
+     7df:	vxorps %xmm15,%xmm15,%xmm15
+     7e4:	vcomiss %xmm15,%xmm11
+     7e9:	ja     3f6 <Calculation+0x3f6>
+                                	float ST2 = (v_T) + a_T;
+     7ef:	vaddss %xmm3,%xmm10,%xmm10
+					float SB2 = (v_B) + a_B;
+     7f3:	vaddss %xmm0,%xmm13,%xmm13
+                                	if (ST2 > SB2){
+     7f7:	vmaxss %xmm13,%xmm10,%xmm10
+					}else if(S2 < 0){
+     7fc:	vcomiss %xmm10,%xmm15
+     801:	ja     13f0 <Calculation+0x13f0>
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+     807:	vmulss %xmm10,%xmm11,%xmm3
+     80c:	vsubss %xmm2,%xmm4,%xmm4
+     810:	vmovss 0x0(%rip),%xmm2        # 818 <Calculation+0x818>
+     818:	vmulss %xmm3,%xmm4,%xmm4
+     81c:	vfnmadd231ss %xmm11,%xmm12,%xmm4
+     821:	vmovaps %xmm4,%xmm0
+     825:	vsubss %xmm11,%xmm10,%xmm4
+     82a:	vfmadd231ss %xmm10,%xmm6,%xmm0
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+     82f:	vsubss %xmm6,%xmm12,%xmm6
+     833:	vdivss %xmm4,%xmm2,%xmm4
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+     837:	vsubss %xmm5,%xmm7,%xmm2
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+     83b:	vmulss %xmm3,%xmm6,%xmm6
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+     83f:	vmulss %xmm3,%xmm2,%xmm2
+     843:	vfnmadd231ss %xmm11,%xmm14,%xmm2
+     848:	vfmadd231ss %xmm10,%xmm9,%xmm2
+     84d:	vfmadd132ss %xmm1,%xmm6,%xmm10
+     852:	vmulss %xmm2,%xmm4,%xmm9
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+     856:	vfnmadd132ss %xmm8,%xmm10,%xmm11
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+     85b:	vmulss %xmm0,%xmm4,%xmm6
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+     85f:	vmulss %xmm11,%xmm4,%xmm1
+     864:	jmp    3f6 <Calculation+0x3f6>
+     869:	nopl   0x0(%rax)
+            					float SR1 = (u_r) - a_r;
+     870:	vsubss %xmm10,%xmm2,%xmm15
+            					float SL1 = (u_l) - a_l;
+     875:	vsubss %xmm13,%xmm0,%xmm11
+						if (SL1 > SR1) {
+     87a:	vminss %xmm15,%xmm11,%xmm11
+						if(S1 > 0){
+     87f:	vxorps %xmm15,%xmm15,%xmm15
+     884:	vcomiss %xmm15,%xmm11
+     889:	ja     2ee <Calculation+0x2ee>
+						float SR2 = (u_r) + a_r;
+     88f:	vaddss %xmm2,%xmm10,%xmm10
+						float SL2 = (u_l) + a_l;
+     893:	vaddss %xmm0,%xmm13,%xmm13
+						if (SL2 > SR2) {
+     897:	vmaxss %xmm13,%xmm10,%xmm10
+						}else if(S2 < 0){
+     89c:	vcomiss %xmm10,%xmm15
+     8a1:	ja     1420 <Calculation+0x1420>
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+     8a7:	vmulss %xmm10,%xmm11,%xmm2
+     8ac:	vsubss %xmm1,%xmm4,%xmm4
+     8b0:	vsubss %xmm11,%xmm10,%xmm1
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+     8b5:	vsubss %xmm6,%xmm7,%xmm7
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+     8b9:	vmulss %xmm2,%xmm4,%xmm4
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+     8bd:	vmulss %xmm2,%xmm7,%xmm7
+     8c1:	vfnmadd231ss %xmm11,%xmm12,%xmm4
+     8c6:	vmovaps %xmm4,%xmm0
+     8ca:	vmovss 0x0(%rip),%xmm4        # 8d2 <Calculation+0x8d2>
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+     8d2:	vfmadd231ss %xmm10,%xmm5,%xmm0
+            						momentum_F_X[index] = (S2*mom_left_X - S1*mom_right_X)/(S2-S1) + S1*S2*(mass_r * u_r - mass_l * u_l)/(S2-S1);
+     8d7:	vsubss %xmm5,%xmm12,%xmm5
+     8db:	vdivss %xmm1,%xmm4,%xmm1
+     8df:	vmulss %xmm2,%xmm5,%xmm5
+     8e3:	vfmadd132ss %xmm10,%xmm5,%xmm3
+     8e8:	vfnmadd231ss %xmm11,%xmm8,%xmm3
+     8ed:	vfnmadd132ss %xmm14,%xmm7,%xmm11
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+     8f2:	vfmadd132ss %xmm9,%xmm11,%xmm10
+            						momentum_F_X[index] = (S2*mom_left_X - S1*mom_right_X)/(S2-S1) + S1*S2*(mass_r * u_r - mass_l * u_l)/(S2-S1);
+     8f7:	vmulss %xmm3,%xmm1,%xmm3
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+     8fb:	vmulss %xmm0,%xmm1,%xmm5
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+     8ff:	vmulss %xmm10,%xmm1,%xmm9
+     904:	jmp    2ee <Calculation+0x2ee>
+     909:	nopl   0x0(%rax)
+			for (int j = 1; j < NY+2; j++){
+     910:	mov    %r13,%rax
+     913:	jmp    1f0 <Calculation+0x1f0>
+     918:	nopl   0x0(%rax,%rax,1)
+     920:	vmovss -0x68(%rsp),%xmm15
+     926:	mov    -0x48(%rsp),%r13
+     92b:	mov    %r11d,-0xc(%rsp)
+     930:	mov    -0x40(%rsp),%rbx
+     935:	mov    -0x38(%rsp),%r12
+	for (int i = 1; i < NX+2; i++){
+     93a:	mov    0x18(%rsp),%rax
+     93f:	mov    0x10(%rsp),%rdi
+     944:	add    $0x1,%edx
+     947:	add    %rdi,(%rsp)
+     94b:	add    %rax,-0x70(%rsp)
+     950:	add    %rax,%rbx
+     953:	add    %rax,%r12
+     956:	add    %rax,%r13
+     959:	add    %rax,-0x60(%rsp)
+     95e:	cmp    %edx,0x8(%rsp)
+     962:	jne    140 <Calculation+0x140>
+
+				}
+        		}
+		}
+}
+     968:	add    $0x50,%rsp
+     96c:	pop    %rbx
+     96d:	pop    %rbp
+     96e:	pop    %r12
+     970:	pop    %r13
+     972:	pop    %r14
+     974:	pop    %r15
+     976:	ret
+     977:	nopw   0x0(%rax,%rax,1)
+                					u_X_r = -u_X_l;
+     980:	vxorps 0x0(%rip),%xmm0,%xmm4        # 988 <Calculation+0x988>
+                					v_Y_r = v_Y_l;
+     988:	vmovaps %xmm6,%xmm8
+                					mass_r = mass_l;
+     98c:	vmovaps %xmm2,%xmm5
+     990:	jmp    668 <Calculation+0x668>
+     995:	nopl   (%rax)
+					mass_T = mass_B;  u_X_T = u_X_B;  v_Y_T = -v_Y_B;
+     998:	vxorps 0x0(%rip),%xmm0,%xmm3        # 9a0 <Calculation+0x9a0>
+     9a0:	vmovaps %xmm5,%xmm7
+     9a4:	vmovaps %xmm2,%xmm4
+     9a8:	jmp    581 <Calculation+0x581>
+     9ad:	nopl   (%rax)
+					mass_B = mass_T;  u_X_B = u_X_T;  v_Y_B = -v_Y_T;
+     9b0:	vxorps 0x0(%rip),%xmm3,%xmm0        # 9b8 <Calculation+0x9b8>
+     9b8:	vmovaps %xmm7,%xmm5
+     9bc:	vmovaps %xmm4,%xmm2
+     9c0:	jmp    577 <Calculation+0x577>
+     9c5:	nopl   (%rax)
+					mass_T = mass_B;  u_X_T = u_X_B;  v_Y_T = -v_Y_B;
+     9c8:	vxorps 0x0(%rip),%xmm0,%xmm3        # 9d0 <Calculation+0x9d0>
+     9d0:	vmovaps %xmm5,%xmm7
+     9d4:	vmovaps %xmm2,%xmm4
+     9d8:	jmp    352 <Calculation+0x352>
+     9dd:	nopl   (%rax)
+					mass_B = mass_T;  u_X_B = u_X_T;  v_Y_B = -v_Y_T;
+     9e0:	vxorps 0x0(%rip),%xmm3,%xmm0        # 9e8 <Calculation+0x9e8>
+     9e8:	vmovaps %xmm7,%xmm5
+     9ec:	vmovaps %xmm4,%xmm2
+     9f0:	jmp    347 <Calculation+0x347>
+     9f5:	nopl   (%rax)
+                                	float ST2 = (v_T) + a_T;
+     9f8:	vaddss %xmm3,%xmm10,%xmm10
+					float SB2 = (v_B) + a_B;
+     9fc:	vaddss %xmm0,%xmm13,%xmm13
+                                	if (ST2 > SB2){
+     a00:	vmaxss %xmm13,%xmm10,%xmm10
+					}else if(S2 < 0){
+     a05:	vcomiss %xmm10,%xmm15
+     a0a:	ja     1408 <Calculation+0x1408>
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+     a10:	vmulss %xmm10,%xmm11,%xmm3
+     a15:	vsubss %xmm2,%xmm4,%xmm4
+     a19:	vsubss %xmm11,%xmm10,%xmm2
+     a1e:	vmulss %xmm3,%xmm4,%xmm4
+     a22:	vfnmadd231ss %xmm11,%xmm12,%xmm4
+     a27:	vmovaps %xmm4,%xmm0
+     a2b:	vmovss 0x0(%rip),%xmm4        # a33 <Calculation+0xa33>
+     a33:	vfmadd231ss %xmm10,%xmm6,%xmm0
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+     a38:	vsubss %xmm6,%xmm12,%xmm6
+     a3c:	vdivss %xmm2,%xmm4,%xmm2
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+     a40:	vsubss %xmm5,%xmm7,%xmm4
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+     a44:	vmulss %xmm3,%xmm6,%xmm6
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+     a48:	vmulss %xmm3,%xmm4,%xmm4
+     a4c:	vfnmadd231ss %xmm11,%xmm14,%xmm4
+     a51:	vfmadd231ss %xmm10,%xmm9,%xmm4
+     a56:	vfmadd132ss %xmm1,%xmm6,%xmm10
+     a5b:	vmulss %xmm4,%xmm2,%xmm9
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+     a5f:	vfnmadd132ss %xmm8,%xmm10,%xmm11
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+     a64:	vmulss %xmm0,%xmm2,%xmm6
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+     a68:	vmulss %xmm11,%xmm2,%xmm1
+     a6d:	jmp    5e3 <Calculation+0x5e3>
+     a72:	nopw   0x0(%rax,%rax,1)
+     a78:	cmpl   $0xc7,0x28(%rsp)
+     a80:	jle    1470 <Calculation+0x1470>
+     a86:	mov    0x2c(%rsp),%edi
+     a8a:	mov    -0x74(%rsp),%eax
+     a8e:	mov    %r13,0x20(%rsp)
+     a93:	lea    (%r10,%r13,1),%r8
+     a97:	mov    -0x58(%rsp),%r11
+     a9c:	mov    %r15,0x38(%rsp)
+     aa1:	lea    0x0(%rbp,%r13,1),%rcx
+     aa6:	lea    (%rsi,%r13,1),%r9
+     aaa:	cmp    %eax,%edi
+     aac:	mov    %rbp,0x40(%rsp)
+     ab1:	vmovaps %xmm15,%xmm14
+     ab6:	cmovle %edi,%eax
+     ab9:	add    %r13,%r11
+     abc:	lea    (%r15,%r13,1),%rdi
+     ac0:	mov    %rsi,0x48(%rsp)
+     ac5:	mov    %r11,-0x38(%rsp)
+     aca:	mov    -0x50(%rsp),%r11
+     acf:	mov    %r10,0xa0(%rsp)
+     ad7:	mov    -0x38(%rsp),%rsi
+     adc:	add    %r13,%r11
+     adf:	mov    %eax,-0x14(%rsp)
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+     ae3:	mov    $0x1,%eax
+     ae8:	mov    %r11,-0x30(%rsp)
+     aed:	mov    -0x8(%rsp),%r11
+     af2:	mov    -0x30(%rsp),%r10
+     af7:	add    %r13,%r11
+     afa:	mov    %r11,-0x28(%rsp)
+     aff:	mov    0x88(%rsp),%r11
+     b07:	mov    -0x28(%rsp),%rbp
+     b0c:	add    %r13,%r11
+     b0f:	mov    %r11,-0x20(%rsp)
+     b14:	mov    0x90(%rsp),%r11
+     b1c:	mov    -0x20(%rsp),%r15
+     b21:	add    %r13,%r11
+     b24:	mov    %r11,-0x48(%rsp)
+     b29:	mov    0x98(%rsp),%r11
+     b31:	add    %r13,%r11
+     b34:	mov    %r11,-0x40(%rsp)
+     b39:	mov    -0xc(%rsp),%r11d
+     b3e:	xchg   %ax,%ax
+            				float mass_l = mass[index-NY-2];
+     b40:	mov    -0x70(%rsp),%r13
+            					if (i == (NX/2)+1) {
+     b45:	cmp    %edx,%r11d
+            				float u_X_r = u[index];
+     b48:	vmovss 0x4(%rdi),%xmm2
+            				float mass_r = mass[index];
+     b4d:	vmovss 0x4(%r8),%xmm4
+            				float u_X_l = u[index-NY-2];
+     b53:	vmovss -0x8(%rbx,%rax,4),%xmm0
+            				float mass_l = mass[index-NY-2];
+     b59:	vmovss -0x8(%r13,%rax,4),%xmm1
+					float v_Y_l = v[index-NY-2];
+     b60:	vmovss -0x8(%r12,%rax,4),%xmm6
+                                	float v_Y_r = v[index];
+     b67:	vmovss 0x4(%rcx),%xmm7
+            					if (i == (NX/2)+1) {
+     b6c:	je     fd8 <Calculation+0xfd8>
+            					else if (i == (NX/2)+2) {
+     b72:	cmp    %edx,-0x64(%rsp)
+     b76:	jne    b88 <Calculation+0xb88>
+                					u_X_l = -u_X_r;
+     b78:	vxorps 0x0(%rip),%xmm2,%xmm0        # b80 <Calculation+0xb80>
+                					v_Y_l = v_Y_r;
+     b80:	vmovaps %xmm7,%xmm6
+                					mass_l = mass_r;
+     b84:	vmovaps %xmm4,%xmm1
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     b88:	vmulss %xmm1,%xmm1,%xmm3
+					float a_l = a[index-NY-2];   /* √(g·h)：在 ghost() 裡每格只算一次 */
+     b8c:	mov    -0x60(%rsp),%r13
+					if (type == FLUX_HLL) {
+     b91:	test   %r14d,%r14d
+					float a_r = a[index];
+     b94:	vmovss 0x4(%r9),%xmm10
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     b9a:	vmulss %xmm4,%xmm4,%xmm8
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     b9e:	vmulss %xmm7,%xmm4,%xmm7
+					float a_l = a[index-NY-2];   /* √(g·h)：在 ghost() 裡每格只算一次 */
+     ba2:	vmovss -0x8(%r13,%rax,4),%xmm13
+            				float mass_left = mass_l * u_l;
+     ba9:	vmulss %xmm0,%xmm1,%xmm5
+            				float mass_right = mass_r * u_r;
+     bad:	vmulss %xmm2,%xmm4,%xmm12
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     bb1:	vmulss %xmm14,%xmm3,%xmm3
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     bb6:	vmulss %xmm14,%xmm8,%xmm8
+					float mom_left_Y = mass_l * v_l * u_l;
+     bbb:	vmulss %xmm6,%xmm1,%xmm6
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     bbf:	vmulss %xmm7,%xmm2,%xmm15
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     bc3:	vfmadd231ss %xmm5,%xmm0,%xmm3
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     bc8:	vfmadd231ss %xmm12,%xmm2,%xmm8
+					float mom_left_Y = mass_l * v_l * u_l;
+     bcd:	vmulss %xmm6,%xmm0,%xmm9
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     bd1:	vmovss %xmm15,-0x68(%rsp)
+					if (type == FLUX_HLL) {
+     bd7:	jne    10d0 <Calculation+0x10d0>
+            					float SR1 = (u_r) - a_r;
+     bdd:	vsubss %xmm10,%xmm2,%xmm15
+            					float SL1 = (u_l) - a_l;
+     be2:	vsubss %xmm13,%xmm0,%xmm11
+						if (SL1 > SR1) {
+     be7:	vminss %xmm15,%xmm11,%xmm11
+						if(S1 > 0){
+     bec:	vxorps %xmm15,%xmm15,%xmm15
+     bf1:	vcomiss %xmm15,%xmm11
+     bf6:	jbe    11d8 <Calculation+0x11d8>
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+     bfc:	cmp    $0x1,%rax
+							mass_F[index] = mass_right;
+     c00:	vmovss %xmm5,(%rsi,%rax,4)
+     c05:	mov    %eax,%r13d
+                                                	momentum_F_X[index] = mom_right_X;
+     c08:	vmovss %xmm3,(%r10,%rax,4)
+                                                	momentum_F_Y[index] = mom_right_Y;
+     c0e:	vmovss %xmm9,0x0(%rbp,%rax,4)
+                                float u_X_T = u[index];
+     c14:	vmovss 0x4(%rdi),%xmm7
+                                float v_Y_T = v[index];
+     c19:	vmovss 0x4(%rcx),%xmm3
+                                float mass_T = mass[index];
+     c1e:	vmovss 0x4(%r8),%xmm4
+				float a_B = a[index-1];       /* √(g·h)：在 ghost() 裡每格只算一次 */
+     c24:	vmovss (%r9),%xmm13
+				float a_T = a[index];
+     c29:	vmovss 0x4(%r9),%xmm10
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+     c2f:	je     1150 <Calculation+0x1150>
+				if (j == NY+1) {              // 上牆
+     c35:	cmp    %eax,-0x74(%rsp)
+                                float mass_B = mass[index-1];
+     c39:	vmovss (%r8),%xmm2
+                                float u_X_B = u[index-1];
+     c3e:	vmovss (%rdi),%xmm5
+				float v_Y_B = v[index-1];
+     c42:	vmovss (%rcx),%xmm0
+				if (j == NY+1) {              // 上牆
+     c46:	je     13d8 <Calculation+0x13d8>
+					if(j == NY*96/200 +1){
+     c4c:	cmp    %r13d,-0x10(%rsp)
+     c51:	je     1150 <Calculation+0x1150>
+					if(j == NY*171/200){
+     c57:	cmp    %r13d,-0x18(%rsp)
+     c5c:	jne    c6e <Calculation+0xc6e>
+						v_Y_T = -v_Y_B;
+     c5e:	vxorps 0x0(%rip),%xmm0,%xmm3        # c66 <Calculation+0xc66>
+						u_X_T = u_X_B;
+     c66:	vmovaps %xmm5,%xmm7
+						mass_T = mass_B;
+     c6a:	vmovaps %xmm2,%xmm4
+                                float mom_Top_X = mass_T * u_T * v_T;
+     c6e:	vmulss %xmm7,%xmm4,%xmm7
+				if (type == FLUX_HLL) {
+     c72:	test   %r14d,%r14d
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     c75:	vmulss %xmm4,%xmm4,%xmm8
+                                float mass_Bottom = mass_B * v_B;
+     c79:	vmulss %xmm0,%xmm2,%xmm6
+                                float mass_Top = mass_T * v_T;
+     c7d:	vmulss %xmm3,%xmm4,%xmm12
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+     c81:	vmulss %xmm5,%xmm2,%xmm5
+                                float mom_Top_X = mass_T * u_T * v_T;
+     c85:	vmulss %xmm7,%xmm3,%xmm1
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     c89:	vmulss %xmm14,%xmm8,%xmm8
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+     c8e:	vmulss %xmm5,%xmm0,%xmm9
+                                float mom_Top_X = mass_T * u_T * v_T;
+     c92:	vmovss %xmm1,-0x68(%rsp)
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     c98:	vmulss %xmm2,%xmm2,%xmm1
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     c9c:	vfmadd231ss %xmm12,%xmm3,%xmm8
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     ca1:	vmulss %xmm14,%xmm1,%xmm1
+     ca6:	vfmadd231ss %xmm6,%xmm0,%xmm1
+				if (type == FLUX_HLL) {
+     cab:	jne    1060 <Calculation+0x1060>
+                                	float ST1 = (v_T) - a_T;
+     cb1:	vsubss %xmm10,%xmm3,%xmm15
+                                	float SB1 = (v_B) - a_B;
+     cb6:	vsubss %xmm13,%xmm0,%xmm11
+                                	if (ST1 > SB1){
+     cbb:	vminss %xmm15,%xmm11,%xmm11
+					if(S1 > 0){
+     cc0:	vxorps %xmm15,%xmm15,%xmm15
+     cc5:	vcomiss %xmm15,%xmm11
+     cca:	jbe    12d8 <Calculation+0x12d8>
+			for (int j = 1; j < NY+2; j++){
+     cd0:	add    $0x4,%r8
+     cd4:	add    $0x4,%rdi
+     cd8:	add    $0x4,%rcx
+     cdc:	add    $0x4,%r9
+                                        	momentum_G_X[index] = mom_Top_X;
+     ce0:	mov    -0x48(%rsp),%r13
+						mass_G[index] = mass_Top;
+     ce5:	vmovss %xmm6,(%r15,%rax,4)
+                                        	momentum_G_X[index] = mom_Top_X;
+     ceb:	vmovss %xmm9,0x0(%r13,%rax,4)
+                                        	momentum_G_Y[index] = mom_Top_Y;
+     cf2:	mov    -0x40(%rsp),%r13
+     cf7:	vmovss %xmm1,0x0(%r13,%rax,4)
+			for (int j = 1; j < NY+2; j++){
+     cfe:	lea    0x1(%rax),%r13
+     d02:	cmp    %r13d,-0x14(%rsp)
+     d07:	jge    1140 <Calculation+0x1140>
+     d0d:	cmp    %eax,0xd8(%rsp)
+     d14:	mov    %r11d,-0xc(%rsp)
+     d19:	vmovaps %xmm14,%xmm15
+     d1e:	mov    0x20(%rsp),%r13
+     d23:	mov    0x38(%rsp),%r15
+     d28:	mov    0x40(%rsp),%rbp
+     d2d:	mov    0x48(%rsp),%rsi
+     d32:	mov    0xa0(%rsp),%r10
+     d3a:	jl     93a <Calculation+0x93a>
+     d40:	add    $0x1,%eax
+     d43:	mov    (%rsp),%rdi
+     d47:	mov    0x30(%rsp),%r11
+     d4c:	movslq %eax,%r8
+     d4f:	vmovaps %xmm15,%xmm14
+     d54:	mov    %r13,-0x48(%rsp)
+     d59:	mov    -0x18(%rsp),%r9d
+     d5e:	lea    (%r8,%rdi,1),%rcx
+     d62:	sub    %r11,%rdi
+     d65:	mov    %rbx,-0x40(%rsp)
+     d6a:	mov    -0xc(%rsp),%r11d
+     d6f:	add    %r8,%rdi
+     d72:	mov    %r12,-0x38(%rsp)
+     d77:	shl    $0x2,%rcx
+     d7b:	mov    0x88(%rsp),%rbx
+     d83:	mov    0x90(%rsp),%r12
+     d8b:	mov    0x98(%rsp),%r13
+     d93:	lea    -0x8(,%rdi,4),%rdi
+     d9b:	jmp    ed3 <Calculation+0xed3>
+            					float SR1 = (u_r) - a_r;
+     da0:	vsubss %xmm10,%xmm4,%xmm15
+            					float SL1 = (u_l) - a_l;
+     da5:	vsubss %xmm13,%xmm0,%xmm11
+						if (SL1 > SR1) {
+     daa:	vminss %xmm15,%xmm11,%xmm11
+						if(S1 > 0){
+     daf:	vxorps %xmm15,%xmm15,%xmm15
+     db4:	vcomiss %xmm15,%xmm11
+     db9:	jbe    1358 <Calculation+0x1358>
+							mass_F[index] = mass_right;
+     dbf:	mov    -0x58(%rsp),%r8
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+     dc4:	cmp    $0x1,%eax
+							mass_F[index] = mass_right;
+     dc7:	vmovss %xmm3,(%r8,%rcx,1)
+                                                	momentum_F_X[index] = mom_right_X;
+     dcd:	mov    -0x50(%rsp),%r8
+     dd2:	vmovss %xmm1,(%r8,%rcx,1)
+                                                	momentum_F_Y[index] = mom_right_Y;
+     dd8:	mov    -0x8(%rsp),%r8
+     ddd:	vmovss %xmm9,(%r8,%rcx,1)
+                                float mass_T = mass[index];
+     de3:	vmovss (%r10,%rcx,1),%xmm4
+                                float u_X_T = u[index];
+     de9:	vmovss (%r15,%rcx,1),%xmm7
+                                float v_Y_T = v[index];
+     def:	vmovss 0x0(%rbp,%rcx,1),%xmm3
+				float a_B = a[index-1];       /* √(g·h)：在 ghost() 裡每格只算一次 */
+     df5:	vmovss -0x4(%rsi,%rcx,1),%xmm13
+				float a_T = a[index];
+     dfb:	vmovss (%rsi,%rcx,1),%xmm10
+				if (j == 1) {                 // 下牆：鏡射重建後的面值
+     e00:	je     11b0 <Calculation+0x11b0>
+                                float mass_B = mass[index-1];
+     e06:	vmovss -0x4(%r10,%rcx,1),%xmm2
+                                float u_X_B = u[index-1];
+     e0d:	vmovss -0x4(%r15,%rcx,1),%xmm5
+				float v_Y_B = v[index-1];
+     e14:	vmovss -0x4(%rbp,%rcx,1),%xmm0
+				if (j == NY+1) {              // 上牆
+     e1a:	cmp    %eax,-0x74(%rsp)
+     e1e:	je     1180 <Calculation+0x1180>
+					if(j == NY*96/200 +1){
+     e24:	cmp    %eax,-0x10(%rsp)
+     e28:	je     119a <Calculation+0x119a>
+					if(j == NY*171/200){
+     e2e:	cmp    %eax,%r9d
+     e31:	jne    e43 <Calculation+0xe43>
+						v_Y_T = -v_Y_B;
+     e33:	vxorps 0x0(%rip),%xmm0,%xmm3        # e3b <Calculation+0xe3b>
+						u_X_T = u_X_B;
+     e3b:	vmovaps %xmm5,%xmm7
+						mass_T = mass_B;
+     e3f:	vmovaps %xmm2,%xmm4
+                                float mom_Top_X = mass_T * u_T * v_T;
+     e43:	vmulss %xmm7,%xmm4,%xmm7
+				if (type == FLUX_HLL) {
+     e47:	test   %r14d,%r14d
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     e4a:	vmulss %xmm4,%xmm4,%xmm8
+                                float mass_Bottom = mass_B * v_B;
+     e4e:	vmulss %xmm0,%xmm2,%xmm6
+                                float mass_Top = mass_T * v_T;
+     e52:	vmulss %xmm3,%xmm4,%xmm12
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+     e56:	vmulss %xmm5,%xmm2,%xmm5
+                                float mom_Top_X = mass_T * u_T * v_T;
+     e5a:	vmulss %xmm7,%xmm3,%xmm1
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     e5e:	vmulss %xmm14,%xmm8,%xmm8
+                                float mom_Bottom_X = mass_B * u_B * v_B;
+     e63:	vmulss %xmm5,%xmm0,%xmm9
+                                float mom_Top_X = mass_T * u_T * v_T;
+     e67:	vmovss %xmm1,-0x68(%rsp)
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     e6d:	vmulss %xmm2,%xmm2,%xmm1
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+     e71:	vfmadd231ss %xmm12,%xmm3,%xmm8
+				float mom_Bottom_Y = mass_B * v_B * v_B + 0.5f*g*mass_B*mass_B;
+     e76:	vmulss %xmm14,%xmm1,%xmm1
+     e7b:	vfmadd231ss %xmm6,%xmm0,%xmm1
+				if (type == FLUX_HLL) {
+     e80:	jne    ff0 <Calculation+0xff0>
+                                	float ST1 = (v_T) - a_T;
+     e86:	vsubss %xmm10,%xmm3,%xmm15
+                                	float SB1 = (v_B) - a_B;
+     e8b:	vsubss %xmm13,%xmm0,%xmm11
+                                	if (ST1 > SB1){
+     e90:	vminss %xmm15,%xmm11,%xmm11
+					if(S1 > 0){
+     e95:	vxorps %xmm15,%xmm15,%xmm15
+     e9a:	vcomiss %xmm15,%xmm11
+     e9f:	jbe    1258 <Calculation+0x1258>
+						mass_G[index] = mass_Top;
+     ea5:	vmovss %xmm6,(%rbx,%rcx,1)
+			for (int j = 1; j < NY+2; j++){
+     eaa:	add    $0x4,%rdi
+     eae:	lea    0x1(%rax),%r8d
+                                        	momentum_G_X[index] = mom_Top_X;
+     eb2:	vmovss %xmm9,(%r12,%rcx,1)
+                                        	momentum_G_Y[index] = mom_Top_Y;
+     eb8:	vmovss %xmm1,0x0(%r13,%rcx,1)
+			for (int j = 1; j < NY+2; j++){
+     ebf:	add    $0x4,%rcx
+     ec3:	cmp    %eax,0xd8(%rsp)
+     eca:	jl     1450 <Calculation+0x1450>
+     ed0:	mov    %r8d,%eax
+					if (j <= NY*96/200 || j >= NY*171/200) {
+     ed3:	cmp    %eax,%r9d
+            				float mass_l = mass[index-NY-2];
+     ed6:	vmovss (%r10,%rdi,1),%xmm2
+            				float mass_r = mass[index];
+     edc:	vmovss (%r10,%rcx,1),%xmm5
+            				float u_X_l = u[index-NY-2];
+     ee2:	vmovss (%r15,%rdi,1),%xmm0
+            				float u_X_r = u[index];
+     ee8:	vmovss (%r15,%rcx,1),%xmm4
+					float v_Y_l = v[index-NY-2];
+     eee:	vmovss 0x0(%rbp,%rdi,1),%xmm6
+                                	float v_Y_r = v[index];
+     ef4:	vmovss 0x0(%rbp,%rcx,1),%xmm8
+					float a_l = a[index-NY-2];   /* √(g·h)：在 ghost() 裡每格只算一次 */
+     efa:	vmovss (%rsi,%rdi,1),%xmm13
+					float a_r = a[index];
+     eff:	vmovss (%rsi,%rcx,1),%xmm10
+					if (j <= NY*96/200 || j >= NY*171/200) {
+     f04:	jg     f28 <Calculation+0xf28>
+            					if (i == (NX/2)+1) {
+     f06:	cmp    %edx,%r11d
+     f09:	je     1168 <Calculation+0x1168>
+            					else if (i == (NX/2)+2) {
+     f0f:	cmp    %edx,-0x64(%rsp)
+     f13:	jne    f28 <Calculation+0xf28>
+                					u_X_l = -u_X_r;
+     f15:	vxorps 0x0(%rip),%xmm4,%xmm0        # f1d <Calculation+0xf1d>
+                					v_Y_l = v_Y_r;
+     f1d:	vmovaps %xmm8,%xmm6
+                					mass_l = mass_r;
+     f21:	vmovaps %xmm5,%xmm2
+     f25:	nopl   (%rax)
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     f28:	vmulss %xmm2,%xmm2,%xmm1
+					if (type == FLUX_HLL) {
+     f2c:	test   %r14d,%r14d
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     f2f:	vmulss %xmm5,%xmm5,%xmm7
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     f33:	vmulss %xmm8,%xmm5,%xmm8
+            				float mass_left = mass_l * u_l;
+     f38:	vmulss %xmm0,%xmm2,%xmm3
+            				float mass_right = mass_r * u_r;
+     f3c:	vmulss %xmm4,%xmm5,%xmm12
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     f40:	vmulss %xmm14,%xmm1,%xmm1
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     f45:	vmulss %xmm14,%xmm7,%xmm7
+					float mom_left_Y = mass_l * v_l * u_l;
+     f4a:	vmulss %xmm6,%xmm2,%xmm6
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     f4e:	vmulss %xmm8,%xmm4,%xmm15
+            				float mom_left_X = mass_l * u_l * u_l + 0.5f*g*mass_l*mass_l;
+     f53:	vfmadd231ss %xmm3,%xmm0,%xmm1
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+     f58:	vfmadd231ss %xmm12,%xmm4,%xmm7
+					float mom_left_Y = mass_l * v_l * u_l;
+     f5d:	vmulss %xmm6,%xmm0,%xmm9
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+     f61:	vmovss %xmm15,-0x68(%rsp)
+					if (type == FLUX_HLL) {
+     f67:	je     da0 <Calculation+0xda0>
+						float S_L = fabsf(u_l) + a_l;
+     f6d:	vandps 0x0(%rip),%xmm0,%xmm0        # f75 <Calculation+0xf75>
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     f75:	vaddss %xmm7,%xmm1,%xmm1
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     f79:	vaddss -0x68(%rsp),%xmm9,%xmm9
+                                        	float S_R = fabsf(u_r) + a_r;
+     f7f:	vandps 0x0(%rip),%xmm4,%xmm4        # f87 <Calculation+0xf87>
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     f87:	vsubss %xmm5,%xmm2,%xmm2
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     f8b:	vsubss %xmm8,%xmm6,%xmm6
+						float S_L = fabsf(u_l) + a_l;
+     f90:	vaddss %xmm13,%xmm0,%xmm0
+                                        	float S_R = fabsf(u_r) + a_r;
+     f95:	vaddss %xmm10,%xmm4,%xmm4
+                                        	if (S_L > S_R) {
+     f9a:	vmaxss %xmm4,%xmm0,%xmm0
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     f9e:	vaddss %xmm12,%xmm3,%xmm4
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     fa3:	vsubss %xmm12,%xmm3,%xmm3
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     fa8:	vfmadd132ss %xmm0,%xmm4,%xmm2
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     fad:	vfmadd132ss %xmm0,%xmm1,%xmm3
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     fb2:	vfmadd132ss %xmm6,%xmm9,%xmm0
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+     fb7:	vmulss 0x0(%rip),%xmm3,%xmm1        # fbf <Calculation+0xfbf>
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+     fbf:	vmulss 0x0(%rip),%xmm0,%xmm9        # fc7 <Calculation+0xfc7>
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+     fc7:	vmulss 0x0(%rip),%xmm2,%xmm3        # fcf <Calculation+0xfcf>
+     fcf:	jmp    dbf <Calculation+0xdbf>
+     fd4:	nopl   0x0(%rax)
+                					u_X_r = -u_X_l;
+     fd8:	vxorps 0x0(%rip),%xmm0,%xmm2        # fe0 <Calculation+0xfe0>
+                					v_Y_r = v_Y_l;
+     fe0:	vmovaps %xmm6,%xmm7
+                					mass_r = mass_l;
+     fe4:	vmovaps %xmm1,%xmm4
+     fe8:	jmp    b88 <Calculation+0xb88>
+     fed:	nopl   (%rax)
+					float S_B = fabsf(v_B) + a_B;
+     ff0:	vandps 0x0(%rip),%xmm0,%xmm0        # ff8 <Calculation+0xff8>
+                                	float S_T = fabsf(v_T) + a_T;
+     ff8:	vandps 0x0(%rip),%xmm3,%xmm3        # 1000 <Calculation+0x1000>
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+    1000:	vaddss %xmm8,%xmm1,%xmm1
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+    1005:	vaddss -0x68(%rsp),%xmm9,%xmm9
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+    100b:	vsubss %xmm4,%xmm2,%xmm2
+                                	float S_T = fabsf(v_T) + a_T;
+    100f:	vaddss %xmm10,%xmm3,%xmm3
+					float S_B = fabsf(v_B) + a_B;
+    1014:	vaddss %xmm13,%xmm0,%xmm0
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+    1019:	vsubss %xmm7,%xmm5,%xmm5
+                                	if (S_T > S_B){
+    101d:	vmaxss %xmm3,%xmm0,%xmm0
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+    1021:	vaddss %xmm12,%xmm6,%xmm3
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+    1026:	vsubss %xmm12,%xmm6,%xmm6
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+    102b:	vfmadd132ss %xmm0,%xmm3,%xmm2
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+    1030:	vfmadd132ss %xmm0,%xmm9,%xmm5
+    1035:	vmulss 0x0(%rip),%xmm5,%xmm9        # 103d <Calculation+0x103d>
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+    103d:	vfmadd132ss %xmm6,%xmm1,%xmm0
+    1042:	vmulss 0x0(%rip),%xmm0,%xmm1        # 104a <Calculation+0x104a>
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+    104a:	vmulss 0x0(%rip),%xmm2,%xmm6        # 1052 <Calculation+0x1052>
+    1052:	jmp    ea5 <Calculation+0xea5>
+    1057:	nopw   0x0(%rax,%rax,1)
+					float S_B = fabsf(v_B) + a_B;
+    1060:	vandps 0x0(%rip),%xmm0,%xmm0        # 1068 <Calculation+0x1068>
+                                	float S_T = fabsf(v_T) + a_T;
+    1068:	vandps 0x0(%rip),%xmm3,%xmm3        # 1070 <Calculation+0x1070>
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+    1070:	vaddss %xmm8,%xmm1,%xmm1
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+    1075:	vaddss -0x68(%rsp),%xmm9,%xmm9
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+    107b:	vsubss %xmm4,%xmm2,%xmm2
+                                	float S_T = fabsf(v_T) + a_T;
+    107f:	vaddss %xmm10,%xmm3,%xmm3
+					float S_B = fabsf(v_B) + a_B;
+    1084:	vaddss %xmm13,%xmm0,%xmm0
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+    1089:	vsubss %xmm7,%xmm5,%xmm5
+                                	if (S_T > S_B){
+    108d:	vmaxss %xmm3,%xmm0,%xmm0
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+    1091:	vaddss %xmm12,%xmm6,%xmm3
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+    1096:	vsubss %xmm12,%xmm6,%xmm6
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+    109b:	vfmadd132ss %xmm0,%xmm3,%xmm2
+                                	momentum_G_X[index] = 0.5f*(mom_Bottom_X + mom_Top_X) - 0.5f*S*(mass_T * u_T - mass_B * u_B);
+    10a0:	vfmadd132ss %xmm0,%xmm9,%xmm5
+    10a5:	vmulss 0x0(%rip),%xmm5,%xmm9        # 10ad <Calculation+0x10ad>
+                                	momentum_G_Y[index] = 0.5f*(mom_Bottom_Y + mom_Top_Y) - 0.5f*S*(mass_T * v_T - mass_B * v_B);
+    10ad:	vfmadd132ss %xmm6,%xmm1,%xmm0
+    10b2:	vmulss 0x0(%rip),%xmm0,%xmm1        # 10ba <Calculation+0x10ba>
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+    10ba:	vmulss 0x0(%rip),%xmm2,%xmm6        # 10c2 <Calculation+0x10c2>
+    10c2:	jmp    cd0 <Calculation+0xcd0>
+    10c7:	nopw   0x0(%rax,%rax,1)
+						float S_L = fabsf(u_l) + a_l;
+    10d0:	vandps 0x0(%rip),%xmm0,%xmm0        # 10d8 <Calculation+0x10d8>
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+    10d8:	vaddss %xmm8,%xmm3,%xmm3
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+    10dd:	vaddss -0x68(%rsp),%xmm9,%xmm9
+                                        	float S_R = fabsf(u_r) + a_r;
+    10e3:	vandps 0x0(%rip),%xmm2,%xmm2        # 10eb <Calculation+0x10eb>
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+    10eb:	vsubss %xmm4,%xmm1,%xmm1
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+    10ef:	vsubss %xmm7,%xmm6,%xmm6
+						float S_L = fabsf(u_l) + a_l;
+    10f3:	vaddss %xmm13,%xmm0,%xmm0
+                                        	float S_R = fabsf(u_r) + a_r;
+    10f8:	vaddss %xmm10,%xmm2,%xmm2
+                                        	if (S_L > S_R) {
+    10fd:	vmaxss %xmm2,%xmm0,%xmm0
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+    1101:	vaddss %xmm12,%xmm5,%xmm2
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+    1106:	vsubss %xmm12,%xmm5,%xmm5
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+    110b:	vfmadd132ss %xmm0,%xmm2,%xmm1
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+    1110:	vfmadd132ss %xmm0,%xmm3,%xmm5
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+    1115:	vfmadd132ss %xmm6,%xmm9,%xmm0
+                                        	momentum_F_X[index] = 0.5f*(mom_left_X + mom_right_X) - 0.5f*S*(mass_r * u_r - mass_l * u_l);
+    111a:	vmulss 0x0(%rip),%xmm5,%xmm3        # 1122 <Calculation+0x1122>
+                                        	momentum_F_Y[index] = 0.5f*(mom_left_Y + mom_right_Y) - 0.5f*S*(mass_r * v_r - mass_l * v_l);
+    1122:	vmulss 0x0(%rip),%xmm0,%xmm9        # 112a <Calculation+0x112a>
+                                        	mass_F[index] = 0.5f*(mass_left + mass_right) - 0.5f*S*(mass_r - mass_l);
+    112a:	vmulss 0x0(%rip),%xmm1,%xmm5        # 1132 <Calculation+0x1132>
+    1132:	jmp    bfc <Calculation+0xbfc>
+    1137:	nopw   0x0(%rax,%rax,1)
+			for (int j = 1; j < NY+2; j++){
+    1140:	mov    %r13,%rax
+    1143:	jmp    b40 <Calculation+0xb40>
+    1148:	nopl   0x0(%rax,%rax,1)
+						v_Y_B = -v_Y_T;
+    1150:	vxorps 0x0(%rip),%xmm3,%xmm0        # 1158 <Calculation+0x1158>
+						u_X_B = u_X_T;
+    1158:	vmovaps %xmm7,%xmm5
+						mass_B = mass_T;
+    115c:	vmovaps %xmm4,%xmm2
+    1160:	jmp    c57 <Calculation+0xc57>
+    1165:	nopl   (%rax)
+                					u_X_r = -u_X_l;
+    1168:	vxorps 0x0(%rip),%xmm0,%xmm4        # 1170 <Calculation+0x1170>
+                					v_Y_r = v_Y_l;
+    1170:	vmovaps %xmm6,%xmm8
+                					mass_r = mass_l;
+    1174:	vmovaps %xmm2,%xmm5
+    1178:	jmp    f28 <Calculation+0xf28>
+    117d:	nopl   (%rax)
+					if(j == NY*96/200 +1){
+    1180:	cmp    %eax,-0x10(%rsp)
+					mass_T = mass_B;  u_X_T = u_X_B;  v_Y_T = -v_Y_B;
+    1184:	vxorps 0x0(%rip),%xmm0,%xmm3        # 118c <Calculation+0x118c>
+    118c:	vmovaps %xmm5,%xmm7
+    1190:	vmovaps %xmm2,%xmm4
+					if(j == NY*96/200 +1){
+    1194:	jne    e2e <Calculation+0xe2e>
+						v_Y_B = -v_Y_T;
+    119a:	vxorps 0x0(%rip),%xmm3,%xmm0        # 11a2 <Calculation+0x11a2>
+						u_X_B = u_X_T;
+    11a2:	vmovaps %xmm7,%xmm5
+						mass_B = mass_T;
+    11a6:	vmovaps %xmm4,%xmm2
+    11aa:	jmp    e2e <Calculation+0xe2e>
+    11af:	nop
+					mass_B = mass_T;  u_X_B = u_X_T;  v_Y_B = -v_Y_T;
+    11b0:	vxorps 0x0(%rip),%xmm3,%xmm0        # 11b8 <Calculation+0x11b8>
+    11b8:	vmovaps %xmm7,%xmm5
+    11bc:	vmovaps %xmm4,%xmm2
+    11c0:	jmp    e1a <Calculation+0xe1a>
+    11c5:	nopl   (%rax)
+                                	mass_G[index] = 0.5f*(mass_Bottom + mass_Top) - 0.5f*S*(mass_T - mass_B);
+    11c8:	mov    $0x1,%ecx
+    11cd:	jmp    459 <Calculation+0x459>
+    11d2:	nopw   0x0(%rax,%rax,1)
+						float SR2 = (u_r) + a_r;
+    11d8:	vaddss %xmm2,%xmm10,%xmm10
+						float SL2 = (u_l) + a_l;
+    11dc:	vaddss %xmm0,%xmm13,%xmm13
+						if (SL2 > SR2) {
+    11e0:	vmaxss %xmm13,%xmm10,%xmm10
+						}else if(S2 < 0){
+    11e5:	vcomiss %xmm10,%xmm15
+    11ea:	ja     14b0 <Calculation+0x14b0>
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+    11f0:	vmulss %xmm10,%xmm11,%xmm2
+    11f5:	vsubss %xmm1,%xmm4,%xmm4
+    11f9:	vsubss %xmm11,%xmm10,%xmm1
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+    11fe:	vsubss %xmm6,%xmm7,%xmm7
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+    1202:	vmulss %xmm2,%xmm4,%xmm4
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+    1206:	vmulss %xmm2,%xmm7,%xmm7
+    120a:	vfnmadd231ss %xmm11,%xmm12,%xmm4
+    120f:	vmovaps %xmm4,%xmm0
+    1213:	vmovss 0x0(%rip),%xmm4        # 121b <Calculation+0x121b>
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+    121b:	vfmadd231ss %xmm10,%xmm5,%xmm0
+            						momentum_F_X[index] = (S2*mom_left_X - S1*mom_right_X)/(S2-S1) + S1*S2*(mass_r * u_r - mass_l * u_l)/(S2-S1);
+    1220:	vsubss %xmm5,%xmm12,%xmm5
+    1224:	vdivss %xmm1,%xmm4,%xmm1
+    1228:	vmulss %xmm2,%xmm5,%xmm5
+    122c:	vfmadd132ss %xmm10,%xmm5,%xmm3
+    1231:	vfnmadd231ss %xmm11,%xmm8,%xmm3
+    1236:	vfnmadd132ss -0x68(%rsp),%xmm7,%xmm11
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+    123d:	vfmadd132ss %xmm9,%xmm11,%xmm10
+            						momentum_F_X[index] = (S2*mom_left_X - S1*mom_right_X)/(S2-S1) + S1*S2*(mass_r * u_r - mass_l * u_l)/(S2-S1);
+    1242:	vmulss %xmm3,%xmm1,%xmm3
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+    1246:	vmulss %xmm0,%xmm1,%xmm5
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+    124a:	vmulss %xmm10,%xmm1,%xmm9
+    124f:	jmp    bfc <Calculation+0xbfc>
+    1254:	nopl   0x0(%rax)
+                                	float ST2 = (v_T) + a_T;
+    1258:	vaddss %xmm3,%xmm10,%xmm10
+					float SB2 = (v_B) + a_B;
+    125c:	vaddss %xmm0,%xmm13,%xmm13
+                                	if (ST2 > SB2){
+    1260:	vmaxss %xmm13,%xmm10,%xmm10
+					}else if(S2 < 0){
+    1265:	vcomiss %xmm10,%xmm15
+    126a:	ja     14c8 <Calculation+0x14c8>
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+    1270:	vmulss %xmm10,%xmm11,%xmm3
+    1275:	vsubss %xmm2,%xmm4,%xmm4
+    1279:	vsubss %xmm11,%xmm10,%xmm2
+    127e:	vmulss %xmm3,%xmm4,%xmm4
+    1282:	vfnmadd231ss %xmm11,%xmm12,%xmm4
+    1287:	vmovaps %xmm4,%xmm0
+    128b:	vmovss 0x0(%rip),%xmm4        # 1293 <Calculation+0x1293>
+    1293:	vfmadd231ss %xmm10,%xmm6,%xmm0
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+    1298:	vsubss %xmm6,%xmm12,%xmm6
+    129c:	vdivss %xmm2,%xmm4,%xmm2
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+    12a0:	vsubss %xmm5,%xmm7,%xmm4
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+    12a4:	vmulss %xmm3,%xmm6,%xmm6
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+    12a8:	vmulss %xmm3,%xmm4,%xmm4
+    12ac:	vfnmadd231ss -0x68(%rsp),%xmm11,%xmm4
+    12b3:	vfmadd231ss %xmm10,%xmm9,%xmm4
+    12b8:	vfmadd132ss %xmm1,%xmm6,%xmm10
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+    12bd:	vfnmadd132ss %xmm8,%xmm10,%xmm11
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+    12c2:	vmulss %xmm4,%xmm2,%xmm9
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+    12c6:	vmulss %xmm11,%xmm2,%xmm1
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+    12cb:	vmulss %xmm0,%xmm2,%xmm6
+    12cf:	jmp    ea5 <Calculation+0xea5>
+    12d4:	nopl   0x0(%rax)
+                                	float ST2 = (v_T) + a_T;
+    12d8:	vaddss %xmm3,%xmm10,%xmm10
+					float SB2 = (v_B) + a_B;
+    12dc:	vaddss %xmm0,%xmm13,%xmm13
+                                	if (ST2 > SB2){
+    12e0:	vmaxss %xmm13,%xmm10,%xmm10
+					}else if(S2 < 0){
+    12e5:	vcomiss %xmm10,%xmm15
+    12ea:	ja     1480 <Calculation+0x1480>
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+    12f0:	vmulss %xmm10,%xmm11,%xmm3
+    12f5:	vsubss %xmm2,%xmm4,%xmm4
+    12f9:	vsubss %xmm11,%xmm10,%xmm2
+    12fe:	vmulss %xmm3,%xmm4,%xmm4
+    1302:	vfnmadd231ss %xmm11,%xmm12,%xmm4
+    1307:	vmovaps %xmm4,%xmm0
+    130b:	vmovss 0x0(%rip),%xmm4        # 1313 <Calculation+0x1313>
+    1313:	vfmadd231ss %xmm10,%xmm6,%xmm0
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+    1318:	vsubss %xmm6,%xmm12,%xmm6
+    131c:	vdivss %xmm2,%xmm4,%xmm2
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+    1320:	vsubss %xmm5,%xmm7,%xmm4
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+    1324:	vmulss %xmm3,%xmm6,%xmm6
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+    1328:	vmulss %xmm3,%xmm4,%xmm4
+    132c:	vfnmadd231ss -0x68(%rsp),%xmm11,%xmm4
+    1333:	vfmadd231ss %xmm10,%xmm9,%xmm4
+    1338:	vfmadd132ss %xmm1,%xmm6,%xmm10
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+    133d:	vfnmadd132ss %xmm8,%xmm10,%xmm11
+                                		momentum_G_X[index] = (S2*mom_Bottom_X - S1*mom_Top_X)/(S2-S1) + S1*S2*(mass_T * u_T - mass_B * u_B)/(S2-S1);
+    1342:	vmulss %xmm4,%xmm2,%xmm9
+						momentum_G_Y[index] = (S2*mom_Bottom_Y - S1*mom_Top_Y)/(S2-S1) + S1*S2*(mass_T * v_T - mass_B * v_B)/(S2-S1);
+    1346:	vmulss %xmm11,%xmm2,%xmm1
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+    134b:	vmulss %xmm0,%xmm2,%xmm6
+    134f:	jmp    cd0 <Calculation+0xcd0>
+    1354:	nopl   0x0(%rax)
+						float SR2 = (u_r) + a_r;
+    1358:	vaddss %xmm4,%xmm10,%xmm10
+						float SL2 = (u_l) + a_l;
+    135c:	vaddss %xmm0,%xmm13,%xmm13
+						if (SL2 > SR2) {
+    1360:	vmaxss %xmm13,%xmm10,%xmm10
+						}else if(S2 < 0){
+    1365:	vcomiss %xmm10,%xmm15
+    136a:	ja     1498 <Calculation+0x1498>
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+    1370:	vmulss %xmm10,%xmm11,%xmm4
+    1375:	vsubss %xmm2,%xmm5,%xmm5
+    1379:	vsubss %xmm11,%xmm10,%xmm2
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+    137e:	vsubss %xmm6,%xmm8,%xmm8
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+    1382:	vmulss %xmm4,%xmm5,%xmm5
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+    1386:	vmulss %xmm4,%xmm8,%xmm8
+    138a:	vfnmadd231ss %xmm11,%xmm12,%xmm5
+    138f:	vmovaps %xmm5,%xmm0
+    1393:	vmovss 0x0(%rip),%xmm5        # 139b <Calculation+0x139b>
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+    139b:	vfmadd231ss %xmm10,%xmm3,%xmm0
+            						momentum_F_X[index] = (S2*mom_left_X - S1*mom_right_X)/(S2-S1) + S1*S2*(mass_r * u_r - mass_l * u_l)/(S2-S1);
+    13a0:	vsubss %xmm3,%xmm12,%xmm3
+    13a4:	vdivss %xmm2,%xmm5,%xmm2
+    13a8:	vmulss %xmm4,%xmm3,%xmm3
+    13ac:	vfmadd132ss %xmm10,%xmm3,%xmm1
+    13b1:	vfnmadd231ss %xmm11,%xmm7,%xmm1
+    13b6:	vfnmadd132ss -0x68(%rsp),%xmm8,%xmm11
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+    13bd:	vfmadd132ss %xmm9,%xmm11,%xmm10
+            						momentum_F_X[index] = (S2*mom_left_X - S1*mom_right_X)/(S2-S1) + S1*S2*(mass_r * u_r - mass_l * u_l)/(S2-S1);
+    13c2:	vmulss %xmm1,%xmm2,%xmm1
+            						mass_F[index] = (S2*mass_left - S1*mass_right)/(S2-S1) + S1*S2*(mass_r - mass_l)/(S2-S1);
+    13c6:	vmulss %xmm0,%xmm2,%xmm3
+							momentum_F_Y[index] = (S2*mom_left_Y - S1*mom_right_Y)/(S2-S1) + S1*S2*(mass_r * v_r - mass_l * v_l)/(S2-S1);
+    13ca:	vmulss %xmm10,%xmm2,%xmm9
+    13cf:	jmp    dbf <Calculation+0xdbf>
+    13d4:	nopl   0x0(%rax)
+					mass_T = mass_B;  u_X_T = u_X_B;  v_Y_T = -v_Y_B;
+    13d8:	vxorps 0x0(%rip),%xmm0,%xmm3        # 13e0 <Calculation+0x13e0>
+    13e0:	vmovaps %xmm5,%xmm7
+    13e4:	vmovaps %xmm2,%xmm4
+    13e8:	jmp    c4c <Calculation+0xc4c>
+    13ed:	nopl   (%rax)
+                                float mass_Top = mass_T * v_T;
+    13f0:	vmovaps %xmm12,%xmm6
+                                float mom_Top_X = mass_T * u_T * v_T;
+    13f4:	vmovaps %xmm14,%xmm9
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+    13f9:	vmovaps %xmm8,%xmm1
+    13fd:	jmp    3f6 <Calculation+0x3f6>
+    1402:	nopw   0x0(%rax,%rax,1)
+                                float mass_Top = mass_T * v_T;
+    1408:	vmovaps %xmm12,%xmm6
+                                float mom_Top_X = mass_T * u_T * v_T;
+    140c:	vmovaps %xmm14,%xmm9
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+    1411:	vmovaps %xmm8,%xmm1
+    1415:	jmp    5e3 <Calculation+0x5e3>
+    141a:	nopw   0x0(%rax,%rax,1)
+            				float mass_right = mass_r * u_r;
+    1420:	vmovaps %xmm12,%xmm5
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+    1424:	vmovaps %xmm8,%xmm3
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+    1428:	vmovaps %xmm14,%xmm9
+    142d:	jmp    2ee <Calculation+0x2ee>
+    1432:	nopw   0x0(%rax,%rax,1)
+            				float mass_right = mass_r * u_r;
+    1438:	vmovaps %xmm12,%xmm3
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+    143c:	vmovaps %xmm7,%xmm1
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+    1440:	vmovaps %xmm14,%xmm9
+    1445:	jmp    521 <Calculation+0x521>
+    144a:	nopw   0x0(%rax,%rax,1)
+    1450:	mov    %r11d,-0xc(%rsp)
+    1455:	mov    -0x48(%rsp),%r13
+    145a:	vmovaps %xmm14,%xmm15
+    145f:	mov    -0x40(%rsp),%rbx
+    1464:	mov    -0x38(%rsp),%r12
+    1469:	jmp    93a <Calculation+0x93a>
+    146e:	xchg   %ax,%ax
+                                		mass_G[index] = (S2*mass_Bottom - S1*mass_Top)/(S2-S1) + S1*S2*(mass_T - mass_B)/(S2-S1);
+    1470:	mov    $0x1,%eax
+    1475:	jmp    d43 <Calculation+0xd43>
+    147a:	nopw   0x0(%rax,%rax,1)
+                                float mom_Top_X = mass_T * u_T * v_T;
+    1480:	vmovss -0x68(%rsp),%xmm9
+                                float mass_Top = mass_T * v_T;
+    1486:	vmovaps %xmm12,%xmm6
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+    148a:	vmovaps %xmm8,%xmm1
+    148e:	jmp    cd0 <Calculation+0xcd0>
+    1493:	nopl   0x0(%rax,%rax,1)
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+    1498:	vmovss -0x68(%rsp),%xmm9
+            				float mass_right = mass_r * u_r;
+    149e:	vmovaps %xmm12,%xmm3
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+    14a2:	vmovaps %xmm7,%xmm1
+    14a6:	jmp    dbf <Calculation+0xdbf>
+    14ab:	nopl   0x0(%rax,%rax,1)
+                                	float mom_right_Y = mass_r * v_r * u_r; 
+    14b0:	vmovss -0x68(%rsp),%xmm9
+            				float mass_right = mass_r * u_r;
+    14b6:	vmovaps %xmm12,%xmm5
+            				float mom_right_X = mass_r * u_r * u_r + 0.5f*g*mass_r*mass_r;
+    14ba:	vmovaps %xmm8,%xmm3
+    14be:	jmp    bfc <Calculation+0xbfc>
+    14c3:	nopl   0x0(%rax,%rax,1)
+                                float mom_Top_X = mass_T * u_T * v_T;
+    14c8:	vmovss -0x68(%rsp),%xmm9
+                                float mass_Top = mass_T * v_T;
+    14ce:	vmovaps %xmm12,%xmm6
+                                float mom_Top_Y = mass_T * v_T * v_T + 0.5f*g*mass_T*mass_T;
+    14d2:	vmovaps %xmm8,%xmm1
+    14d6:	jmp    ea5 <Calculation+0xea5>

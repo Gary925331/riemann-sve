@@ -35,11 +35,10 @@
         return result;
         }
 
-void Calculation(float *u,float *v,float *a,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
-float *momentum_Y,float *h,int type,int type_limiter,int NX,int NY,
-float DX,float DY,float g){	
+void Calculation(float *restrict u,float *restrict v,float *restrict a,float *restrict mass_F,float *restrict momentum_F_X,float *restrict momentum_F_Y,float *restrict mass_G,float *restrict momentum_G_X,float *restrict momentum_G_Y,float *restrict mass,float *restrict momentum_X,
+float *restrict momentum_Y,float *restrict h,int type,int type_limiter,int NX,int NY,float DX,float DY,float g){
 	#pragma omp for	
-	for (int i = 0; i < NX+2; i++){
+	for (int i = 1; i < NX+2; i++){
 			float wL = 1.0f, wR = 1.0f;
 			int   offLL = 2*(NY+2);      /* 左格的左邊 = 第 i-2 列 */
 			int   offRR = NY+2;          /* 右格的右邊 = 第 i+1 列 */
@@ -52,7 +51,7 @@ float DX,float DY,float g){
 				offRR = 0;
 			}
 
-			for (int j = 0; j < NY+2; j++){
+			for (int j = 1; j < NY+2; j++){
 				int index = i*(NY+2)+j;
 				int kLL = index - offLL, kL = index - NY-2, kR = index, kRR = index + offRR;
             				float mass_l = mass[index-NY-2];
@@ -68,11 +67,13 @@ float DX,float DY,float g){
                 					mass_r = mass_l;
                 					u_X_r = -u_X_l;
                 					v_Y_r = v_Y_l;
+							a_r = a_l;
             					}
             					else if (i == (NX/2)+2) {
                 					mass_l = mass_r;
                 					u_X_l = -u_X_r;
                 					v_Y_l = v_Y_r;
+							a_l = a_r;
             					}
         				}
             				float u_l = u_X_l;
@@ -152,11 +153,13 @@ float DX,float DY,float g){
 						mass_B = mass_T;
 						u_X_B = u_X_T;
 						v_Y_B = -v_Y_T;
+						a_B = a_T;
 					}
 					if(j == NY*171/200){
 						mass_T = mass_B;
 						u_X_T = u_X_B;
 						v_Y_T = -v_Y_B;
+						a_T = a_B;
 					}
 				}
                                 float u_B = u_X_B;

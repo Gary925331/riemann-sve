@@ -1,0 +1,329 @@
+
+state.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <state>:
+#include <stdlib.h>
+#include <math.h>
+#include <omp.h>
+void state(float *u,float *v,float *a,float *mass_F,float *momentum_F_X,float *momentum_F_Y,float *mass_G,float *momentum_G_X,float *momentum_G_Y,float *mass,float *momentum_X,
+float *momentum_Y,float *h,int NX,int NY,float DX,float DY,float DT,float g){
+   0:	endbr64
+   4:	push   %rbp
+   5:	mov    %rsp,%rbp
+   8:	push   %r15
+   a:	mov    %rdi,%r15
+   d:	push   %r14
+   f:	push   %r13
+  11:	push   %r12
+  13:	push   %rbx
+  14:	and    $0xffffffffffffffe0,%rsp
+  18:	mov    %rsi,-0x8(%rsp)
+  1d:	mov    %rcx,%rsi
+  20:	mov    %rdx,-0x10(%rsp)
+		#pragma omp for
+                for(int i = 1;i < NX+1;i++){
+  25:	mov    0x48(%rbp),%ebx
+float *momentum_Y,float *h,int NX,int NY,float DX,float DY,float DT,float g){
+  28:	mov    0x10(%rbp),%rdi
+  2c:	mov    0x18(%rbp),%r10
+  30:	mov    0x20(%rbp),%r11
+                for(int i = 1;i < NX+1;i++){
+  34:	test   %ebx,%ebx
+float *momentum_Y,float *h,int NX,int NY,float DX,float DY,float DT,float g){
+  36:	mov    0x30(%rbp),%rdx
+  3a:	mov    0x38(%rbp),%rcx
+                for(int i = 1;i < NX+1;i++){
+  3e:	jle    29c <state+0x29c>
+                        for (int j = 1; j < NY+1; j++){
+                                int index = i*(NY+2)+j;
+                                //int index1 = i*(NIF_Y+2)+j;
+                                if (i == NX/2 +1 && (j <= NY*96/200 || j >= NY*171/200)) {
+  44:	mov    $0x1,%ebx
+  49:	sarx   %ebx,0x48(%rbp),%ebx
+  4f:	add    $0x1,%ebx
+  52:	mov    0x50(%rbp),%eax
+  55:	mov    %ebx,-0x20(%rsp)
+  59:	mov    0x50(%rbp),%ebx
+  5c:	imul   $0xab,0x50(%rbp),%r12d
+  64:	vmovss 0x0(%rip),%xmm5        # 6c <state+0x6c>
+  6c:	lea    (%rbx,%rbx,2),%ebx
+  6f:	vdivss %xmm0,%xmm5,%xmm4
+  73:	shl    $0x5,%ebx
+  76:	mov    %ebx,%r14d
+  79:	mov    %ebx,-0x4c(%rsp)
+  7d:	movslq %ebx,%rbx
+  80:	imul   $0x51eb851f,%rbx,%rbx
+  87:	sar    $0x1f,%r14d
+  8b:	sar    $0x26,%rbx
+  8f:	sub    %r14d,%ebx
+  92:	mov    %ebx,%r14d
+  95:	movslq %r12d,%rbx
+  98:	sar    $0x1f,%r12d
+  9c:	imul   $0x51eb851f,%rbx,%rbx
+  a3:	sar    $0x26,%rbx
+  a7:	sub    %r12d,%ebx
+  aa:	test   %eax,%eax
+  ac:	mov    %ebx,-0x1c(%rsp)
+  b0:	vdivss %xmm1,%xmm5,%xmm1
+  b4:	jle    29c <state+0x29c>
+  ba:	movslq 0x50(%rbp),%r12
+  be:	mov    0x50(%rbp),%eax
+                for(int i = 1;i < NX+1;i++){
+  c1:	movl   $0x1,-0x14(%rsp)
+  c9:	lea    0x2(%r12),%rbx
+  ce:	add    $0x2,%eax
+  d1:	lea    0x0(,%rbx,4),%r13
+  d9:	mov    %eax,-0x38(%rsp)
+  dd:	mov    0x50(%rbp),%eax
+  e0:	mov    %r13,-0x40(%rsp)
+  e5:	mov    0x50(%rbp),%r13d
+  e9:	lea    0x2(%rax,%rax,1),%eax
+  ed:	mov    %rbx,-0x30(%rsp)
+  f2:	sub    $0x1,%r13d
+  f6:	mov    %eax,-0x18(%rsp)
+  fa:	mov    0x48(%rbp),%eax
+  fd:	lea    0x3(%r12,%r13,1),%rbx
+ 102:	add    $0x1,%eax
+ 105:	shl    $0x2,%rbx
+ 109:	cmp    0x50(%rbp),%r14d
+ 10d:	cmovg  0x50(%rbp),%r14d
+ 112:	sub    %r13,%r12
+ 115:	mov    %eax,-0x34(%rsp)
+ 119:	mov    %r14d,-0x50(%rsp)
+                                if (i == NX/2 +1 && (j <= NY*96/200 || j >= NY*171/200)) {
+ 11e:	mov    -0x30(%rsp),%r14
+ 123:	lea    0x8(,%r12,4),%rax
+ 12b:	mov    %rax,-0x48(%rsp)
+ 130:	mov    0x28(%rbp),%rax
+ 134:	mov    %r14,-0x28(%rsp)
+ 139:	nopl   0x0(%rax)
+                        for (int j = 1; j < NY+1; j++){
+ 140:	mov    -0x14(%rsp),%r13d
+ 145:	cmp    %r13d,-0x20(%rsp)
+ 14a:	je     2b0 <state+0x2b0>
+ 150:	mov    -0x28(%rsp),%r14
+ 155:	lea    0x0(,%r14,4),%r12
+ 15d:	mov    -0x48(%rsp),%r14
+ 162:	lea    (%r14,%rbx,1),%r13
+ 166:	cs nopw 0x0(%rax,%rax,1)
+                                        continue; 
+                                }
+                                mass[index] = mass[index] - (DT*(mass_F[index+NY+2]-mass_F[index])/DX) - (DT*(mass_G[index+1]-mass_G[index])/DY);
+ 170:	vmovss 0x4(%rdi,%r12,1),%xmm6
+ 177:	vsubss 0x8(%rdi,%r12,1),%xmm6,%xmm6
+ 17e:	vmovss 0x4(%rsi,%r12,1),%xmm0
+ 185:	vsubss (%rsi,%r13,1),%xmm0,%xmm0
+                                momentum_X[index] = momentum_X[index] - (DT*(momentum_F_X[index+NY+2]-momentum_F_X[index])/DX)-(DT*(momentum_G_X[index+1]-momentum_G_X[index])/DY);
+                                momentum_Y[index] = momentum_Y[index] - (DT*(momentum_F_Y[index+NY+2]-momentum_F_Y[index])/DX)-(DT*(momentum_G_Y[index+1]-momentum_G_Y[index])/DY);
+//                      printf("%f,%f\n",mass[i],momentum[i]);
+				float inv = 1.0f/mass[index];
+				h[index] = mass[index];
+ 18b:	mov    0x40(%rbp),%r14
+                                mass[index] = mass[index] - (DT*(mass_F[index+NY+2]-mass_F[index])/DX) - (DT*(mass_G[index+1]-mass_G[index])/DY);
+ 18f:	vmulss %xmm1,%xmm6,%xmm6
+ 193:	vfmadd132ss %xmm4,%xmm6,%xmm0
+ 198:	vfmadd213ss 0x4(%rax,%r12,1),%xmm2,%xmm0
+ 19f:	vmovss %xmm0,0x4(%rax,%r12,1)
+                                momentum_X[index] = momentum_X[index] - (DT*(momentum_F_X[index+NY+2]-momentum_F_X[index])/DX)-(DT*(momentum_G_X[index+1]-momentum_G_X[index])/DY);
+ 1a6:	vmovss 0x4(%r10,%r12,1),%xmm6
+ 1ad:	vsubss 0x8(%r10,%r12,1),%xmm6,%xmm6
+ 1b4:	vmovss 0x4(%r8,%r12,1),%xmm0
+ 1bb:	vsubss (%r8,%r13,1),%xmm0,%xmm0
+ 1c1:	vmulss %xmm1,%xmm6,%xmm6
+ 1c5:	vfmadd132ss %xmm4,%xmm6,%xmm0
+ 1ca:	vfmadd213ss 0x4(%rdx,%r12,1),%xmm2,%xmm0
+ 1d1:	vmovss %xmm0,0x4(%rdx,%r12,1)
+                                momentum_Y[index] = momentum_Y[index] - (DT*(momentum_F_Y[index+NY+2]-momentum_F_Y[index])/DX)-(DT*(momentum_G_Y[index+1]-momentum_G_Y[index])/DY);
+ 1d8:	vmovss 0x4(%r11,%r12,1),%xmm6
+ 1df:	vsubss 0x8(%r11,%r12,1),%xmm6,%xmm6
+ 1e6:	vmovss 0x4(%r9,%r12,1),%xmm0
+ 1ed:	vsubss (%r9,%r13,1),%xmm0,%xmm0
+                        for (int j = 1; j < NY+1; j++){
+ 1f3:	add    $0x4,%r13
+                                momentum_Y[index] = momentum_Y[index] - (DT*(momentum_F_Y[index+NY+2]-momentum_F_Y[index])/DX)-(DT*(momentum_G_Y[index+1]-momentum_G_Y[index])/DY);
+ 1f7:	vmulss %xmm1,%xmm6,%xmm6
+ 1fb:	vfmadd132ss %xmm4,%xmm6,%xmm0
+ 200:	vfmadd213ss 0x4(%rcx,%r12,1),%xmm2,%xmm0
+ 207:	vmovss %xmm0,0x4(%rcx,%r12,1)
+				float inv = 1.0f/mass[index];
+ 20e:	vmovss 0x4(%rax,%r12,1),%xmm6
+ 215:	vdivss %xmm6,%xmm5,%xmm0
+				h[index] = mass[index];
+ 219:	vmovss %xmm6,0x4(%r14,%r12,1)
+                                u[index] = momentum_X[index]*inv;
+                                v[index] = momentum_Y[index]*inv;
+ 220:	mov    -0x8(%rsp),%r14
+                                u[index] = momentum_X[index]*inv;
+ 225:	vmulss 0x4(%rdx,%r12,1),%xmm0,%xmm6
+ 22c:	vmovss %xmm6,0x4(%r15,%r12,1)
+                                v[index] = momentum_Y[index]*inv;
+ 233:	vmulss 0x4(%rcx,%r12,1),%xmm0,%xmm0
+ 23a:	vmovss %xmm0,0x4(%r14,%r12,1)
+                                a[index] = sqrtf(g*mass[index]); 
+ 241:	vmulss 0x4(%rax,%r12,1),%xmm3,%xmm0
+ 248:	mov    -0x10(%rsp),%r14
+ 24d:	vsqrtss %xmm0,%xmm0,%xmm0
+ 251:	vmovss %xmm0,0x4(%r14,%r12,1)
+                        for (int j = 1; j < NY+1; j++){
+ 258:	add    $0x4,%r12
+ 25c:	cmp    %rbx,%r12
+ 25f:	jne    170 <state+0x170>
+                for(int i = 1;i < NX+1;i++){
+ 265:	mov    -0x40(%rsp),%r13
+ 26a:	addl   $0x1,-0x14(%rsp)
+ 26f:	mov    -0x14(%rsp),%r14d
+ 274:	mov    -0x38(%rsp),%r12d
+ 279:	add    %r13,%rbx
+ 27c:	mov    -0x34(%rsp),%r13d
+ 281:	add    %r12d,-0x18(%rsp)
+ 286:	mov    -0x30(%rsp),%r12
+ 28b:	add    %r12,-0x28(%rsp)
+ 290:	cmp    %r13d,%r14d
+ 293:	jne    140 <state+0x140>
+ 299:	vzeroupper
+                                u[index] = momentum_X[index]*inv;
+                                v[index] = momentum_Y[index]*inv;
+				a[index] = sqrtf(g*mass[index]); 
+                        }
+                }*/
+}
+ 29c:	lea    -0x28(%rbp),%rsp
+ 2a0:	pop    %rbx
+ 2a1:	pop    %r12
+ 2a3:	pop    %r13
+ 2a5:	pop    %r14
+ 2a7:	pop    %r15
+ 2a9:	pop    %rbp
+ 2aa:	ret
+ 2ab:	nopl   0x0(%rax,%rax,1)
+ 2b0:	cmpl   $0xc7,-0x4c(%rsp)
+                        for (int j = 1; j < NY+1; j++){
+ 2b8:	mov    $0x1,%r14d
+ 2be:	jg     3e0 <state+0x3e0>
+ 2c4:	nopl   0x0(%rax)
+ 2c8:	mov    -0x28(%rsp),%r13
+ 2cd:	movslq %r14d,%r12
+ 2d0:	mov    %rbx,-0x58(%rsp)
+ 2d5:	add    %r13,%r12
+ 2d8:	mov    0x40(%rbp),%r13
+ 2dc:	shl    $0x2,%r12
+                                if (i == NX/2 +1 && (j <= NY*96/200 || j >= NY*171/200)) {
+ 2e0:	cmp    %r14d,-0x1c(%rsp)
+ 2e5:	jle    3c4 <state+0x3c4>
+                                mass[index] = mass[index] - (DT*(mass_F[index+NY+2]-mass_F[index])/DX) - (DT*(mass_G[index+1]-mass_G[index])/DY);
+ 2eb:	vmovss (%rdi,%r12,1),%xmm6
+ 2f1:	vsubss 0x4(%rdi,%r12,1),%xmm6,%xmm6
+ 2f8:	mov    -0x18(%rsp),%ebx
+ 2fc:	vmovss (%rsi,%r12,1),%xmm0
+ 302:	vmulss %xmm1,%xmm6,%xmm6
+ 306:	add    %r14d,%ebx
+ 309:	movslq %ebx,%rbx
+ 30c:	vsubss 0x8(%rsi,%rbx,4),%xmm0,%xmm0
+ 312:	vfmadd132ss %xmm4,%xmm6,%xmm0
+ 317:	vfmadd213ss (%rax,%r12,1),%xmm2,%xmm0
+ 31d:	vmovss %xmm0,(%rax,%r12,1)
+                                momentum_X[index] = momentum_X[index] - (DT*(momentum_F_X[index+NY+2]-momentum_F_X[index])/DX)-(DT*(momentum_G_X[index+1]-momentum_G_X[index])/DY);
+ 323:	vmovss (%r10,%r12,1),%xmm6
+ 329:	vsubss 0x4(%r10,%r12,1),%xmm6,%xmm6
+ 330:	vmovss (%r8,%r12,1),%xmm0
+ 336:	vsubss 0x8(%r8,%rbx,4),%xmm0,%xmm0
+ 33d:	vmulss %xmm1,%xmm6,%xmm6
+ 341:	vfmadd132ss %xmm4,%xmm6,%xmm0
+ 346:	vfmadd213ss (%rdx,%r12,1),%xmm2,%xmm0
+ 34c:	vmovss %xmm0,(%rdx,%r12,1)
+                                momentum_Y[index] = momentum_Y[index] - (DT*(momentum_F_Y[index+NY+2]-momentum_F_Y[index])/DX)-(DT*(momentum_G_Y[index+1]-momentum_G_Y[index])/DY);
+ 352:	vmovss (%r11,%r12,1),%xmm6
+ 358:	vsubss 0x4(%r11,%r12,1),%xmm6,%xmm6
+ 35f:	vmovss (%r9,%r12,1),%xmm0
+ 365:	vsubss 0x8(%r9,%rbx,4),%xmm0,%xmm0
+                                v[index] = momentum_Y[index]*inv;
+ 36c:	mov    -0x8(%rsp),%rbx
+                                momentum_Y[index] = momentum_Y[index] - (DT*(momentum_F_Y[index+NY+2]-momentum_F_Y[index])/DX)-(DT*(momentum_G_Y[index+1]-momentum_G_Y[index])/DY);
+ 371:	vmulss %xmm1,%xmm6,%xmm6
+ 375:	vfmadd132ss %xmm4,%xmm6,%xmm0
+ 37a:	vfmadd213ss (%rcx,%r12,1),%xmm2,%xmm0
+ 380:	vmovss %xmm0,(%rcx,%r12,1)
+				float inv = 1.0f/mass[index];
+ 386:	vmovss (%rax,%r12,1),%xmm6
+ 38c:	vdivss %xmm6,%xmm5,%xmm0
+				h[index] = mass[index];
+ 390:	vmovss %xmm6,0x0(%r13,%r12,1)
+                                u[index] = momentum_X[index]*inv;
+ 397:	vmulss (%rdx,%r12,1),%xmm0,%xmm6
+ 39d:	vmovss %xmm6,(%r15,%r12,1)
+                                v[index] = momentum_Y[index]*inv;
+ 3a3:	vmulss (%rcx,%r12,1),%xmm0,%xmm0
+ 3a9:	vmovss %xmm0,(%rbx,%r12,1)
+                                a[index] = sqrtf(g*mass[index]); 
+ 3af:	vmulss (%rax,%r12,1),%xmm3,%xmm0
+ 3b5:	mov    -0x10(%rsp),%rbx
+ 3ba:	vsqrtss %xmm0,%xmm0,%xmm0
+ 3be:	vmovss %xmm0,(%rbx,%r12,1)
+                        for (int j = 1; j < NY+1; j++){
+ 3c4:	add    $0x1,%r14d
+ 3c8:	add    $0x4,%r12
+ 3cc:	cmp    %r14d,0x50(%rbp)
+ 3d0:	jge    2e0 <state+0x2e0>
+ 3d6:	mov    -0x58(%rsp),%rbx
+ 3db:	jmp    265 <state+0x265>
+ 3e0:	mov    -0x50(%rsp),%r14d
+ 3e5:	mov    $0x1,%r13d
+ 3eb:	test   %r14d,%r14d
+ 3ee:	cmovg  %r14d,%r13d
+ 3f2:	cmp    $0x7,%r14d
+ 3f6:	jle    4ca <state+0x4ca>
+ 3fc:	mov    %r13d,%r14d
+float *momentum_Y,float *h,int NX,int NY,float DX,float DY,float DT,float g){
+ 3ff:	vmovdqa 0x0(%rip),%ymm0        # 407 <state+0x407>
+ 407:	xor    %r12d,%r12d
+ 40a:	vpbroadcastd 0x0(%rip),%ymm6        # 413 <state+0x413>
+ 413:	shr    $0x3,%r14d
+ 417:	nopw   0x0(%rax,%rax,1)
+ 420:	add    $0x1,%r12d
+ 424:	vmovdqa %ymm0,%ymm7
+ 428:	vpaddd %ymm6,%ymm0,%ymm0
+                        for (int j = 1; j < NY+1; j++){
+ 42c:	cmp    %r14d,%r12d
+ 42f:	jne    420 <state+0x420>
+ 431:	mov    %r13d,%r12d
+ 434:	and    $0xfffffff8,%r12d
+ 438:	add    $0x1,%r12d
+ 43c:	and    $0x7,%r13d
+ 440:	je     4a8 <state+0x4a8>
+ 442:	lea    0x1(%r12),%r14d
+ 447:	cmp    %r14d,-0x50(%rsp)
+ 44c:	jge    45d <state+0x45d>
+ 44e:	cmp    %r14d,0x50(%rbp)
+ 452:	jge    2c8 <state+0x2c8>
+ 458:	jmp    265 <state+0x265>
+ 45d:	lea    0x2(%r12),%r14d
+ 462:	cmp    %r14d,-0x50(%rsp)
+ 467:	jl     44e <state+0x44e>
+ 469:	lea    0x3(%r12),%r14d
+ 46e:	cmp    %r14d,-0x50(%rsp)
+ 473:	jl     44e <state+0x44e>
+ 475:	lea    0x4(%r12),%r14d
+ 47a:	cmp    %r14d,-0x50(%rsp)
+ 47f:	jl     44e <state+0x44e>
+ 481:	mov    -0x50(%rsp),%r13d
+ 486:	lea    0x5(%r12),%r14d
+ 48b:	cmp    %r13d,%r14d
+ 48e:	jg     44e <state+0x44e>
+ 490:	lea    0x6(%r12),%r14d
+ 495:	add    $0x7,%r12d
+ 499:	cmp    %r14d,%r13d
+ 49c:	cmovge %r12d,%r14d
+ 4a0:	jmp    44e <state+0x44e>
+ 4a2:	nopw   0x0(%rax,%rax,1)
+ 4a8:	mov    $0x1,%r12d
+ 4ae:	vmovd  %r12d,%xmm0
+ 4b3:	vpbroadcastd %xmm0,%ymm0
+ 4b8:	vpaddd %ymm0,%ymm7,%ymm7
+ 4bc:	vextracti128 $0x1,%ymm7,%xmm0
+ 4c2:	vpextrd $0x3,%xmm0,%r14d
+ 4c8:	jmp    44e <state+0x44e>
+ 4ca:	mov    $0x1,%r12d
+ 4d0:	jmp    442 <state+0x442>
