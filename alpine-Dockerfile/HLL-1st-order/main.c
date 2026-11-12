@@ -34,28 +34,29 @@ float *momentum_Y,float *h,int type,int type_limiter){
         float Smax_Y;
 	float DT;
 	int stop_flag = 0;
+	 #pragma omp single
+                {
+                        Smax_X = 0.0;
+                        Smax_Y = 0.0;
+                }
+                #pragma omp for reduction(max:Smax_X, Smax_Y)
+                for (int i = 1;i < NX+1;i++){
+                        for (int j = 1;j < NY+1;j++){
+                                int index = i*(NY+2)+j;
+                                float S_R = fabsf(u[index]) + a[index];
+                                if (S_R > Smax_X) {
+                                        Smax_X = S_R;
+                                }
+                                float S_T = fabsf(v[index]) + a[index];
+                                if (S_T > Smax_Y) {
+                                        Smax_Y = S_T;
+                                }
+                        }
+                }
+
 	#pragma omp parallel
 	{
 	for (int timestep = 0; timestep < MAX_TIMESTEPS; timestep++){
-		#pragma omp single
-		{
-	        	Smax_X = 0.0;
-			Smax_Y = 0.0;
-		}
-		#pragma omp for reduction(max:Smax_X, Smax_Y)
-		for (int i = 1;i < NX+1;i++){
-			for (int j = 1;j < NY+1;j++){
-				int index = i*(NY+2)+j;
-				float S_R = fabsf(u[index]) + a[index];
-				if (S_R > Smax_X) {
-            				Smax_X = S_R;
-        			}
-                        	float S_T = fabsf(v[index]) + a[index];
-				if (S_T > Smax_Y) {
-            				Smax_Y = S_T;
-        			}
-			}
-		}
 		#pragma omp master
 		{
 		float term_X = Smax_X / DX;
@@ -89,7 +90,7 @@ float *momentum_Y,float *h,int type,int type_limiter){
 		}*/
         	Calculation(u,v,a,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,type,type_limiter,NX,NY,DX,DY,g);
 
-        	state(u,v,a,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,NX,NY,DX,DY,DT,g);
+        	state(u,v,a,mass_F,momentum_F_X,momentum_F_Y,mass_G,momentum_G_X,momentum_G_Y,mass,momentum_X,momentum_Y,h,NX,NY,DX,DY,DT,g,&Smax_X,&Smax_Y);
 		
 
 		#pragma omp master

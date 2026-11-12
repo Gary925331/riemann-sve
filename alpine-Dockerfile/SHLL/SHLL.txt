@@ -1,0 +1,1405 @@
+
+test.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <Allocate_and_Init_Memory>:
+       0:	endbr64
+       4:	push   %rbp
+       5:	mov    $0xf42400,%edx
+       a:	mov    $0x20,%esi
+       f:	mov    %rsp,%rbp
+      12:	push   %r13
+      14:	push   %r12
+      16:	push   %rbx
+      17:	sub    $0x138,%rsp
+      1e:	mov    %fs:0x28,%rax
+      27:	mov    %rax,0x128(%rsp)
+      2f:	xor    %eax,%eax
+      31:	mov    %rsp,%rdi
+      34:	call   39 <Allocate_and_Init_Memory+0x39>
+      39:	mov    0x0(%rip),%rbx        # 40 <Allocate_and_Init_Memory+0x40>
+      40:	test   %eax,%eax
+      42:	jne    4f <Allocate_and_Init_Memory+0x4f>
+      44:	mov    (%rsp),%rbx
+      48:	mov    %rbx,0x0(%rip)        # 4f <Allocate_and_Init_Memory+0x4f>
+      4f:	lea    0x8(%rsp),%rdi
+      54:	mov    $0xf42400,%edx
+      59:	mov    $0x20,%esi
+      5e:	call   63 <Allocate_and_Init_Memory+0x63>
+      63:	mov    0x0(%rip),%r12        # 6a <Allocate_and_Init_Memory+0x6a>
+      6a:	test   %eax,%eax
+      6c:	jne    7a <Allocate_and_Init_Memory+0x7a>
+      6e:	mov    0x8(%rsp),%r12
+      73:	mov    %r12,0x0(%rip)        # 7a <Allocate_and_Init_Memory+0x7a>
+      7a:	lea    0x10(%rsp),%rdi
+      7f:	mov    $0xf42400,%edx
+      84:	mov    $0x20,%esi
+      89:	call   8e <Allocate_and_Init_Memory+0x8e>
+      8e:	mov    0x0(%rip),%r13        # 95 <Allocate_and_Init_Memory+0x95>
+      95:	test   %eax,%eax
+      97:	jne    a5 <Allocate_and_Init_Memory+0xa5>
+      99:	mov    0x10(%rsp),%r13
+      9e:	mov    %r13,0x0(%rip)        # a5 <Allocate_and_Init_Memory+0xa5>
+      a5:	lea    0x18(%rsp),%rdi
+      aa:	mov    $0xf42400,%edx
+      af:	mov    $0x20,%esi
+      b4:	call   b9 <Allocate_and_Init_Memory+0xb9>
+      b9:	test   %eax,%eax
+      bb:	jne    c9 <Allocate_and_Init_Memory+0xc9>
+      bd:	mov    0x18(%rsp),%rax
+      c2:	mov    %rax,0x0(%rip)        # c9 <Allocate_and_Init_Memory+0xc9>
+      c9:	lea    0x20(%rsp),%rdi
+      ce:	mov    $0xf42400,%edx
+      d3:	mov    $0x20,%esi
+      d8:	call   dd <Allocate_and_Init_Memory+0xdd>
+      dd:	test   %eax,%eax
+      df:	jne    ed <Allocate_and_Init_Memory+0xed>
+      e1:	mov    0x20(%rsp),%rax
+      e6:	mov    %rax,0x0(%rip)        # ed <Allocate_and_Init_Memory+0xed>
+      ed:	lea    0x28(%rsp),%rdi
+      f2:	mov    $0xf42400,%edx
+      f7:	mov    $0x20,%esi
+      fc:	call   101 <Allocate_and_Init_Memory+0x101>
+     101:	test   %eax,%eax
+     103:	jne    111 <Allocate_and_Init_Memory+0x111>
+     105:	mov    0x28(%rsp),%rax
+     10a:	mov    %rax,0x0(%rip)        # 111 <Allocate_and_Init_Memory+0x111>
+     111:	lea    0x30(%rsp),%rdi
+     116:	mov    $0xf42400,%edx
+     11b:	mov    $0x20,%esi
+     120:	call   125 <Allocate_and_Init_Memory+0x125>
+     125:	test   %eax,%eax
+     127:	jne    135 <Allocate_and_Init_Memory+0x135>
+     129:	mov    0x30(%rsp),%rax
+     12e:	mov    %rax,0x0(%rip)        # 135 <Allocate_and_Init_Memory+0x135>
+     135:	lea    0x38(%rsp),%rdi
+     13a:	mov    $0xf42400,%edx
+     13f:	mov    $0x20,%esi
+     144:	call   149 <Allocate_and_Init_Memory+0x149>
+     149:	test   %eax,%eax
+     14b:	jne    159 <Allocate_and_Init_Memory+0x159>
+     14d:	mov    0x38(%rsp),%rax
+     152:	mov    %rax,0x0(%rip)        # 159 <Allocate_and_Init_Memory+0x159>
+     159:	lea    0x40(%rsp),%rdi
+     15e:	mov    $0xf42400,%edx
+     163:	mov    $0x20,%esi
+     168:	call   16d <Allocate_and_Init_Memory+0x16d>
+     16d:	test   %eax,%eax
+     16f:	jne    17d <Allocate_and_Init_Memory+0x17d>
+     171:	mov    0x40(%rsp),%rax
+     176:	mov    %rax,0x0(%rip)        # 17d <Allocate_and_Init_Memory+0x17d>
+     17d:	lea    0x48(%rsp),%rdi
+     182:	mov    $0xf42400,%edx
+     187:	mov    $0x20,%esi
+     18c:	call   191 <Allocate_and_Init_Memory+0x191>
+     191:	test   %eax,%eax
+     193:	jne    1a1 <Allocate_and_Init_Memory+0x1a1>
+     195:	mov    0x48(%rsp),%rax
+     19a:	mov    %rax,0x0(%rip)        # 1a1 <Allocate_and_Init_Memory+0x1a1>
+     1a1:	lea    0x50(%rsp),%rdi
+     1a6:	mov    $0xf42400,%edx
+     1ab:	mov    $0x20,%esi
+     1b0:	call   1b5 <Allocate_and_Init_Memory+0x1b5>
+     1b5:	test   %eax,%eax
+     1b7:	jne    1c5 <Allocate_and_Init_Memory+0x1c5>
+     1b9:	mov    0x50(%rsp),%rax
+     1be:	mov    %rax,0x0(%rip)        # 1c5 <Allocate_and_Init_Memory+0x1c5>
+     1c5:	lea    0x58(%rsp),%rdi
+     1ca:	mov    $0xf42400,%edx
+     1cf:	mov    $0x20,%esi
+     1d4:	call   1d9 <Allocate_and_Init_Memory+0x1d9>
+     1d9:	test   %eax,%eax
+     1db:	jne    1e9 <Allocate_and_Init_Memory+0x1e9>
+     1dd:	mov    0x58(%rsp),%rax
+     1e2:	mov    %rax,0x0(%rip)        # 1e9 <Allocate_and_Init_Memory+0x1e9>
+     1e9:	lea    0x60(%rsp),%rdi
+     1ee:	mov    $0xf42400,%edx
+     1f3:	mov    $0x20,%esi
+     1f8:	call   1fd <Allocate_and_Init_Memory+0x1fd>
+     1fd:	test   %eax,%eax
+     1ff:	jne    20d <Allocate_and_Init_Memory+0x20d>
+     201:	mov    0x60(%rsp),%rax
+     206:	mov    %rax,0x0(%rip)        # 20d <Allocate_and_Init_Memory+0x20d>
+     20d:	lea    0x68(%rsp),%rdi
+     212:	mov    $0xf42400,%edx
+     217:	mov    $0x20,%esi
+     21c:	call   221 <Allocate_and_Init_Memory+0x221>
+     221:	test   %eax,%eax
+     223:	jne    231 <Allocate_and_Init_Memory+0x231>
+     225:	mov    0x68(%rsp),%rax
+     22a:	mov    %rax,0x0(%rip)        # 231 <Allocate_and_Init_Memory+0x231>
+     231:	lea    0x70(%rsp),%rdi
+     236:	mov    $0xf42400,%edx
+     23b:	mov    $0x20,%esi
+     240:	call   245 <Allocate_and_Init_Memory+0x245>
+     245:	test   %eax,%eax
+     247:	jne    255 <Allocate_and_Init_Memory+0x255>
+     249:	mov    0x70(%rsp),%rax
+     24e:	mov    %rax,0x0(%rip)        # 255 <Allocate_and_Init_Memory+0x255>
+     255:	lea    0x78(%rsp),%rdi
+     25a:	mov    $0xf42400,%edx
+     25f:	mov    $0x20,%esi
+     264:	call   269 <Allocate_and_Init_Memory+0x269>
+     269:	test   %eax,%eax
+     26b:	jne    279 <Allocate_and_Init_Memory+0x279>
+     26d:	mov    0x78(%rsp),%rax
+     272:	mov    %rax,0x0(%rip)        # 279 <Allocate_and_Init_Memory+0x279>
+     279:	lea    0x80(%rsp),%rdi
+     281:	mov    $0xf42400,%edx
+     286:	mov    $0x20,%esi
+     28b:	call   290 <Allocate_and_Init_Memory+0x290>
+     290:	test   %eax,%eax
+     292:	jne    2a3 <Allocate_and_Init_Memory+0x2a3>
+     294:	mov    0x80(%rsp),%rax
+     29c:	mov    %rax,0x0(%rip)        # 2a3 <Allocate_and_Init_Memory+0x2a3>
+     2a3:	lea    0x88(%rsp),%rdi
+     2ab:	mov    $0xf42400,%edx
+     2b0:	mov    $0x20,%esi
+     2b5:	call   2ba <Allocate_and_Init_Memory+0x2ba>
+     2ba:	test   %eax,%eax
+     2bc:	jne    2cd <Allocate_and_Init_Memory+0x2cd>
+     2be:	mov    0x88(%rsp),%rax
+     2c6:	mov    %rax,0x0(%rip)        # 2cd <Allocate_and_Init_Memory+0x2cd>
+     2cd:	lea    0x90(%rsp),%rdi
+     2d5:	mov    $0xf42400,%edx
+     2da:	mov    $0x20,%esi
+     2df:	call   2e4 <Allocate_and_Init_Memory+0x2e4>
+     2e4:	test   %eax,%eax
+     2e6:	jne    2f7 <Allocate_and_Init_Memory+0x2f7>
+     2e8:	mov    0x90(%rsp),%rax
+     2f0:	mov    %rax,0x0(%rip)        # 2f7 <Allocate_and_Init_Memory+0x2f7>
+     2f7:	lea    0x98(%rsp),%rdi
+     2ff:	mov    $0xf42400,%edx
+     304:	mov    $0x20,%esi
+     309:	call   30e <Allocate_and_Init_Memory+0x30e>
+     30e:	test   %eax,%eax
+     310:	jne    321 <Allocate_and_Init_Memory+0x321>
+     312:	mov    0x98(%rsp),%rax
+     31a:	mov    %rax,0x0(%rip)        # 321 <Allocate_and_Init_Memory+0x321>
+     321:	lea    0xa0(%rsp),%rdi
+     329:	mov    $0xf42400,%edx
+     32e:	mov    $0x20,%esi
+     333:	call   338 <Allocate_and_Init_Memory+0x338>
+     338:	test   %eax,%eax
+     33a:	jne    34b <Allocate_and_Init_Memory+0x34b>
+     33c:	mov    0xa0(%rsp),%rax
+     344:	mov    %rax,0x0(%rip)        # 34b <Allocate_and_Init_Memory+0x34b>
+     34b:	lea    0xa8(%rsp),%rdi
+     353:	mov    $0xf42400,%edx
+     358:	mov    $0x20,%esi
+     35d:	call   362 <Allocate_and_Init_Memory+0x362>
+     362:	test   %eax,%eax
+     364:	jne    375 <Allocate_and_Init_Memory+0x375>
+     366:	mov    0xa8(%rsp),%rax
+     36e:	mov    %rax,0x0(%rip)        # 375 <Allocate_and_Init_Memory+0x375>
+     375:	lea    0xb0(%rsp),%rdi
+     37d:	mov    $0xf42400,%edx
+     382:	mov    $0x20,%esi
+     387:	call   38c <Allocate_and_Init_Memory+0x38c>
+     38c:	test   %eax,%eax
+     38e:	jne    39f <Allocate_and_Init_Memory+0x39f>
+     390:	mov    0xb0(%rsp),%rax
+     398:	mov    %rax,0x0(%rip)        # 39f <Allocate_and_Init_Memory+0x39f>
+     39f:	lea    0xb8(%rsp),%rdi
+     3a7:	mov    $0xf42400,%edx
+     3ac:	mov    $0x20,%esi
+     3b1:	call   3b6 <Allocate_and_Init_Memory+0x3b6>
+     3b6:	test   %eax,%eax
+     3b8:	jne    3c9 <Allocate_and_Init_Memory+0x3c9>
+     3ba:	mov    0xb8(%rsp),%rax
+     3c2:	mov    %rax,0x0(%rip)        # 3c9 <Allocate_and_Init_Memory+0x3c9>
+     3c9:	lea    0xc0(%rsp),%rdi
+     3d1:	mov    $0xf42400,%edx
+     3d6:	mov    $0x20,%esi
+     3db:	call   3e0 <Allocate_and_Init_Memory+0x3e0>
+     3e0:	test   %eax,%eax
+     3e2:	jne    3f3 <Allocate_and_Init_Memory+0x3f3>
+     3e4:	mov    0xc0(%rsp),%rax
+     3ec:	mov    %rax,0x0(%rip)        # 3f3 <Allocate_and_Init_Memory+0x3f3>
+     3f3:	lea    0xc8(%rsp),%rdi
+     3fb:	mov    $0xf42400,%edx
+     400:	mov    $0x20,%esi
+     405:	call   40a <Allocate_and_Init_Memory+0x40a>
+     40a:	test   %eax,%eax
+     40c:	jne    41d <Allocate_and_Init_Memory+0x41d>
+     40e:	mov    0xc8(%rsp),%rax
+     416:	mov    %rax,0x0(%rip)        # 41d <Allocate_and_Init_Memory+0x41d>
+     41d:	lea    0xd0(%rsp),%rdi
+     425:	mov    $0xf42400,%edx
+     42a:	mov    $0x20,%esi
+     42f:	call   434 <Allocate_and_Init_Memory+0x434>
+     434:	test   %eax,%eax
+     436:	jne    447 <Allocate_and_Init_Memory+0x447>
+     438:	mov    0xd0(%rsp),%rax
+     440:	mov    %rax,0x0(%rip)        # 447 <Allocate_and_Init_Memory+0x447>
+     447:	lea    0xd8(%rsp),%rdi
+     44f:	mov    $0xf42400,%edx
+     454:	mov    $0x20,%esi
+     459:	call   45e <Allocate_and_Init_Memory+0x45e>
+     45e:	test   %eax,%eax
+     460:	jne    471 <Allocate_and_Init_Memory+0x471>
+     462:	mov    0xd8(%rsp),%rax
+     46a:	mov    %rax,0x0(%rip)        # 471 <Allocate_and_Init_Memory+0x471>
+     471:	lea    0xe0(%rsp),%rdi
+     479:	mov    $0xf42400,%edx
+     47e:	mov    $0x20,%esi
+     483:	call   488 <Allocate_and_Init_Memory+0x488>
+     488:	test   %eax,%eax
+     48a:	jne    49b <Allocate_and_Init_Memory+0x49b>
+     48c:	mov    0xe0(%rsp),%rax
+     494:	mov    %rax,0x0(%rip)        # 49b <Allocate_and_Init_Memory+0x49b>
+     49b:	lea    0xe8(%rsp),%rdi
+     4a3:	mov    $0xf42400,%edx
+     4a8:	mov    $0x20,%esi
+     4ad:	call   4b2 <Allocate_and_Init_Memory+0x4b2>
+     4b2:	test   %eax,%eax
+     4b4:	jne    4c5 <Allocate_and_Init_Memory+0x4c5>
+     4b6:	mov    0xe8(%rsp),%rax
+     4be:	mov    %rax,0x0(%rip)        # 4c5 <Allocate_and_Init_Memory+0x4c5>
+     4c5:	lea    0xf0(%rsp),%rdi
+     4cd:	mov    $0xf42400,%edx
+     4d2:	mov    $0x20,%esi
+     4d7:	call   4dc <Allocate_and_Init_Memory+0x4dc>
+     4dc:	test   %eax,%eax
+     4de:	jne    4ef <Allocate_and_Init_Memory+0x4ef>
+     4e0:	mov    0xf0(%rsp),%rax
+     4e8:	mov    %rax,0x0(%rip)        # 4ef <Allocate_and_Init_Memory+0x4ef>
+     4ef:	lea    0xf8(%rsp),%rdi
+     4f7:	mov    $0xf42400,%edx
+     4fc:	mov    $0x20,%esi
+     501:	call   506 <Allocate_and_Init_Memory+0x506>
+     506:	test   %eax,%eax
+     508:	jne    519 <Allocate_and_Init_Memory+0x519>
+     50a:	mov    0xf8(%rsp),%rax
+     512:	mov    %rax,0x0(%rip)        # 519 <Allocate_and_Init_Memory+0x519>
+     519:	lea    0x100(%rsp),%rdi
+     521:	mov    $0xf42400,%edx
+     526:	mov    $0x20,%esi
+     52b:	call   530 <Allocate_and_Init_Memory+0x530>
+     530:	test   %eax,%eax
+     532:	jne    543 <Allocate_and_Init_Memory+0x543>
+     534:	mov    0x100(%rsp),%rax
+     53c:	mov    %rax,0x0(%rip)        # 543 <Allocate_and_Init_Memory+0x543>
+     543:	lea    0x108(%rsp),%rdi
+     54b:	mov    $0xf42400,%edx
+     550:	mov    $0x20,%esi
+     555:	call   55a <Allocate_and_Init_Memory+0x55a>
+     55a:	test   %eax,%eax
+     55c:	jne    56d <Allocate_and_Init_Memory+0x56d>
+     55e:	mov    0x108(%rsp),%rax
+     566:	mov    %rax,0x0(%rip)        # 56d <Allocate_and_Init_Memory+0x56d>
+     56d:	lea    0x110(%rsp),%rdi
+     575:	mov    $0xf42400,%edx
+     57a:	mov    $0x20,%esi
+     57f:	call   584 <Allocate_and_Init_Memory+0x584>
+     584:	test   %eax,%eax
+     586:	jne    597 <Allocate_and_Init_Memory+0x597>
+     588:	mov    0x110(%rsp),%rax
+     590:	mov    %rax,0x0(%rip)        # 597 <Allocate_and_Init_Memory+0x597>
+     597:	lea    0x118(%rsp),%rdi
+     59f:	mov    $0xf42400,%edx
+     5a4:	mov    $0x20,%esi
+     5a9:	call   5ae <Allocate_and_Init_Memory+0x5ae>
+     5ae:	test   %eax,%eax
+     5b0:	jne    5c1 <Allocate_and_Init_Memory+0x5c1>
+     5b2:	mov    0x118(%rsp),%rax
+     5ba:	mov    %rax,0x0(%rip)        # 5c1 <Allocate_and_Init_Memory+0x5c1>
+     5c1:	lea    0x120(%rsp),%rdi
+     5c9:	mov    $0xf42400,%edx
+     5ce:	mov    $0x20,%esi
+     5d3:	call   5d8 <Allocate_and_Init_Memory+0x5d8>
+     5d8:	test   %eax,%eax
+     5da:	jne    5eb <Allocate_and_Init_Memory+0x5eb>
+     5dc:	mov    0x120(%rsp),%rax
+     5e4:	mov    %rax,0x0(%rip)        # 5eb <Allocate_and_Init_Memory+0x5eb>
+     5eb:	mov    %r13,%rcx
+     5ee:	lea    0x4(%r12),%r10
+     5f3:	mov    %r12,%rsi
+     5f6:	mov    %rbx,%rdi
+     5f9:	lea    0x4(%rbx),%r8
+     5fd:	mov    $0x1f40,%edx
+     602:	vxorps %xmm0,%xmm0,%xmm0
+     606:	xor    %r9d,%r9d
+     609:	vmovss 0x0(%rip),%xmm2        # 611 <Allocate_and_Init_Memory+0x611>
+     611:	vmovss 0x0(%rip),%xmm1        # 619 <Allocate_and_Init_Memory+0x619>
+     619:	vbroadcastss 0x0(%rip),%ymm3        # 622 <Allocate_and_Init_Memory+0x622>
+     622:	vbroadcastss %xmm2,%ymm4
+     627:	mov    %rcx,%rax
+     62a:	sub    %r10,%rax
+     62d:	cmp    $0x18,%rax
+     631:	mov    %rsi,%rax
+     634:	seta   %r11b
+     638:	sub    %r8,%rax
+     63b:	cmp    $0x18,%rax
+     63f:	seta   %al
+     642:	cmp    $0x3e8,%r9d
+     649:	jle    6ee <Allocate_and_Init_Memory+0x6ee>
+     64f:	test   %al,%r11b
+     652:	je     781 <Allocate_and_Init_Memory+0x781>
+     658:	mov    %rcx,%r11
+     65b:	xor    %eax,%eax
+     65d:	sub    %r8,%r11
+     660:	cmp    $0x18,%r11
+     664:	jbe    781 <Allocate_and_Init_Memory+0x781>
+     66a:	nopw   0x0(%rax,%rax,1)
+     670:	vmovups %ymm3,(%rdi,%rax,1)
+     675:	vmovups %ymm0,(%rsi,%rax,1)
+     67a:	vmovups %ymm0,(%rcx,%rax,1)
+     67f:	add    $0x20,%rax
+     683:	cmp    $0x1f40,%rax
+     689:	jne    670 <Allocate_and_Init_Memory+0x670>
+     68b:	add    $0x1,%r9d
+     68f:	add    $0x1f40,%rdx
+     696:	add    $0x1f40,%rcx
+     69d:	add    $0x1f40,%r10
+     6a4:	add    $0x1f40,%rsi
+     6ab:	add    $0x1f40,%r8
+     6b2:	add    $0x1f40,%rdi
+     6b9:	cmp    $0x7d0,%r9d
+     6c0:	jne    627 <Allocate_and_Init_Memory+0x627>
+     6c6:	mov    0x128(%rsp),%rax
+     6ce:	sub    %fs:0x28,%rax
+     6d7:	jne    7b4 <Allocate_and_Init_Memory+0x7b4>
+     6dd:	vzeroupper
+     6e0:	add    $0x138,%rsp
+     6e7:	pop    %rbx
+     6e8:	pop    %r12
+     6ea:	pop    %r13
+     6ec:	pop    %rbp
+     6ed:	ret
+     6ee:	test   %al,%r11b
+     6f1:	je     756 <Allocate_and_Init_Memory+0x756>
+     6f3:	mov    %rcx,%rax
+     6f6:	sub    %r8,%rax
+     6f9:	cmp    $0x18,%rax
+     6fd:	jbe    756 <Allocate_and_Init_Memory+0x756>
+     6ff:	xor    %eax,%eax
+     701:	nopl   0x0(%rax)
+     708:	vmovups %ymm4,(%rdi,%rax,1)
+     70d:	vmovups %ymm0,(%rsi,%rax,1)
+     712:	vmovups %ymm0,(%rcx,%rax,1)
+     717:	add    $0x20,%rax
+     71b:	cmp    $0x1f40,%rax
+     721:	jne    708 <Allocate_and_Init_Memory+0x708>
+     723:	add    $0x1,%r9d
+     727:	add    $0x1f40,%rdx
+     72e:	add    $0x1f40,%rcx
+     735:	add    $0x1f40,%r10
+     73c:	add    $0x1f40,%rsi
+     743:	add    $0x1f40,%r8
+     74a:	add    $0x1f40,%rdi
+     751:	jmp    627 <Allocate_and_Init_Memory+0x627>
+     756:	lea    -0x1f40(%rdx),%rax
+     75d:	nopl   (%rax)
+     760:	vmovss %xmm2,(%rbx,%rax,1)
+     765:	movl   $0x0,(%r12,%rax,1)
+     76d:	movl   $0x0,0x0(%r13,%rax,1)
+     776:	add    $0x4,%rax
+     77a:	cmp    %rax,%rdx
+     77d:	jne    760 <Allocate_and_Init_Memory+0x760>
+     77f:	jmp    723 <Allocate_and_Init_Memory+0x723>
+     781:	lea    -0x1f40(%rdx),%rax
+     788:	nopl   0x0(%rax,%rax,1)
+     790:	vmovss %xmm1,(%rbx,%rax,1)
+     795:	movl   $0x0,(%r12,%rax,1)
+     79d:	movl   $0x0,0x0(%r13,%rax,1)
+     7a6:	add    $0x4,%rax
+     7aa:	cmp    %rax,%rdx
+     7ad:	jne    790 <Allocate_and_Init_Memory+0x790>
+     7af:	jmp    68b <Allocate_and_Init_Memory+0x68b>
+     7b4:	vzeroupper
+     7b7:	call   7bc <Allocate_and_Init_Memory+0x7bc>
+     7bc:	nopl   0x0(%rax)
+
+00000000000007c0 <Free_Memory>:
+     7c0:	endbr64
+     7c4:	sub    $0x8,%rsp
+     7c8:	mov    0x0(%rip),%rdi        # 7cf <Free_Memory+0xf>
+     7cf:	call   7d4 <Free_Memory+0x14>
+     7d4:	mov    0x0(%rip),%rdi        # 7db <Free_Memory+0x1b>
+     7db:	call   7e0 <Free_Memory+0x20>
+     7e0:	mov    0x0(%rip),%rdi        # 7e7 <Free_Memory+0x27>
+     7e7:	call   7ec <Free_Memory+0x2c>
+     7ec:	mov    0x0(%rip),%rdi        # 7f3 <Free_Memory+0x33>
+     7f3:	call   7f8 <Free_Memory+0x38>
+     7f8:	mov    0x0(%rip),%rdi        # 7ff <Free_Memory+0x3f>
+     7ff:	call   804 <Free_Memory+0x44>
+     804:	mov    0x0(%rip),%rdi        # 80b <Free_Memory+0x4b>
+     80b:	call   810 <Free_Memory+0x50>
+     810:	mov    0x0(%rip),%rdi        # 817 <Free_Memory+0x57>
+     817:	call   81c <Free_Memory+0x5c>
+     81c:	mov    0x0(%rip),%rdi        # 823 <Free_Memory+0x63>
+     823:	call   828 <Free_Memory+0x68>
+     828:	mov    0x0(%rip),%rdi        # 82f <Free_Memory+0x6f>
+     82f:	call   834 <Free_Memory+0x74>
+     834:	mov    0x0(%rip),%rdi        # 83b <Free_Memory+0x7b>
+     83b:	call   840 <Free_Memory+0x80>
+     840:	mov    0x0(%rip),%rdi        # 847 <Free_Memory+0x87>
+     847:	call   84c <Free_Memory+0x8c>
+     84c:	mov    0x0(%rip),%rdi        # 853 <Free_Memory+0x93>
+     853:	call   858 <Free_Memory+0x98>
+     858:	mov    0x0(%rip),%rdi        # 85f <Free_Memory+0x9f>
+     85f:	call   864 <Free_Memory+0xa4>
+     864:	mov    0x0(%rip),%rdi        # 86b <Free_Memory+0xab>
+     86b:	call   870 <Free_Memory+0xb0>
+     870:	mov    0x0(%rip),%rdi        # 877 <Free_Memory+0xb7>
+     877:	call   87c <Free_Memory+0xbc>
+     87c:	mov    0x0(%rip),%rdi        # 883 <Free_Memory+0xc3>
+     883:	call   888 <Free_Memory+0xc8>
+     888:	mov    0x0(%rip),%rdi        # 88f <Free_Memory+0xcf>
+     88f:	call   894 <Free_Memory+0xd4>
+     894:	mov    0x0(%rip),%rdi        # 89b <Free_Memory+0xdb>
+     89b:	call   8a0 <Free_Memory+0xe0>
+     8a0:	mov    0x0(%rip),%rdi        # 8a7 <Free_Memory+0xe7>
+     8a7:	call   8ac <Free_Memory+0xec>
+     8ac:	mov    0x0(%rip),%rdi        # 8b3 <Free_Memory+0xf3>
+     8b3:	call   8b8 <Free_Memory+0xf8>
+     8b8:	mov    0x0(%rip),%rdi        # 8bf <Free_Memory+0xff>
+     8bf:	call   8c4 <Free_Memory+0x104>
+     8c4:	mov    0x0(%rip),%rdi        # 8cb <Free_Memory+0x10b>
+     8cb:	call   8d0 <Free_Memory+0x110>
+     8d0:	mov    0x0(%rip),%rdi        # 8d7 <Free_Memory+0x117>
+     8d7:	call   8dc <Free_Memory+0x11c>
+     8dc:	mov    0x0(%rip),%rdi        # 8e3 <Free_Memory+0x123>
+     8e3:	call   8e8 <Free_Memory+0x128>
+     8e8:	mov    0x0(%rip),%rdi        # 8ef <Free_Memory+0x12f>
+     8ef:	call   8f4 <Free_Memory+0x134>
+     8f4:	mov    0x0(%rip),%rdi        # 8fb <Free_Memory+0x13b>
+     8fb:	call   900 <Free_Memory+0x140>
+     900:	mov    0x0(%rip),%rdi        # 907 <Free_Memory+0x147>
+     907:	call   90c <Free_Memory+0x14c>
+     90c:	mov    0x0(%rip),%rdi        # 913 <Free_Memory+0x153>
+     913:	call   918 <Free_Memory+0x158>
+     918:	mov    0x0(%rip),%rdi        # 91f <Free_Memory+0x15f>
+     91f:	call   924 <Free_Memory+0x164>
+     924:	mov    0x0(%rip),%rdi        # 92b <Free_Memory+0x16b>
+     92b:	call   930 <Free_Memory+0x170>
+     930:	mov    0x0(%rip),%rdi        # 937 <Free_Memory+0x177>
+     937:	call   93c <Free_Memory+0x17c>
+     93c:	mov    0x0(%rip),%rdi        # 943 <Free_Memory+0x183>
+     943:	call   948 <Free_Memory+0x188>
+     948:	mov    0x0(%rip),%rdi        # 94f <Free_Memory+0x18f>
+     94f:	call   954 <Free_Memory+0x194>
+     954:	mov    0x0(%rip),%rdi        # 95b <Free_Memory+0x19b>
+     95b:	call   960 <Free_Memory+0x1a0>
+     960:	mov    0x0(%rip),%rdi        # 967 <Free_Memory+0x1a7>
+     967:	call   96c <Free_Memory+0x1ac>
+     96c:	mov    0x0(%rip),%rdi        # 973 <Free_Memory+0x1b3>
+     973:	call   978 <Free_Memory+0x1b8>
+     978:	mov    0x0(%rip),%rdi        # 97f <Free_Memory+0x1bf>
+     97f:	add    $0x8,%rsp
+     983:	jmp    988 <Free_Memory+0x1c8>
+     988:	nopl   0x0(%rax,%rax,1)
+
+0000000000000990 <Compute_U_from_P>:
+     990:	endbr64
+     994:	mov    0x0(%rip),%rdx        # 99b <Compute_U_from_P+0xb>
+     99b:	mov    0x0(%rip),%r9        # 9a2 <Compute_U_from_P+0x12>
+     9a2:	xor    %eax,%eax
+     9a4:	mov    0x0(%rip),%r8        # 9ab <Compute_U_from_P+0x1b>
+     9ab:	mov    0x0(%rip),%rdi        # 9b2 <Compute_U_from_P+0x22>
+     9b2:	mov    0x0(%rip),%rsi        # 9b9 <Compute_U_from_P+0x29>
+     9b9:	mov    0x0(%rip),%rcx        # 9c0 <Compute_U_from_P+0x30>
+     9c0:	vmovss (%rdx,%rax,1),%xmm0
+     9c5:	vmovss %xmm0,(%r9,%rax,1)
+     9cb:	vmulss (%r8,%rax,1),%xmm0,%xmm0
+     9d1:	vmovss %xmm0,(%rdi,%rax,1)
+     9d6:	vmovss (%rdx,%rax,1),%xmm0
+     9db:	vmulss (%rsi,%rax,1),%xmm0,%xmm0
+     9e0:	vmovss %xmm0,(%rcx,%rax,1)
+     9e5:	add    $0x4,%rax
+     9e9:	cmp    $0xf42400,%rax
+     9ef:	jne    9c0 <Compute_U_from_P+0x30>
+     9f1:	vmovss 0x0(%rip),%xmm0        # 9f9 <Compute_U_from_P+0x69>
+     9f9:	movl   $0x3aa3d70a,0x0(%rip)        # a03 <Compute_U_from_P+0x73>
+     a03:	vmovss %xmm0,0x0(%rip)        # a0b <Compute_U_from_P+0x7b>
+     a0b:	vmovss %xmm0,0x0(%rip)        # a13 <Compute_U_from_P+0x83>
+     a13:	ret
+     a14:	data16 cs nopw 0x0(%rax,%rax,1)
+     a1f:	nop
+
+0000000000000a20 <Update_U_from_F>:
+     a20:	endbr64
+     a24:	push   %r15
+     a26:	push   %r14
+     a28:	push   %r13
+     a2a:	push   %r12
+     a2c:	push   %rbp
+     a2d:	xor    %ebp,%ebp
+     a2f:	push   %rbx
+     a30:	sub    $0x78,%rsp
+     a34:	mov    0x0(%rip),%rax        # a3b <Update_U_from_F+0x1b>
+     a3b:	mov    0x0(%rip),%r14        # a42 <Update_U_from_F+0x22>
+     a42:	mov    0x0(%rip),%r15        # a49 <Update_U_from_F+0x29>
+     a49:	mov    %rax,0x18(%rsp)
+     a4e:	mov    0x0(%rip),%rax        # a55 <Update_U_from_F+0x35>
+     a55:	mov    %rax,-0x30(%rsp)
+     a5a:	mov    0x0(%rip),%rax        # a61 <Update_U_from_F+0x41>
+     a61:	mov    %rax,0x28(%rsp)
+     a66:	mov    0x0(%rip),%rax        # a6d <Update_U_from_F+0x4d>
+     a6d:	mov    %rax,-0x28(%rsp)
+     a72:	mov    0x0(%rip),%rax        # a79 <Update_U_from_F+0x59>
+     a79:	mov    %rax,0x30(%rsp)
+     a7e:	mov    0x0(%rip),%rax        # a85 <Update_U_from_F+0x65>
+     a85:	mov    %rax,-0x20(%rsp)
+     a8a:	mov    0x0(%rip),%rax        # a91 <Update_U_from_F+0x71>
+     a91:	mov    %rax,-0x18(%rsp)
+     a96:	mov    0x0(%rip),%rax        # a9d <Update_U_from_F+0x7d>
+     a9d:	mov    %rax,-0x10(%rsp)
+     aa2:	mov    0x0(%rip),%rax        # aa9 <Update_U_from_F+0x89>
+     aa9:	vmovss 0x0(%rip),%xmm0        # ab1 <Update_U_from_F+0x91>
+     ab1:	mov    0x0(%rip),%rcx        # ab8 <Update_U_from_F+0x98>
+     ab8:	mov    0x0(%rip),%r8        # abf <Update_U_from_F+0x9f>
+     abf:	mov    %ebp,0x8(%rsp)
+     ac3:	mov    0x0(%rip),%rbx        # aca <Update_U_from_F+0xaa>
+     aca:	mov    0x0(%rip),%r11        # ad1 <Update_U_from_F+0xb1>
+     ad1:	mov    %rax,0x20(%rsp)
+     ad6:	xor    %eax,%eax
+     ad8:	mov    %rcx,-0x50(%rsp)
+     add:	mov    0x0(%rip),%rcx        # ae4 <Update_U_from_F+0xc4>
+     ae4:	mov    %r8,-0x8(%rsp)
+     ae9:	mov    0x0(%rip),%r8        # af0 <Update_U_from_F+0xd0>
+     af0:	lea    -0x4(%rbx),%r10
+     af4:	mov    %r11,%rbp
+     af7:	mov    0x0(%rip),%rsi        # afe <Update_U_from_F+0xde>
+     afe:	mov    0x0(%rip),%r9        # b05 <Update_U_from_F+0xe5>
+     b05:	mov    %rcx,-0x48(%rsp)
+     b0a:	mov    0x0(%rip),%r13        # b11 <Update_U_from_F+0xf1>
+     b11:	mov    0x0(%rip),%rdi        # b18 <Update_U_from_F+0xf8>
+     b18:	mov    %r8,-0x58(%rsp)
+     b1d:	xor    %r8d,%r8d
+     b20:	mov    0x0(%rip),%r12        # b27 <Update_U_from_F+0x107>
+     b27:	mov    0x0(%rip),%rcx        # b2e <Update_U_from_F+0x10e>
+     b2e:	mov    %r11,0x50(%rsp)
+     b33:	mov    0x0(%rip),%rdx        # b3a <Update_U_from_F+0x11a>
+     b3a:	mov    %rbx,0x40(%rsp)
+     b3f:	mov    %r13,%r11
+     b42:	mov    %r8d,%ebx
+     b45:	mov    %r9,0x48(%rsp)
+     b4a:	mov    %r10,%r8
+     b4d:	mov    %rsi,%r13
+     b50:	sub    $0x4,%r9
+     b54:	mov    %rsi,0x60(%rsp)
+     b59:	mov    %r12,%r10
+     b5c:	mov    0x20(%rsp),%rsi
+     b61:	mov    %rdi,0x58(%rsp)
+     b66:	mov    %rcx,0x68(%rsp)
+     b6b:	mov    %rdx,0x70(%rsp)
+     b70:	jmp    c08 <Update_U_from_F+0x1e8>
+     b75:	nopl   (%rax)
+     b78:	mov    -0x48(%rsp),%r12
+     b7d:	cmp    $0x7cf,%ebx
+     b83:	mov    %r8,-0x40(%rsp)
+     b88:	mov    %r9,-0x38(%rsp)
+     b8d:	vmovss -0x4(%r12,%rax,1),%xmm1
+     b94:	je     cf0 <Update_U_from_F+0x2d0>
+     b9a:	vmovss %xmm1,0x0(%rbp)
+     b9f:	vmovss (%r8),%xmm1
+     ba4:	mov    -0x8(%rsp),%r12
+     ba9:	vmovss %xmm1,(%rdi)
+     bad:	vmovss (%r9),%xmm1
+     bb2:	vmovss %xmm1,0x0(%r13)
+     bb8:	vmovss 0x4(%r10,%rax,1),%xmm1
+     bbf:	vmovss %xmm1,(%rcx)
+     bc3:	vmovss 0x4(%r11,%rax,1),%xmm1
+     bca:	vmovss %xmm1,(%rdx)
+     bce:	vmovss 0x4(%r12,%rax,1),%xmm1
+     bd5:	addl   $0x1,0x8(%rsp)
+     bda:	add    $0x1,%ebx
+     bdd:	add    $0x4,%rbp
+     be1:	add    $0x4,%rdi
+     be5:	add    $0x4,%r13
+     be9:	add    $0x4,%rcx
+     bed:	add    $0x4,%rdx
+     bf1:	add    $0x4,%r8
+     bf5:	mov    -0x58(%rsp),%r12
+     bfa:	add    $0x4,%r9
+     bfe:	vmovss %xmm1,(%r12,%rax,1)
+     c04:	add    $0x4,%rax
+     c08:	vmovss (%r14,%rax,1),%xmm1
+     c0e:	mov    -0x30(%rsp),%r12
+     c13:	test   %ebx,%ebx
+     c15:	mov    %rdx,(%rsp)
+     c19:	mov    %rbp,-0x60(%rsp)
+     c1e:	vxorps %xmm0,%xmm1,%xmm1
+     c22:	mov    %rdi,-0x78(%rsp)
+     c27:	vmovss %xmm1,(%r12,%rax,1)
+     c2d:	mov    -0x28(%rsp),%r12
+     c32:	vmovss (%r15,%rax,1),%xmm1
+     c38:	mov    %r13,-0x70(%rsp)
+     c3d:	vmovss %xmm1,(%r12,%rax,1)
+     c43:	vmovss (%rsi,%rax,1),%xmm1
+     c48:	mov    -0x20(%rsp),%r12
+     c4d:	mov    %rcx,-0x68(%rsp)
+     c52:	vxorps %xmm0,%xmm1,%xmm1
+     c56:	vmovss %xmm1,(%r12,%rax,1)
+     c5c:	mov    -0x18(%rsp),%r12
+     c61:	vmovss 0x1f40(%r14,%rax,1),%xmm1
+     c6b:	vmovss %xmm1,(%r12,%rax,1)
+     c71:	mov    -0x10(%rsp),%r12
+     c76:	vmovss 0x1f40(%r15,%rax,1),%xmm1
+     c80:	vmovss %xmm1,(%r12,%rax,1)
+     c86:	mov    -0x50(%rsp),%r12
+     c8b:	vmovss 0x1f40(%rsi,%rax,1),%xmm1
+     c94:	vmovss %xmm1,(%r12,%rax,1)
+     c9a:	jne    b78 <Update_U_from_F+0x158>
+     ca0:	vmovss (%r10,%rax,1),%xmm1
+     ca6:	mov    -0x8(%rsp),%r12
+     cab:	vxorps %xmm0,%xmm1,%xmm1
+     caf:	vmovss %xmm1,0x0(%rbp)
+     cb4:	vmovss (%r11,%rax,1),%xmm1
+     cba:	vxorps %xmm0,%xmm1,%xmm1
+     cbe:	vmovss %xmm1,(%rdi)
+     cc2:	vmovss (%r12,%rax,1),%xmm1
+     cc8:	vmovss %xmm1,0x0(%r13)
+     cce:	vmovss 0x4(%r10,%rax,1),%xmm1
+     cd5:	vmovss %xmm1,(%rcx)
+     cd9:	vmovss 0x4(%r11,%rax,1),%xmm1
+     ce0:	vmovss %xmm1,(%rdx)
+     ce4:	vmovss 0x4(%r12,%rax,1),%xmm1
+     ceb:	jmp    bd5 <Update_U_from_F+0x1b5>
+     cf0:	mov    0x8(%rsp),%ebp
+     cf4:	mov    %rdx,%rbx
+     cf7:	mov    -0x58(%rsp),%rdx
+     cfc:	xor    %ecx,%ecx
+     cfe:	mov    %r14,0x8(%rsp)
+     d03:	mov    %r11,%r12
+     d06:	mov    %r15,0x10(%rsp)
+     d0b:	mov    %ebp,%r14d
+     d0e:	mov    %ecx,%r15d
+     d11:	add    %rax,%rdx
+     d14:	mov    %r10,%rbp
+     d17:	mov    %r9,%rcx
+     d1a:	mov    -0x60(%rsp),%rsi
+     d1f:	mov    -0x40(%rsp),%rdi
+     d24:	add    $0x1,%r15d
+     d28:	cmp    $0x7d0,%r15d
+     d2f:	vmovss %xmm1,(%rsi)
+     d33:	mov    -0x78(%rsp),%rsi
+     d38:	vmovss (%rdi),%xmm1
+     d3c:	mov    -0x70(%rsp),%rdi
+     d41:	vmovss %xmm1,(%rsi)
+     d45:	mov    -0x48(%rsp),%rsi
+     d4a:	vmovss (%rcx),%xmm1
+     d4e:	mov    -0x68(%rsp),%rcx
+     d53:	vmovss %xmm1,(%rdi)
+     d57:	vmovss (%rsi,%rax,1),%xmm1
+     d5c:	mov    0x40(%rsp),%rdi
+     d61:	mov    0x48(%rsp),%rsi
+     d66:	vxorps %xmm0,%xmm1,%xmm1
+     d6a:	vmovss %xmm1,(%rcx)
+     d6e:	vmovss (%rdi,%rax,1),%xmm1
+     d73:	vxorps %xmm0,%xmm1,%xmm1
+     d77:	vmovss %xmm1,(%rbx)
+     d7b:	vmovss (%rsi,%rax,1),%xmm1
+     d80:	vmovss %xmm1,(%rdx)
+     d84:	je     10e0 <Update_U_from_F+0x6c0>
+     d8a:	add    $0x1,%r14d
+     d8e:	mov    0x50(%rsp),%rcx
+     d93:	movslq %r14d,%rax
+     d96:	shl    $0x2,%rax
+     d9a:	cmp    $0x7cf,%r15d
+     da1:	je     1281 <Update_U_from_F+0x861>
+     da7:	mov    0x58(%rsp),%rdx
+     dac:	lea    (%rcx,%rax,1),%r13
+     db0:	lea    -0x4(%rax),%r9
+     db4:	mov    %r12,%r11
+     db7:	mov    0x60(%rsp),%rcx
+     dbc:	mov    -0x8(%rsp),%rbx
+     dc1:	mov    %rbp,%r12
+     dc4:	mov    %r15d,%ebp
+     dc7:	lea    (%rdx,%rax,1),%r8
+     dcb:	mov    0x68(%rsp),%rdx
+     dd0:	mov    %r14d,%r15d
+     dd3:	lea    (%rcx,%rax,1),%rdi
+     dd7:	mov    0x70(%rsp),%rcx
+     ddc:	mov    %rbx,(%rsp)
+     de0:	lea    (%rdx,%rax,1),%rsi
+     de4:	mov    0x40(%rsp),%rdx
+     de9:	add    %rax,%rcx
+     dec:	lea    (%rdx,%r9,1),%r10
+     df0:	mov    0x48(%rsp),%rdx
+     df5:	mov    %r10,%r14
+     df8:	add    %rdx,%r9
+     dfb:	xor    %edx,%edx
+     dfd:	jmp    e94 <Update_U_from_F+0x474>
+     e02:	nopw   0x0(%rax,%rax,1)
+     e08:	mov    -0x48(%rsp),%rbx
+     e0d:	cmp    $0x7cf,%edx
+     e13:	mov    %r14,-0x40(%rsp)
+     e18:	mov    %r9,-0x38(%rsp)
+     e1d:	vmovss -0x4(%rbx,%rax,1),%xmm1
+     e23:	je     fb0 <Update_U_from_F+0x590>
+     e29:	vmovss %xmm1,0x0(%r13)
+     e2f:	vmovss (%r14),%xmm1
+     e34:	mov    (%rsp),%rbx
+     e38:	vmovss %xmm1,(%r8)
+     e3d:	vmovss (%r9),%xmm1
+     e42:	vmovss %xmm1,(%rdi)
+     e46:	vmovss 0x4(%r12,%rax,1),%xmm1
+     e4d:	vmovss %xmm1,(%rsi)
+     e51:	vmovss 0x4(%r11,%rax,1),%xmm1
+     e58:	vmovss %xmm1,(%rcx)
+     e5c:	vmovss 0x4(%rbx,%rax,1),%xmm1
+     e62:	mov    -0x58(%rsp),%r10
+     e67:	add    $0x1,%r15d
+     e6b:	add    $0x1,%edx
+     e6e:	add    $0x4,%r13
+     e72:	add    $0x4,%r8
+     e76:	add    $0x4,%rdi
+     e7a:	add    $0x4,%rsi
+     e7e:	add    $0x4,%rcx
+     e82:	vmovss %xmm1,(%r10,%rax,1)
+     e88:	add    $0x4,%r14
+     e8c:	add    $0x4,%r9
+     e90:	add    $0x4,%rax
+     e94:	cmp    $0x3e8,%ebp
+     e9a:	je     1038 <Update_U_from_F+0x618>
+     ea0:	cmp    $0x3e9,%ebp
+     ea6:	je     fd0 <Update_U_from_F+0x5b0>
+     eac:	mov    0x18(%rsp),%rbx
+     eb1:	lea    -0x7d0(%r15),%r10d
+     eb8:	movslq %r10d,%r10
+     ebb:	vmovss (%rbx,%r10,4),%xmm1
+     ec1:	mov    -0x30(%rsp),%rbx
+     ec6:	vmovss %xmm1,(%rbx,%rax,1)
+     ecb:	mov    0x28(%rsp),%rbx
+     ed0:	vmovss (%rbx,%r10,4),%xmm1
+     ed6:	mov    -0x28(%rsp),%rbx
+     edb:	vmovss %xmm1,(%rbx,%rax,1)
+     ee0:	mov    0x30(%rsp),%rbx
+     ee5:	vmovss (%rbx,%r10,4),%xmm1
+     eeb:	mov    -0x20(%rsp),%rbx
+     ef0:	lea    0x7d0(%r15),%r10d
+     ef7:	vmovss %xmm1,(%rbx,%rax,1)
+     efc:	mov    0x8(%rsp),%rbx
+     f01:	vmovss (%rbx,%r10,4),%xmm1
+     f07:	mov    -0x18(%rsp),%rbx
+     f0c:	vmovss %xmm1,(%rbx,%rax,1)
+     f11:	mov    0x10(%rsp),%rbx
+     f16:	vmovss (%rbx,%r10,4),%xmm1
+     f1c:	mov    -0x10(%rsp),%rbx
+     f21:	vmovss %xmm1,(%rbx,%rax,1)
+     f26:	mov    0x20(%rsp),%rbx
+     f2b:	vmovss (%rbx,%r10,4),%xmm1
+     f31:	mov    -0x50(%rsp),%r10
+     f36:	test   %edx,%edx
+     f38:	mov    %r13,-0x60(%rsp)
+     f3d:	mov    %r8,-0x78(%rsp)
+     f42:	vmovss %xmm1,(%r10,%rax,1)
+     f48:	mov    %rcx,%r10
+     f4b:	mov    %rdi,-0x70(%rsp)
+     f50:	mov    %rsi,-0x68(%rsp)
+     f55:	jne    e08 <Update_U_from_F+0x3e8>
+     f5b:	vmovss (%r12,%rax,1),%xmm1
+     f61:	mov    (%rsp),%rbx
+     f65:	vxorps %xmm0,%xmm1,%xmm1
+     f69:	vmovss %xmm1,0x0(%r13)
+     f6f:	vmovss (%r11,%rax,1),%xmm1
+     f75:	vxorps %xmm0,%xmm1,%xmm1
+     f79:	vmovss %xmm1,(%r8)
+     f7e:	vmovss (%rbx,%rax,1),%xmm1
+     f83:	vmovss %xmm1,(%rdi)
+     f87:	vmovss 0x4(%r12,%rax,1),%xmm1
+     f8e:	vmovss %xmm1,(%rsi)
+     f92:	vmovss 0x4(%r11,%rax,1),%xmm1
+     f99:	vmovss %xmm1,(%rcx)
+     f9d:	vmovss 0x4(%rbx,%rax,1),%xmm1
+     fa3:	jmp    e62 <Update_U_from_F+0x442>
+     fa8:	nopl   0x0(%rax,%rax,1)
+     fb0:	mov    -0x58(%rsp),%rdx
+     fb5:	mov    %r15d,%r14d
+     fb8:	mov    %r10,%rbx
+     fbb:	mov    %ebp,%r15d
+     fbe:	mov    %r9,%rcx
+     fc1:	mov    %r12,%rbp
+     fc4:	mov    %r11,%r12
+     fc7:	add    %rax,%rdx
+     fca:	jmp    d1a <Update_U_from_F+0x2fa>
+     fcf:	nop
+     fd0:	lea    -0x3c0(%rdx),%r10d
+     fd7:	cmp    $0x2e4,%r10d
+     fde:	jbe    eac <Update_U_from_F+0x48c>
+     fe4:	mov    0x8(%rsp),%rbx
+     fe9:	lea    0x7d0(%r15),%r10d
+     ff0:	vmovss (%rbx,%rax,1),%xmm1
+     ff5:	mov    -0x30(%rsp),%rbx
+     ffa:	vxorps %xmm0,%xmm1,%xmm1
+     ffe:	vmovss %xmm1,(%rbx,%rax,1)
+    1003:	mov    0x10(%rsp),%rbx
+    1008:	vmovss (%rbx,%rax,1),%xmm1
+    100d:	mov    -0x28(%rsp),%rbx
+    1012:	vmovss %xmm1,(%rbx,%rax,1)
+    1017:	mov    0x20(%rsp),%rbx
+    101c:	vmovss (%rbx,%rax,1),%xmm1
+    1021:	mov    -0x20(%rsp),%rbx
+    1026:	vxorps %xmm0,%xmm1,%xmm1
+    102a:	vmovss %xmm1,(%rbx,%rax,1)
+    102f:	jmp    efc <Update_U_from_F+0x4dc>
+    1034:	nopl   0x0(%rax)
+    1038:	lea    -0x3c0(%rdx),%r10d
+    103f:	cmp    $0x2e4,%r10d
+    1046:	jbe    eac <Update_U_from_F+0x48c>
+    104c:	mov    0x18(%rsp),%rbx
+    1051:	lea    -0x7d0(%r15),%r10d
+    1058:	movslq %r10d,%r10
+    105b:	vmovss (%rbx,%r10,4),%xmm1
+    1061:	mov    -0x30(%rsp),%rbx
+    1066:	vmovss %xmm1,(%rbx,%rax,1)
+    106b:	mov    0x28(%rsp),%rbx
+    1070:	vmovss (%rbx,%r10,4),%xmm1
+    1076:	mov    -0x28(%rsp),%rbx
+    107b:	vmovss %xmm1,(%rbx,%rax,1)
+    1080:	mov    0x30(%rsp),%rbx
+    1085:	vmovss (%rbx,%r10,4),%xmm1
+    108b:	mov    -0x20(%rsp),%r10
+    1090:	mov    0x18(%rsp),%rbx
+    1095:	vmovss %xmm1,(%r10,%rax,1)
+    109b:	mov    -0x18(%rsp),%r10
+    10a0:	vmovss (%rbx,%rax,1),%xmm1
+    10a5:	mov    0x28(%rsp),%rbx
+    10aa:	vxorps %xmm0,%xmm1,%xmm1
+    10ae:	vmovss %xmm1,(%r10,%rax,1)
+    10b4:	mov    -0x10(%rsp),%r10
+    10b9:	vmovss (%rbx,%rax,1),%xmm1
+    10be:	mov    0x30(%rsp),%rbx
+    10c3:	vmovss %xmm1,(%r10,%rax,1)
+    10c9:	vmovss (%rbx,%rax,1),%xmm1
+    10ce:	vxorps %xmm0,%xmm1,%xmm1
+    10d2:	jmp    f31 <Update_U_from_F+0x511>
+    10d7:	nopw   0x0(%rax,%rax,1)
+    10e0:	mov    %rsi,%rbx
+    10e3:	mov    %r12,%r13
+    10e6:	mov    0x8(%rsp),%r14
+    10eb:	mov    %rbp,%r12
+    10ee:	mov    0x10(%rsp),%r15
+    10f3:	mov    0x28(%rsp),%r8
+    10f8:	mov    %rdi,%r11
+    10fb:	xor    %eax,%eax
+    10fd:	mov    0x0(%rip),%rdx        # 1104 <Update_U_from_F+0x6e4>
+    1104:	mov    0x0(%rip),%rcx        # 110b <Update_U_from_F+0x6eb>
+    110b:	mov    0x0(%rip),%rsi        # 1112 <Update_U_from_F+0x6f2>
+    1112:	mov    0x30(%rsp),%r9
+    1117:	mov    -0x48(%rsp),%r10
+    111c:	mov    -0x58(%rsp),%rbp
+    1121:	nopl   0x0(%rax)
+    1128:	mov    0x18(%rsp),%rdi
+    112d:	vmovss (%rdx,%rax,1),%xmm2
+    1132:	vmovss (%rdi,%rax,1),%xmm0
+    1137:	mov    -0x18(%rsp),%rdi
+    113c:	vsubss (%r14,%rax,1),%xmm0,%xmm0
+    1142:	vaddss (%rdi,%rax,1),%xmm0,%xmm0
+    1147:	mov    -0x30(%rsp),%rdi
+    114c:	vsubss (%rdi,%rax,1),%xmm0,%xmm0
+    1151:	mov    -0x10(%rsp),%rdi
+    1156:	vfnmadd132ss 0x0(%rip),%xmm2,%xmm0        # 115f <Update_U_from_F+0x73f>
+    115f:	vmovss %xmm0,(%rdx,%rax,1)
+    1164:	vmovss (%r8,%rax,1),%xmm0
+    116a:	vmovss (%rcx,%rax,1),%xmm3
+    116f:	vsubss (%r15,%rax,1),%xmm0,%xmm0
+    1175:	vaddss (%rdi,%rax,1),%xmm0,%xmm0
+    117a:	mov    -0x28(%rsp),%rdi
+    117f:	vsubss (%rdi,%rax,1),%xmm0,%xmm0
+    1184:	mov    0x20(%rsp),%rdi
+    1189:	vfnmadd132ss 0x0(%rip),%xmm3,%xmm0        # 1192 <Update_U_from_F+0x772>
+    1192:	vmovss %xmm0,(%rcx,%rax,1)
+    1197:	vmovss (%r9,%rax,1),%xmm0
+    119d:	vsubss (%rdi,%rax,1),%xmm0,%xmm0
+    11a2:	mov    -0x50(%rsp),%rdi
+    11a7:	vmovss (%rsi,%rax,1),%xmm4
+    11ac:	vaddss (%rdi,%rax,1),%xmm0,%xmm0
+    11b1:	mov    -0x20(%rsp),%rdi
+    11b6:	vsubss (%rdi,%rax,1),%xmm0,%xmm0
+    11bb:	mov    0x68(%rsp),%rdi
+    11c0:	vfnmadd132ss 0x0(%rip),%xmm4,%xmm0        # 11c9 <Update_U_from_F+0x7a9>
+    11c9:	vmovss %xmm0,(%rsi,%rax,1)
+    11ce:	vmovss (%r10,%rax,1),%xmm0
+    11d4:	vsubss (%r12,%rax,1),%xmm0,%xmm0
+    11da:	vaddss (%rdi,%rax,1),%xmm0,%xmm0
+    11df:	mov    0x50(%rsp),%rdi
+    11e4:	vmovss (%rdx,%rax,1),%xmm5
+    11e9:	vsubss (%rdi,%rax,1),%xmm0,%xmm0
+    11ee:	mov    0x70(%rsp),%rdi
+    11f3:	vfnmadd132ss 0x0(%rip),%xmm5,%xmm0        # 11fc <Update_U_from_F+0x7dc>
+    11fc:	vmovss %xmm0,(%rdx,%rax,1)
+    1201:	vmovss (%r11,%rax,1),%xmm0
+    1207:	vmovss (%rcx,%rax,1),%xmm6
+    120c:	vsubss 0x0(%r13,%rax,1),%xmm0,%xmm0
+    1213:	vaddss (%rdi,%rax,1),%xmm0,%xmm0
+    1218:	mov    0x58(%rsp),%rdi
+    121d:	vsubss (%rdi,%rax,1),%xmm0,%xmm0
+    1222:	mov    -0x8(%rsp),%rdi
+    1227:	vfnmadd132ss 0x0(%rip),%xmm6,%xmm0        # 1230 <Update_U_from_F+0x810>
+    1230:	vmovss %xmm0,(%rcx,%rax,1)
+    1235:	vmovss (%rbx,%rax,1),%xmm0
+    123a:	vsubss (%rdi,%rax,1),%xmm0,%xmm0
+    123f:	mov    0x60(%rsp),%rdi
+    1244:	vaddss 0x0(%rbp,%rax,1),%xmm0,%xmm0
+    124a:	vmovss (%rsi,%rax,1),%xmm7
+    124f:	vsubss (%rdi,%rax,1),%xmm0,%xmm0
+    1254:	vfnmadd132ss 0x0(%rip),%xmm7,%xmm0        # 125d <Update_U_from_F+0x83d>
+    125d:	vmovss %xmm0,(%rsi,%rax,1)
+    1262:	add    $0x4,%rax
+    1266:	cmp    $0xf42400,%rax
+    126c:	jne    1128 <Update_U_from_F+0x708>
+    1272:	add    $0x78,%rsp
+    1276:	pop    %rbx
+    1277:	pop    %rbp
+    1278:	pop    %r12
+    127a:	pop    %r13
+    127c:	pop    %r14
+    127e:	pop    %r15
+    1280:	ret
+    1281:	lea    (%rcx,%rax,1),%r9
+    1285:	mov    0x40(%rsp),%rcx
+    128a:	lea    -0x4(%rax),%rdx
+    128e:	xor    %r15d,%r15d
+    1291:	mov    %r14d,0x3c(%rsp)
+    1296:	mov    %r12,%r11
+    1299:	mov    %r9,%rbx
+    129c:	mov    %r15d,%r12d
+    129f:	lea    (%rcx,%rdx,1),%r10
+    12a3:	mov    0x58(%rsp),%rcx
+    12a8:	mov    0x28(%rsp),%r9
+    12ad:	mov    %rbp,%r13
+    12b0:	mov    %r10,%r14
+    12b3:	mov    0x30(%rsp),%r10
+    12b8:	lea    (%rcx,%rax,1),%rdi
+    12bc:	mov    0x48(%rsp),%rcx
+    12c1:	lea    (%rcx,%rdx,1),%r8
+    12c5:	mov    0x60(%rsp),%rdx
+    12ca:	mov    0x68(%rsp),%rcx
+    12cf:	mov    %r8,%r15
+    12d2:	mov    0x18(%rsp),%r8
+    12d7:	lea    (%rdx,%rax,1),%rsi
+    12db:	mov    0x70(%rsp),%rdx
+    12e0:	add    %rax,%rcx
+    12e3:	add    %rax,%rdx
+    12e6:	jmp    137d <Update_U_from_F+0x95d>
+    12eb:	nopl   0x0(%rax,%rax,1)
+    12f0:	mov    -0x48(%rsp),%rbp
+    12f5:	cmp    $0x7cf,%r12d
+    12fc:	mov    %r14,-0x40(%rsp)
+    1301:	mov    %r15,-0x38(%rsp)
+    1306:	vmovss -0x4(%rbp,%rax,1),%xmm1
+    130c:	je     1468 <Update_U_from_F+0xa48>
+    1312:	vmovss %xmm1,(%rbx)
+    1316:	vmovss (%r14),%xmm1
+    131b:	mov    -0x8(%rsp),%rbp
+    1320:	vmovss %xmm1,(%rdi)
+    1324:	vmovss (%r15),%xmm1
+    1329:	vmovss %xmm1,(%rsi)
+    132d:	vmovss 0x4(%r13,%rax,1),%xmm1
+    1334:	vmovss %xmm1,(%rcx)
+    1338:	vmovss 0x4(%r11,%rax,1),%xmm1
+    133f:	vmovss %xmm1,(%rdx)
+    1343:	vmovss 0x4(%rbp,%rax,1),%xmm1
+    1349:	add    $0x1,%r12d
+    134d:	add    $0x4,%rbx
+    1351:	add    $0x4,%r14
+    1355:	add    $0x4,%rdi
+    1359:	add    $0x4,%r15
+    135d:	add    $0x4,%rsi
+    1361:	add    $0x4,%rcx
+    1365:	add    $0x4,%rdx
+    1369:	addl   $0x1,0x3c(%rsp)
+    136e:	mov    -0x58(%rsp),%rbp
+    1373:	vmovss %xmm1,0x0(%rbp,%rax,1)
+    1379:	add    $0x4,%rax
+    137d:	mov    -0x30(%rsp),%rbp
+    1382:	test   %r12d,%r12d
+    1385:	mov    %rbx,-0x60(%rsp)
+    138a:	vmovss -0x1f40(%r8,%rax,1),%xmm1
+    1394:	mov    %rdi,-0x78(%rsp)
+    1399:	mov    %rsi,-0x70(%rsp)
+    139e:	vmovss %xmm1,0x0(%rbp,%rax,1)
+    13a4:	mov    -0x28(%rsp),%rbp
+    13a9:	vmovss -0x1f40(%r9,%rax,1),%xmm1
+    13b3:	mov    %rcx,-0x68(%rsp)
+    13b8:	vmovss %xmm1,0x0(%rbp,%rax,1)
+    13be:	mov    -0x20(%rsp),%rbp
+    13c3:	vmovss -0x1f40(%r10,%rax,1),%xmm1
+    13cd:	mov    %rdx,(%rsp)
+    13d1:	vmovss %xmm1,0x0(%rbp,%rax,1)
+    13d7:	vmovss (%r8,%rax,1),%xmm1
+    13dd:	mov    -0x18(%rsp),%rbp
+    13e2:	vxorps %xmm0,%xmm1,%xmm1
+    13e6:	vmovss %xmm1,0x0(%rbp,%rax,1)
+    13ec:	mov    -0x10(%rsp),%rbp
+    13f1:	vmovss (%r9,%rax,1),%xmm1
+    13f7:	vmovss %xmm1,0x0(%rbp,%rax,1)
+    13fd:	vmovss (%r10,%rax,1),%xmm1
+    1403:	mov    -0x50(%rsp),%rbp
+    1408:	vxorps %xmm0,%xmm1,%xmm1
+    140c:	vmovss %xmm1,0x0(%rbp,%rax,1)
+    1412:	jne    12f0 <Update_U_from_F+0x8d0>
+    1418:	vmovss 0x0(%r13,%rax,1),%xmm1
+    141f:	mov    -0x8(%rsp),%rbp
+    1424:	vxorps %xmm0,%xmm1,%xmm1
+    1428:	vmovss %xmm1,(%rbx)
+    142c:	vmovss (%r11,%rax,1),%xmm1
+    1432:	vxorps %xmm0,%xmm1,%xmm1
+    1436:	vmovss %xmm1,(%rdi)
+    143a:	vmovss 0x0(%rbp,%rax,1),%xmm1
+    1440:	vmovss %xmm1,(%rsi)
+    1444:	vmovss 0x4(%r13,%rax,1),%xmm1
+    144b:	vmovss %xmm1,(%rcx)
+    144f:	vmovss 0x4(%r11,%rax,1),%xmm1
+    1456:	vmovss %xmm1,(%rdx)
+    145a:	vmovss 0x4(%rbp,%rax,1),%xmm1
+    1460:	jmp    1349 <Update_U_from_F+0x929>
+    1465:	nopl   (%rax)
+    1468:	mov    %rdx,%rbx
+    146b:	mov    -0x58(%rsp),%rdx
+    1470:	mov    %r12d,%r15d
+    1473:	mov    0x3c(%rsp),%r14d
+    1478:	mov    -0x38(%rsp),%rcx
+    147d:	mov    %r13,%rbp
+    1480:	mov    %r11,%r12
+    1483:	add    %rax,%rdx
+    1486:	jmp    d1a <Update_U_from_F+0x2fa>
+    148b:	nopl   0x0(%rax,%rax,1)
+
+0000000000001490 <Compute_F_from_P>:
+    1490:	endbr64
+    1494:	push   %r15
+    1496:	mov    0x0(%rip),%rax        # 149d <Compute_F_from_P+0xd>
+    149d:	vxorps %xmm4,%xmm4,%xmm4
+    14a1:	mov    0x0(%rip),%r11        # 14a8 <Compute_F_from_P+0x18>
+    14a8:	mov    0x0(%rip),%r10        # 14af <Compute_F_from_P+0x1f>
+    14af:	push   %r14
+    14b1:	mov    0x0(%rip),%rsi        # 14b8 <Compute_F_from_P+0x28>
+    14b8:	mov    0x0(%rip),%r14        # 14bf <Compute_F_from_P+0x2f>
+    14bf:	push   %r13
+    14c1:	push   %r12
+    14c3:	mov    0x0(%rip),%r13        # 14ca <Compute_F_from_P+0x3a>
+    14ca:	push   %rbp
+    14cb:	mov    0x0(%rip),%r12        # 14d2 <Compute_F_from_P+0x42>
+    14d2:	push   %rbx
+    14d3:	mov    0x0(%rip),%rbp        # 14da <Compute_F_from_P+0x4a>
+    14da:	mov    0x0(%rip),%rbx        # 14e1 <Compute_F_from_P+0x51>
+    14e1:	mov    %rax,-0x60(%rsp)
+    14e6:	mov    0x0(%rip),%rax        # 14ed <Compute_F_from_P+0x5d>
+    14ed:	mov    %rax,-0x58(%rsp)
+    14f2:	mov    0x0(%rip),%rax        # 14f9 <Compute_F_from_P+0x69>
+    14f9:	mov    %rax,-0x50(%rsp)
+    14fe:	mov    0x0(%rip),%rax        # 1505 <Compute_F_from_P+0x75>
+    1505:	mov    %rax,-0x48(%rsp)
+    150a:	mov    0x0(%rip),%rax        # 1511 <Compute_F_from_P+0x81>
+    1511:	mov    %rax,-0x40(%rsp)
+    1516:	mov    0x0(%rip),%rax        # 151d <Compute_F_from_P+0x8d>
+    151d:	mov    %rax,-0x38(%rsp)
+    1522:	mov    0x0(%rip),%r9        # 1529 <Compute_F_from_P+0x99>
+    1529:	mov    0x0(%rip),%rax        # 1530 <Compute_F_from_P+0xa0>
+    1530:	mov    0x0(%rip),%r15        # 1537 <Compute_F_from_P+0xa7>
+    1537:	mov    0x0(%rip),%r8        # 153e <Compute_F_from_P+0xae>
+    153e:	mov    0x0(%rip),%rdi        # 1545 <Compute_F_from_P+0xb5>
+    1545:	mov    %rax,-0x30(%rsp)
+    154a:	mov    0x0(%rip),%rax        # 1551 <Compute_F_from_P+0xc1>
+    1551:	mov    %r15,-0x8(%rsp)
+    1556:	mov    0x0(%rip),%rcx        # 155d <Compute_F_from_P+0xcd>
+    155d:	mov    %rax,-0x28(%rsp)
+    1562:	mov    0x0(%rip),%rax        # 1569 <Compute_F_from_P+0xd9>
+    1569:	mov    0x0(%rip),%rdx        # 1570 <Compute_F_from_P+0xe0>
+    1570:	vmovsd 0x0(%rip),%xmm2        # 1578 <Compute_F_from_P+0xe8>
+    1578:	mov    %rax,-0x20(%rsp)
+    157d:	mov    0x0(%rip),%rax        # 1584 <Compute_F_from_P+0xf4>
+    1584:	vmovsd 0x0(%rip),%xmm1        # 158c <Compute_F_from_P+0xfc>
+    158c:	vmovsd 0x0(%rip),%xmm3        # 1594 <Compute_F_from_P+0x104>
+    1594:	mov    %rax,-0x18(%rsp)
+    1599:	mov    0x0(%rip),%rax        # 15a0 <Compute_F_from_P+0x110>
+    15a0:	mov    %rax,-0x10(%rsp)
+    15a5:	xor    %eax,%eax
+    15a7:	nopw   0x0(%rax,%rax,1)
+    15b0:	vmovss (%r14,%rax,1),%xmm6
+    15b6:	vmovss (%r12,%rax,1),%xmm0
+    15bc:	add    $0x4,%rcx
+    15c0:	add    $0x4,%rdx
+    15c4:	vmovss -0x4(%rcx),%xmm8
+    15c9:	mov    -0x60(%rsp),%r15
+    15ce:	vdivss %xmm6,%xmm0,%xmm0
+    15d2:	vcvtss2sd %xmm6,%xmm6,%xmm6
+    15d6:	vmulsd %xmm1,%xmm6,%xmm6
+    15da:	vmovss %xmm8,0x0(%rbp,%rax,1)
+    15e0:	vmulss (%r12,%rax,1),%xmm8,%xmm8
+    15e6:	vcvtss2sd %xmm8,%xmm8,%xmm8
+    15eb:	vcvtss2sd %xmm0,%xmm0,%xmm5
+    15ef:	vmulss %xmm0,%xmm0,%xmm0
+    15f3:	vaddsd %xmm2,%xmm5,%xmm7
+    15f7:	vsubsd %xmm2,%xmm5,%xmm5
+    15fb:	vmulsd %xmm1,%xmm7,%xmm7
+    15ff:	vmulsd %xmm1,%xmm5,%xmm5
+    1603:	vcvtss2sd %xmm0,%xmm0,%xmm0
+    1607:	vsubsd %xmm0,%xmm2,%xmm0
+    160b:	vmulsd %xmm6,%xmm0,%xmm0
+    160f:	vcvtss2sd 0x0(%r13,%rax,1),%xmm4,%xmm6
+    1616:	vcvtsd2ss %xmm7,%xmm7,%xmm7
+    161a:	vmulsd %xmm3,%xmm6,%xmm9
+    161e:	vcvtsd2ss %xmm5,%xmm5,%xmm5
+    1622:	vcvtsd2ss %xmm0,%xmm0,%xmm0
+    1626:	vfmadd132sd %xmm9,%xmm8,%xmm6
+    162b:	vcvtsd2ss %xmm6,%xmm6,%xmm6
+    162f:	vmovss %xmm6,(%rbx,%rax,1)
+    1634:	vmovss -0x4(%rcx),%xmm6
+    1639:	vmulss (%r11,%rax,1),%xmm6,%xmm6
+    163f:	vmovss %xmm6,(%r10,%rax,1)
+    1645:	vmulss (%rsi,%rax,1),%xmm0,%xmm6
+    164a:	vfmadd231ss 0x0(%rbp,%rax,1),%xmm7,%xmm6
+    1651:	vmovss %xmm6,(%r15,%rax,1)
+    1657:	vmulss -0x4(%rcx),%xmm0,%xmm6
+    165c:	mov    -0x58(%rsp),%r15
+    1661:	vfmadd231ss (%rbx,%rax,1),%xmm7,%xmm6
+    1667:	vmovss %xmm6,(%r15,%rax,1)
+    166d:	vmulss -0x4(%rdx),%xmm0,%xmm6
+    1672:	mov    -0x50(%rsp),%r15
+    1677:	vfmadd132ss (%r10,%rax,1),%xmm6,%xmm7
+    167d:	vmovss %xmm7,(%r15,%rax,1)
+    1683:	vmulss (%rsi,%rax,1),%xmm0,%xmm6
+    1688:	mov    -0x48(%rsp),%r15
+    168d:	vfnmsub231ss 0x0(%rbp,%rax,1),%xmm5,%xmm6
+    1694:	vmovss %xmm6,(%r15,%rax,1)
+    169a:	vmulss -0x4(%rcx),%xmm0,%xmm6
+    169f:	mov    -0x40(%rsp),%r15
+    16a4:	vfnmsub231ss (%rbx,%rax,1),%xmm5,%xmm6
+    16aa:	vmovss %xmm6,(%r15,%rax,1)
+    16b0:	vmulss -0x4(%rdx),%xmm0,%xmm0
+    16b5:	vfnmsub132ss (%r10,%rax,1),%xmm0,%xmm5
+    16bb:	mov    -0x38(%rsp),%r15
+    16c0:	vmovss %xmm5,(%r15,%rax,1)
+    16c6:	vmovss (%r14,%rax,1),%xmm6
+    16cc:	mov    -0x30(%rsp),%r15
+    16d1:	vmovss (%r11,%rax,1),%xmm0
+    16d7:	vdivss %xmm6,%xmm0,%xmm0
+    16db:	vcvtss2sd %xmm6,%xmm6,%xmm6
+    16df:	vmulsd %xmm1,%xmm6,%xmm6
+    16e3:	vcvtss2sd %xmm0,%xmm0,%xmm5
+    16e7:	vmulss %xmm0,%xmm0,%xmm0
+    16eb:	vaddsd %xmm2,%xmm5,%xmm7
+    16ef:	vsubsd %xmm2,%xmm5,%xmm5
+    16f3:	vmulsd %xmm1,%xmm7,%xmm7
+    16f7:	vmulsd %xmm1,%xmm5,%xmm5
+    16fb:	vcvtss2sd %xmm0,%xmm0,%xmm0
+    16ff:	vsubsd %xmm0,%xmm2,%xmm0
+    1703:	vmulsd %xmm6,%xmm0,%xmm0
+    1707:	vmovss -0x4(%rdx),%xmm6
+    170c:	vcvtsd2ss %xmm7,%xmm7,%xmm7
+    1710:	vcvtsd2ss %xmm5,%xmm5,%xmm5
+    1714:	vmovss %xmm6,(%r9,%rax,1)
+    171a:	vmulss (%r12,%rax,1),%xmm6,%xmm6
+    1720:	vcvtsd2ss %xmm0,%xmm0,%xmm0
+    1724:	vmovss %xmm6,(%r8,%rax,1)
+    172a:	vmovss -0x4(%rdx),%xmm8
+    172f:	vmulss (%r11,%rax,1),%xmm8,%xmm8
+    1735:	vcvtss2sd 0x0(%r13,%rax,1),%xmm4,%xmm6
+    173c:	vmulsd %xmm3,%xmm6,%xmm9
+    1740:	vcvtss2sd %xmm8,%xmm8,%xmm8
+    1745:	vfmadd132sd %xmm9,%xmm8,%xmm6
+    174a:	vcvtsd2ss %xmm6,%xmm6,%xmm6
+    174e:	vmovss %xmm6,(%rdi,%rax,1)
+    1753:	vmulss (%rsi,%rax,1),%xmm0,%xmm6
+    1758:	vfmadd231ss (%r9,%rax,1),%xmm7,%xmm6
+    175e:	vmovss %xmm6,(%r15,%rax,1)
+    1764:	vmulss -0x4(%rcx),%xmm0,%xmm6
+    1769:	mov    -0x28(%rsp),%r15
+    176e:	vfmadd231ss (%r8,%rax,1),%xmm7,%xmm6
+    1774:	vmovss %xmm6,(%r15,%rax,1)
+    177a:	vmulss -0x4(%rdx),%xmm0,%xmm6
+    177f:	mov    -0x20(%rsp),%r15
+    1784:	vfmadd132ss (%rdi,%rax,1),%xmm6,%xmm7
+    178a:	vmovss %xmm7,(%r15,%rax,1)
+    1790:	vmulss (%rsi,%rax,1),%xmm0,%xmm6
+    1795:	mov    -0x8(%rsp),%r15
+    179a:	vfnmsub231ss (%r9,%rax,1),%xmm5,%xmm6
+    17a0:	vmovss %xmm6,(%r15,%rax,1)
+    17a6:	vmulss -0x4(%rcx),%xmm0,%xmm6
+    17ab:	mov    -0x18(%rsp),%r15
+    17b0:	vfnmsub231ss (%r8,%rax,1),%xmm5,%xmm6
+    17b6:	vmovss %xmm6,(%r15,%rax,1)
+    17bc:	vmulss -0x4(%rdx),%xmm0,%xmm0
+    17c1:	mov    -0x10(%rsp),%r15
+    17c6:	vfnmsub132ss (%rdi,%rax,1),%xmm0,%xmm5
+    17cc:	vmovss %xmm5,(%r15,%rax,1)
+    17d2:	add    $0x4,%rax
+    17d6:	cmp    $0xf42400,%rax
+    17dc:	jne    15b0 <Compute_F_from_P+0x120>
+    17e2:	pop    %rbx
+    17e3:	pop    %rbp
+    17e4:	pop    %r12
+    17e6:	pop    %r13
+    17e8:	pop    %r14
+    17ea:	pop    %r15
+    17ec:	ret
+    17ed:	nopl   (%rax)
+
+00000000000017f0 <Compute_P_from_U>:
+    17f0:	endbr64
+    17f4:	push   %r15
+    17f6:	vxorps %xmm2,%xmm2,%xmm2
+    17fa:	push   %r14
+    17fc:	push   %r13
+    17fe:	push   %r12
+    1800:	push   %rbp
+    1801:	push   %rbx
+    1802:	xor    %ebx,%ebx
+    1804:	sub    $0x18,%rsp
+    1808:	mov    0x0(%rip),%r12        # 180f <Compute_P_from_U+0x1f>
+    180f:	mov    0x0(%rip),%rbp        # 1816 <Compute_P_from_U+0x26>
+    1816:	mov    0x0(%rip),%rdx        # 181d <Compute_P_from_U+0x2d>
+    181d:	mov    0x0(%rip),%rax        # 1824 <Compute_P_from_U+0x34>
+    1824:	mov    0x0(%rip),%r15        # 182b <Compute_P_from_U+0x3b>
+    182b:	mov    0x0(%rip),%r14        # 1832 <Compute_P_from_U+0x42>
+    1832:	mov    0x0(%rip),%r13        # 1839 <Compute_P_from_U+0x49>
+    1839:	vmovss 0x0(%rip),%xmm3        # 1841 <Compute_P_from_U+0x51>
+    1841:	nopl   0x0(%rax)
+    1848:	vmovss (%r12,%rbx,1),%xmm1
+    184e:	vmovss %xmm1,0x0(%rbp,%rbx,1)
+    1854:	vmovss (%rdx,%rbx,1),%xmm0
+    1859:	vdivss %xmm1,%xmm0,%xmm0
+    185d:	vmovss %xmm0,(%rax,%rbx,1)
+    1862:	vmovss (%r15,%rbx,1),%xmm0
+    1868:	vdivss (%r12,%rbx,1),%xmm0,%xmm0
+    186e:	vmovss %xmm0,(%r14,%rbx,1)
+    1874:	vmulss 0x0(%rbp,%rbx,1),%xmm3,%xmm0
+    187a:	vucomiss %xmm0,%xmm2
+    187e:	ja     18a7 <Compute_P_from_U+0xb7>
+    1880:	vsqrtss %xmm0,%xmm0,%xmm0
+    1884:	vmovss %xmm0,0x0(%r13,%rbx,1)
+    188b:	add    $0x4,%rbx
+    188f:	cmp    $0xf42400,%rbx
+    1896:	jne    1848 <Compute_P_from_U+0x58>
+    1898:	add    $0x18,%rsp
+    189c:	pop    %rbx
+    189d:	pop    %rbp
+    189e:	pop    %r12
+    18a0:	pop    %r13
+    18a2:	pop    %r14
+    18a4:	pop    %r15
+    18a6:	ret
+    18a7:	mov    %rax,0x8(%rsp)
+    18ac:	mov    %rdx,(%rsp)
+    18b0:	call   18b5 <Compute_P_from_U+0xc5>
+    18b5:	mov    (%rsp),%rdx
+    18b9:	mov    0x8(%rsp),%rax
+    18be:	vxorps %xmm2,%xmm2,%xmm2
+    18c2:	vmovss %xmm0,0x0(%r13,%rbx,1)
+    18c9:	add    $0x4,%rbx
+    18cd:	vmovss 0x0(%rip),%xmm3        # 18d5 <Compute_P_from_U+0xe5>
+    18d5:	cmp    $0xf42400,%rbx
+    18dc:	jne    1848 <Compute_P_from_U+0x58>
+    18e2:	jmp    1898 <Compute_P_from_U+0xa8>
+    18e4:	data16 cs nopw 0x0(%rax,%rax,1)
+    18ef:	nop
+
+00000000000018f0 <Save_Results>:
+    18f0:	endbr64
+    18f4:	push   %r15
+    18f6:	lea    0x0(%rip),%rdi        # 18fd <Save_Results+0xd>
+    18fd:	push   %r14
+    18ff:	push   %r13
+    1901:	xor    %r13d,%r13d
+    1904:	push   %r12
+    1906:	xor    %r12d,%r12d
+    1909:	push   %rbp
+    190a:	lea    0x0(%rip),%rbp        # 1911 <Save_Results+0x21>
+    1911:	push   %rbx
+    1912:	sub    $0x18,%rsp
+    1916:	call   191b <Save_Results+0x2b>
+    191b:	lea    0x0(%rip),%rsi        # 1922 <Save_Results+0x32>
+    1922:	lea    0x0(%rip),%rdi        # 1929 <Save_Results+0x39>
+    1929:	call   192e <Save_Results+0x3e>
+    192e:	vxorps %xmm5,%xmm5,%xmm5
+    1932:	mov    %rax,%rbx
+    1935:	nopl   (%rax)
+    1938:	vcvtsi2sd %r12d,%xmm5,%xmm0
+    193d:	vaddsd 0x0(%rip),%xmm0,%xmm0        # 1945 <Save_Results+0x55>
+    1945:	mov    %r13,%r14
+    1948:	xor    %r15d,%r15d
+    194b:	vmulsd 0x0(%rip),%xmm0,%xmm0        # 1953 <Save_Results+0x63>
+    1953:	vcvtsd2ss %xmm0,%xmm0,%xmm0
+    1957:	vcvtss2sd %xmm0,%xmm0,%xmm6
+    195b:	vmovsd %xmm6,0x8(%rsp)
+    1961:	nopl   0x0(%rax)
+    1968:	vcvtsi2sd %r15d,%xmm5,%xmm1
+    196d:	vmovsd 0x8(%rsp),%xmm0
+    1973:	mov    %rbp,%rdx
+    1976:	mov    %rbx,%rdi
+    1979:	mov    0x0(%rip),%rax        # 1980 <Save_Results+0x90>
+    1980:	vaddsd 0x0(%rip),%xmm1,%xmm1        # 1988 <Save_Results+0x98>
+    1988:	mov    $0x2,%esi
+    198d:	add    $0x1,%r15d
+    1991:	vmulsd 0x0(%rip),%xmm1,%xmm1        # 1999 <Save_Results+0xa9>
+    1999:	vcvtss2sd (%rax,%r14,1),%xmm5,%xmm4
+    199f:	mov    0x0(%rip),%rax        # 19a6 <Save_Results+0xb6>
+    19a6:	vcvtss2sd (%rax,%r14,1),%xmm5,%xmm3
+    19ac:	mov    0x0(%rip),%rax        # 19b3 <Save_Results+0xc3>
+    19b3:	vcvtss2sd (%rax,%r14,1),%xmm5,%xmm2
+    19b9:	mov    $0x5,%eax
+    19be:	add    $0x4,%r14
+    19c2:	vcvtsd2ss %xmm1,%xmm1,%xmm1
+    19c6:	vcvtss2sd %xmm1,%xmm1,%xmm1
+    19ca:	call   19cf <Save_Results+0xdf>
+    19cf:	cmp    $0x7d0,%r15d
+    19d6:	vxorps %xmm5,%xmm5,%xmm5
+    19da:	jne    1968 <Save_Results+0x78>
+    19dc:	add    $0x1,%r12d
+    19e0:	add    $0x1f40,%r13
+    19e7:	cmp    $0x7d0,%r12d
+    19ee:	jne    1938 <Save_Results+0x48>
+    19f4:	mov    %rbx,%rdi
+    19f7:	call   19fc <Save_Results+0x10c>
+    19fc:	add    $0x18,%rsp
+    1a00:	lea    0x0(%rip),%rdi        # 1a07 <Save_Results+0x117>
+    1a07:	pop    %rbx
+    1a08:	pop    %rbp
+    1a09:	pop    %r12
+    1a0b:	pop    %r13
+    1a0d:	pop    %r14
+    1a0f:	pop    %r15
+    1a11:	jmp    1a16 <Save_Results+0x126>
+
+Disassembly of section .text.startup:
+
+0000000000000000 <main>:
+   0:	endbr64
+   4:	push   %rbx
+   5:	xor    %eax,%eax
+   7:	sub    $0x10,%rsp
+   b:	call   10 <main+0x10>
+  10:	xor    %eax,%eax
+  12:	call   17 <main+0x17>
+  17:	xor    %eax,%eax
+  19:	vzeroupper
+  1c:	call   21 <main+0x21>
+  21:	mov    0x0(%rip),%eax        # 27 <main+0x27>
+  27:	vxorps %xmm0,%xmm0,%xmm0
+  2b:	lea    0x1(%rax),%ebx
+  2e:	xchg   %ax,%ax
+  30:	xor    %eax,%eax
+  32:	vmovss %xmm0,0xc(%rsp)
+  38:	call   3d <main+0x3d>
+  3d:	xor    %eax,%eax
+  3f:	call   44 <main+0x44>
+  44:	xor    %eax,%eax
+  46:	call   4b <main+0x4b>
+  4b:	vmovss 0xc(%rsp),%xmm0
+  51:	mov    %ebx,0x0(%rip)        # 57 <main+0x57>
+  57:	mov    %ebx,%edx
+  59:	vaddss 0x0(%rip),%xmm0,%xmm0        # 61 <main+0x61>
+  61:	vmovss 0x0(%rip),%xmm1        # 69 <main+0x69>
+  69:	add    $0x1,%ebx
+  6c:	vcomiss %xmm0,%xmm1
+  70:	ja     30 <main+0x30>
+  72:	lea    0x0(%rip),%rsi        # 79 <main+0x79>
+  79:	mov    $0x2,%edi
+  7e:	xor    %eax,%eax
+  80:	call   85 <main+0x85>
+  85:	xor    %eax,%eax
+  87:	call   8c <main+0x8c>
+  8c:	xor    %eax,%eax
+  8e:	call   93 <main+0x93>
+  93:	add    $0x10,%rsp
+  97:	xor    %eax,%eax
+  99:	pop    %rbx
+  9a:	ret
