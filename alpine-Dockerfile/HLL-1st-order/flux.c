@@ -42,6 +42,7 @@ float *restrict momentum_Y,float *restrict h,int type,int type_limiter,int NX,in
 			float wL = 1.0f, wR = 1.0f;
 			int   offLL = 2*(NY+2);      /* 左格的左邊 = 第 i-2 列 */
 			int   offRR = NY+2;          /* 右格的右邊 = 第 i+1 列 */
+			int   offTT = 1;             /* Y 方向：上格的上面 = 第 j+1 格 */
 			if (i == 1) {                /* 左格是第 0 列（ghost）：沒有第 -1 列 */
 				wL = 0.0f;
 				offLL = NY+2;
@@ -49,6 +50,7 @@ float *restrict momentum_Y,float *restrict h,int type,int type_limiter,int NX,in
 			if (i == NX+1) {             /* 右格是第 NX+1 列（ghost）：沒有第 NX+2 列 */
 				wR = 0.0f;
 				offRR = 0;
+				offTT = 0;
 			}
 
 			for (int j = 1; j < NY+2; j++){
@@ -76,6 +78,8 @@ float *restrict momentum_Y,float *restrict h,int type,int type_limiter,int NX,in
 							a_l = a_r;
             					}
         				}
+					//float a_l = sqrtf(g*mass_l);   /* 2nd order：波速要用重建（和鏡射）後的面值，不能用格子的 a */
+					//float a_r = sqrtf(g*mass_r);
             				float u_l = u_X_l;
             				float u_r = u_X_r;
 					float v_l = v_Y_l;
@@ -133,7 +137,7 @@ float *restrict momentum_Y,float *restrict h,int type,int type_limiter,int NX,in
 
 				//int index = i*(NY+2)+j;
 				//int index1 = i*(NIF_Y+2)+j;
-				int kBB = index-2, kB = index-1, kT = index, kTT = index+1;
+				int kBB = index-2, kB = index-1, kT = index, kTT = index+offTT;
                                 float mass_B = mass[index-1];
                                 float mass_T = mass[index];
                                 float u_X_B = u[index-1];
@@ -162,6 +166,8 @@ float *restrict momentum_Y,float *restrict h,int type,int type_limiter,int NX,in
 						a_T = a_B;
 					}
 				}
+				//float a_B = sqrtf(g*mass_B);   /* 2nd order：波速要用重建（和鏡射）後的面值 */
+				//float a_T = sqrtf(g*mass_T);
                                 float u_B = u_X_B;
                                 float u_T = u_X_T;
 				float v_B = v_Y_B;
