@@ -1,1 +1,11 @@
 result_data/
+# perf / gprof 輸出
+*.data
+*.data.old
+gmon.out
+# 執行結果
+results*.dat
+# 編譯產物
+*.o
+main
+main_musl
