@@ -4,18 +4,18 @@
 #include <stdlib.h>
 #include <math.h>
 #include <malloc.h>
-float *p0, *p1, *p2, *u0, *u1, *u2;
-float *f0, *f1, *f2;  // Fluxes
-float *h0, *h1, *h2;  // Fluxes
-float *fp0, *fp1, *fp2;  // Split flux (positive)
-float *fm0, *fm1, *fm2;  // Split flux (minus [negative])
-float *hp0, *hp1, *hp2;  // Split flux (positive)
-float *hm0, *hm1, *hm2;  // Split flux (minus [negative])
-float *Left_f0, *Left_f1, *Left_f2;
-float *Right_f0, *Right_f1, *Right_f2;
-float *Bottom_f0, *Bottom_f1, *Bottom_f2;
-float *Top_f0, *Top_f1, *Top_f2;
-float *a;  // Wave propagation speed
+float *restrict p0, *restrict p1, *restrict p2, *restrict u0, *restrict u1, *restrict u2;
+float *restrict f0, *restrict f1, *restrict f2;  // Fluxes
+float *restrict h0, *restrict h1, *restrict h2;  // Fluxes
+float *restrict fp0, *restrict fp1, *restrict fp2;  // Split flux (positive)
+float *restrict fm0, *restrict fm1, *restrict fm2;  // Split flux (minus [negative])
+float *restrict hp0, *restrict hp1, *restrict hp2;  // Split flux (positive)
+float *restrict hm0, *restrict hm1, *restrict hm2;  // Split flux (minus [negative])
+float *restrict Left_f0, *restrict Left_f1, *restrict Left_f2;
+float *restrict Right_f0, *restrict Right_f1, *restrict Right_f2;
+float *restrict Bottom_f0, *restrict Bottom_f1, *restrict Bottom_f2;
+float *restrict Top_f0, *restrict Top_f1, *restrict Top_f2;
+float *restrict a;  // Wave propagation speed
 const int NX = 2000;
 const int NY = 2000;
 const int N = NX*NY;
