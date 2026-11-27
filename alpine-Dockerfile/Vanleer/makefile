@@ -5,6 +5,7 @@ main: test.c
 	gcc -O3 -march=native -ffast-math test.c -o main -lm 
 
 main_musl: test.c
+ 
 	musl-gcc -O3 -march=native -ffast-math test.c -o main_musl -lm
 
 clean:

@@ -237,9 +237,9 @@ void Compute_F_from_P() {
         M = p1[cell]/a[cell];
 	Mc = 0.5f*(fabsf(M + 1.0f) - fabsf(M - 1.0f)); //For supercritical flow Fr > 1, F+ = F and F- = 0; whereas if Fr < -1, F+ = 0 and F- = F 
         // Z invariants
-        Z1 = 0.25*(Mc + 1.0)*(Mc + 1.0)*(2.0 - Mc);
-        Z2 = 0.25*a[cell]*(1.0-Mc*Mc)*(1.0-Mc*Mc);
-        Z3 = Z1 - 1.0;
+        Z1 = 0.25f*(Mc + 1.0f)*(Mc + 1.0f)*(2.0f - Mc);
+        Z2 = 0.25f*a[cell]*(1.0f-Mc*Mc)*(1.0f-Mc*Mc);
+        Z3 = Z1 - 1.0f;
         // Fluxes of conserved quantities
         f0[cell] = u1[cell];
         f1[cell] = u1[cell]*p1[cell] + 0.5*G*p0[cell]*p0[cell];
@@ -261,9 +261,9 @@ void Compute_F_from_P() {
         M = p2[cell]/a[cell];
 	Mc = 0.5f*(fabsf(M + 1.0f) - fabsf(M - 1.0f)); //For supercritical flow Fr > 1, F+ = F and F- = 0; whereas if Fr < -1, F+ = 0 and F- = F
         // Z invariants
-        Z1 = 0.25*(Mc + 1.0)*(Mc + 1.0)*(2.0 - Mc);
-        Z2 = 0.25*a[cell]*(1.0-Mc*Mc)*(1.0-Mc*Mc);
-        Z3 = Z1 - 1.0;
+        Z1 = 0.25f*(Mc + 1.0f)*(Mc + 1.0f)*(2.0f - Mc);
+        Z2 = 0.25f*a[cell]*(1.0f-Mc*Mc)*(1.0f-Mc*Mc);
+        Z3 = Z1 - 1.0f;
         // Fluxes of conserved quantities
         h0[cell] = u2[cell];
         h1[cell] = u2[cell]*p1[cell];
@@ -289,7 +289,7 @@ void Compute_P_from_U() {
         p0[cell] = u0[cell];
         p1[cell] = u1[cell]/u0[cell];
         p2[cell] = u2[cell]/u0[cell];
-        a[cell] = sqrt(G*p0[cell]);
+        a[cell] = sqrtf(G*p0[cell]);
     }
 }
 
