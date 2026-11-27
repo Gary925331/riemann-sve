@@ -242,7 +242,7 @@ void Compute_F_from_P() {
         Z3 = Z1 - 1.0f;
         // Fluxes of conserved quantities
         f0[cell] = u1[cell];
-        f1[cell] = u1[cell]*p1[cell] + 0.5*G*p0[cell]*p0[cell];
+        f1[cell] = u1[cell]*p1[cell] + 0.5f*G*p0[cell]*p0[cell];
         f2[cell] = u1[cell]*p2[cell];
 
         // Split fluxes - positive
@@ -267,7 +267,7 @@ void Compute_F_from_P() {
         // Fluxes of conserved quantities
         h0[cell] = u2[cell];
         h1[cell] = u2[cell]*p1[cell];
-        h2[cell] = u2[cell]*p2[cell] + 0.5*G*p0[cell]*p0[cell];
+        h2[cell] = u2[cell]*p2[cell] + 0.5f*G*p0[cell]*p0[cell];
 
         // Split fluxes - positive
         // FP[:,:,0] = F[:,:,0]*Z1 + U[:,:,0]*Z2
